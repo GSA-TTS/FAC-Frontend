@@ -4,10 +4,5 @@ layout: layout.njk
 
 <h1>Form</h1>
 
-<form>
-{% for field in form %}
-  {% textInput field.label, field.name %}
-{% endfor %}
-</form>
 
 {{ form | log }}
