@@ -28,3 +28,4 @@ exports.compile = uswds.compile;
 exports.watch = uswds.watch;
 exports.update = uswds.updateUswds;
 exports.default = uswds.watch;
+exports.copyAssets = uswds.copyAssets;

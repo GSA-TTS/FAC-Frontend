@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx gulp watch & npx @11ty/eleventy --serve",
-    "build": "npx gulp compile && npx @11ty/eleventy",
+    "start": "npx gulp copyAssets && npx gulp watch & npx @11ty/eleventy --serve",
+    "build": "npx gulp copyAssets && npx gulp compile && npx @11ty/eleventy",
     "federalist": "npm run build"
   },
   "keywords": [],
