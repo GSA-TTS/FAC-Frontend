@@ -1,3 +1,3 @@
 ---
-layout: form.njk
+layout: home.njk
 ---
