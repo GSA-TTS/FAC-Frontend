@@ -1,1 +1,3 @@
-exports.baseUrl = process.env.BASEURL + '/';
+const baseUrl = process.env.BASEURL;
+
+exports.baseUrl = typeof baseUrl !== 'undefined' ? baseUrl + '/' : '/';
