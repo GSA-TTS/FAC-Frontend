@@ -1,1 +1,1 @@
-exports.baseUrl = process.env.BASEURL || '/';
+exports.baseUrl = process.env.BASEURL + '/';
