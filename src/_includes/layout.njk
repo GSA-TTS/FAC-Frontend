@@ -11,6 +11,7 @@
 </head>
 
 <body>
-  <!-- Grab the content from the page data, dump it here, and mark it as safe --><!-- Safe docs: https://mozilla.github.io/nunjucks/templating.html#safe -->{{ content | safe }}
+  {% include 'components/header.njk' %} <!-- Grab the content from the page data, dump it here, and mark it as safe --><!-- Safe docs: https://mozilla.github.io/nunjucks/templating.html#safe -->{{ content | safe }} <script src="assets/js/uswds.min.js" type="text/javascript">
+</script>
 </body>
 </html>
