@@ -1,0 +1,12 @@
+site_name: Site Name
+
+navigation:
+  primary:
+    - text: Link
+      href: https://gsa.gov
+    - text: Section 1
+      links:
+        - text: Link 1
+          href: https://example.com
+        - text: Link 2
+          href: https://example.com

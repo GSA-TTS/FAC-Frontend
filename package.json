@@ -15,6 +15,7 @@
     "@11ty/eleventy": "^1.0.0",
     "@uswds/compile": "^1.0.0-beta.2",
     "@uswds/uswds": "^3.0.0-beta.4",
-    "concurrently": "^7.1.0"
+    "concurrently": "^7.1.0",
+    "js-yaml": "^4.1.0"
   }
 }
