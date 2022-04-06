@@ -1,12 +1,13 @@
 {
-  "name": "11ty-api-test",
+  "name": "11ty-uswds",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx gulp watch & npx @11ty/eleventy --serve",
-    "build": "npx gulp compile && npx @11ty/eleventy"
+    "build": "npx gulp compile && npx @11ty/eleventy",
+    "federalist": "npm run build"
   },
   "keywords": [],
   "author": "",
