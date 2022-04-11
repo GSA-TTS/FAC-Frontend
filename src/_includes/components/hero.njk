@@ -2,14 +2,13 @@
     <div class="grid-container">
       <div class="usa-hero__callout">
         <h1 class="usa-hero__heading">
-          <span class="usa-hero__heading--alt">Hero callout:</span>Bring
-          attention to a project priority
+          <span class="usa-hero__heading--alt">{{ hero.callout.alt }}</span>{{ hero.callout.text }}
         </h1>
         <p>
           Support the callout with some short explanatory text. You don’t need
           more than a couple of sentences.
         </p>
-        <a class="usa-button" href="javascript:void(0)">Call to action</a>
+        <a class="usa-button" href="{{ hero.button.href }}">{{ hero.button.text }}</a>
       </div>
     </div>
   </section>

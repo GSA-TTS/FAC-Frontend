@@ -1,0 +1,23 @@
+<div class="usa-card__container">
+  <header class="usa-card__header">
+    <h2 class="usa-card__heading">{{ card.heading }}</h2>
+  </header>
+  <div class="usa-card__media">
+    <div class="usa-card__img">
+      <img
+        src="{{ card.image.src }}"
+        alt="{{ card.image.alt }}"
+      />
+    </div>
+  </div>
+  {% if card.body %}
+  <div class="usa-card__body">
+    <p>{{ card.body }}</p>
+  </div>
+  {% endif %}
+  {% if card.button %}
+  <div class="usa-card__footer">
+    <a class="usa-button" href="{{ card.button.href }}">{{ card.button.text }}</a>
+  </div>
+  {% endif %}
+</div>
