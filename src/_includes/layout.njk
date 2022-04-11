@@ -12,11 +12,12 @@
 
 <body>
   <main id="main-content">
-  {% include 'components/header.njk' %} 
+  {% include 'header.njk' %} 
 
   {{ content | safe }} 
 
   </main>
+  {% include 'footer.njk' %}
   <script src="assets/js/uswds.min.js" type="text/javascript"></script>
 </body>
 </html>
