@@ -3,3 +3,16 @@ $color: aliceblue;
 body {
   background-color: $color;
 }
+
+// Prototyping styles
+
+.usa-card__img img {
+  font-size: 0;
+  min-height: 8rem;
+}
+
+.usa-hero {
+  background-color: rgb(240, 240, 240);
+  background-image: none;
+  min-height: 16rem;
+}
