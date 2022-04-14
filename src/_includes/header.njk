@@ -17,6 +17,7 @@
       <button class="usa-nav__close">
       <img src="{{ config.baseUrl }}assets/img/usa-icons/close.svg" role="img" alt="Close" />
       </button>
+
       <ul class="usa-nav__primary usa-accordion">
         {% for section in global.navigation.primary %}
           {% if section.links %}
@@ -47,25 +48,29 @@
           {% endif %}
         {% endfor %}
       </ul>
-
-      <form class="usa-search usa-search--small" role="search">
-        <label class="usa-sr-only" for="basic-search-field-en-small">
-          Search
-        </label>
-        <input
-          class="usa-input"
-          id="basic-search-field-en-small"
-          type="search"
-          name="search"
-        />
-        <button class="usa-button" type="submit">
-          <img
-            src="{{ config.baseUrl }}assets/img/usa-icons-bg/search--white.svg"
-            class="usa-search__submit-icon"
-            alt="Search"
+      <div class="sign-in-search">
+        <a class="usa-button sign-in-logo" href="https://secure.login.gov/" tabindex="0">Sign in with
+          <span>Login.gov</span>
+        </a>
+        <form class="usa-search usa-search--small" role="search">
+          <label class="usa-sr-only" for="basic-search-field-en-small">
+            Search
+          </label>
+          <input
+            class="usa-input"
+            id="basic-search-field-en-small"
+            type="search"
+            name="search"
           />
-        </button>
-      </form>
+          <button class="usa-button" type="submit">
+            <img
+              src="{{ config.baseUrl }}assets/img/usa-icons-bg/search--white.svg"
+              class="usa-search__submit-icon"
+              alt="Search"
+            />
+          </button>
+        </form>
+      </div>
     </nav>
   </div>
 </header>
