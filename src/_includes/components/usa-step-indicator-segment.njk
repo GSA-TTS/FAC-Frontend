@@ -1,0 +1,12 @@
+<li
+  class="usa-step-indicator__segment
+    {{ "usa-step-indicator__segment--complete" if params.completed }}
+    {{ "usa-step-indicator__segment--current" if params.current }}"
+>
+  <span class="usa-step-indicator__segment-label">
+    {{ params.label }}
+    {% if params.completed %}
+      <span class="usa-sr-only">completed</span>
+    {% endif %}
+  </span>
+</li>

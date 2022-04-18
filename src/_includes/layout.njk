@@ -1,3 +1,5 @@
+{%- from "component.njk" import component -%}
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -12,9 +14,9 @@
 
 <body>
   <main id="main-content">
-  {% include 'header.njk' %} 
+  {% include 'header.njk' %}
 
-  {{ content | safe }} 
+  {{ content | safe }}
 
   </main>
   {% include 'footer.njk' %}

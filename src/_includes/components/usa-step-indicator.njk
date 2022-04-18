@@ -1,0 +1,30 @@
+{%- from "../component.njk" import component -%}
+
+<div
+  class="usa-step-indicator usa-step-indicator--counters-sm"
+  aria-label="progress"
+>
+  <ol class="usa-step-indicator__segments">
+    {{
+      component('usa-step-indicator-segment', {
+        label: 'Submission criteria check',
+        current: true
+      })
+    }}
+    {{
+      component('usa-step-indicator-segment', {
+        label: 'Auditee information'
+      })
+    }}
+    {{
+      component('usa-step-indicator-segment', {
+        label: 'Audit submission access'
+      })
+    }}
+    {{
+      component('usa-step-indicator-segment', {
+        label: 'Create new audit'
+      })
+    }}
+  </ol>
+</div>
