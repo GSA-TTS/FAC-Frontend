@@ -1,0 +1,87 @@
+---
+layout: form.njk
+title: Create new audit
+
+fieldsets:
+  - group: entity-type
+    legend: Which organizational type best describes this entity?
+    required: true
+    options:
+      - label: State
+        id: entity-state
+        value: state
+      - label: Local Government
+        id: entity-local
+        value: local government
+      - label: Indian tribe or tribal organization
+        id: entity-tribe
+        value: indian tribe or tribal organization
+      - label: Institution of Higher Education (IHE)
+        id: entity-ihe
+        value: institution of higher education
+      - label: Non-profit
+        id: entity-nonprofit
+        value: non-profit
+      - label: Unknown
+        id: entity-unknown
+        value: unknown
+      - label: None of the these (for example, for-profit)
+        id: entity-none
+        value: none
+
+  - group: entity-spend
+    legend: Did this entity spend $750,000 or more in federal awards during its audit period in accordance with Uniform Guidance?
+    required: true
+    options:
+      - label: Yes
+        id: spend-yes
+        value: yes
+      - label: No
+        id: spend-no
+        value: no
+
+  - group: entity-us
+    legend: Is this entity U.S. based?
+    required: true
+    options:
+      - label: Yes
+        id: us-yes
+        value: yes
+      - label: No
+        id: us-no
+        value: no
+---
+{%- from "../../_includes/component.njk" import component -%}
+
+<form class="usa-form usa-form--large">
+  <fieldset class="usa-fieldset">
+    <legend class="usa-legend usa-legend--large">Does your entity meet the single audit criteria?</legend>
+    <p>
+      <abbr
+        title="required"
+        class="usa-hint usa-hint--required"
+        >*</abbr
+      >Indicates a required field.
+    </p>
+    {% for f in fieldsets %}
+    <fieldset class="usa-fieldset">
+      <legend class="usa-legend">
+        {{ f.legend }}
+        {% if f.required %}
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+        {% endif %}
+      </legend>
+      {% for o in f.options %}
+        {{
+          component('usa-radio', {
+            label: o.label,
+            group: f.group,
+            id: o.id,
+            value: o.value
+          })
+        }}
+      {% endfor %}
+
+    </fieldset>
+    {% endfor %}
+</form>

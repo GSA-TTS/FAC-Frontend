@@ -1,7 +1,9 @@
 ---
 layout: layout.njk
 ---
+{%- from "component.njk" import component -%}
 <div class="grid-container">
-{% include 'components/usa-step-indicator.njk' %}
-
+  <h1>{{ title }}</h1>
+  {% include 'components/usa-step-indicator.njk' %}
+  {{ content | safe }}
 </div>
