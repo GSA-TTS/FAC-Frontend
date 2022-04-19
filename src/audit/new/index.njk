@@ -2,7 +2,7 @@
 title: Create new audit
 
 fieldsets:
-  - group: entity-type
+  - group: user_provided_organization_type
     legend: Which organizational type best describes this entity?
     required: true
     options:
@@ -11,10 +11,10 @@ fieldsets:
         value: state
       - label: Local Government
         id: entity-local
-        value: local government
+        value: local
       - label: Indian tribe or tribal organization
         id: entity-tribe
-        value: indian tribe or tribal organization
+        value: tribal
       - label: Institution of Higher Education (IHE)
         id: entity-ihe
         value: institution of higher education
@@ -28,27 +28,27 @@ fieldsets:
         id: entity-none
         value: none
 
-  - group: entity-spend
+  - group: met_spending_threshold
     legend: Did this entity spend $750,000 or more in federal awards during its audit period in accordance with Uniform Guidance?
     required: true
     options:
       - label: Yes
         id: spend-yes
-        value: yes
+        value: true
       - label: No
         id: spend-no
-        value: no
+        value: false
 
-  - group: entity-us
+  - group: is_usa_based
     legend: Is this entity U.S. based?
     required: true
     options:
       - label: Yes
         id: us-yes
-        value: yes
+        value: true
       - label: No
         id: us-no
-        value: no
+        value: false
 ---
 {%- extends "form.njk" -%}
 {%- block form -%}
@@ -95,4 +95,6 @@ fieldsets:
         </li>
       </ul>
   </form>
+  <script>const authToken = "{{ config.temporaryAuthToken }}"</script>
+  <script src="{{ config.baseUrl }}assets/js/check-eligibility.js"></script>
 {%- endblock -%}
