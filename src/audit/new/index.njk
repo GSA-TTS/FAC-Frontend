@@ -1,5 +1,4 @@
 ---
-layout: form.njk
 title: Create new audit
 
 fieldsets:
@@ -51,37 +50,38 @@ fieldsets:
         id: us-no
         value: no
 ---
-{%- from "../../_includes/component.njk" import component -%}
-
-<form class="usa-form usa-form--large">
-  <fieldset class="usa-fieldset">
-    <legend class="usa-legend usa-legend--large">Does your entity meet the single audit criteria?</legend>
-    <p>
-      <abbr
-        title="required"
-        class="usa-hint usa-hint--required"
-        >*</abbr
-      >Indicates a required field.
-    </p>
-    {% for f in fieldsets %}
+{%- extends "form.njk" -%}
+{%- block form -%}
+  <form class="usa-form usa-form--large">
     <fieldset class="usa-fieldset">
-      <legend class="usa-legend">
-        {{ f.legend }}
-        {% if f.required %}
-          <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-        {% endif %}
-      </legend>
-      {% for o in f.options %}
-        {{
-          component('usa-radio', {
-            label: o.label,
-            group: f.group,
-            id: o.id,
-            value: o.value
-          })
-        }}
-      {% endfor %}
+      <legend class="usa-legend usa-legend--large">Does your entity meet the single audit criteria?</legend>
+      <p>
+        <abbr
+          title="required"
+          class="usa-hint usa-hint--required"
+          >*</abbr
+        >Indicates a required field.
+      </p>
+      {% for f in fieldsets %}
+      <fieldset class="usa-fieldset">
+        <legend class="usa-legend">
+          {{ f.legend }}
+          {% if f.required %}
+            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+          {% endif %}
+        </legend>
+        {% for o in f.options %}
+          {{
+            component('usa-radio', {
+              label: o.label,
+              group: f.group,
+              id: o.id,
+              value: o.value
+            })
+          }}
+        {% endfor %}
 
-    </fieldset>
-    {% endfor %}
-</form>
+      </fieldset>
+      {% endfor %}
+  </form>
+{%- endblock -%}

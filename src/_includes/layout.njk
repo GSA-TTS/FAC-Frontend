@@ -1,4 +1,4 @@
-{%- from "component.njk" import component -%}
+{%- from "system/component.njk" import component -%}
 
 <!DOCTYPE html>
 
@@ -17,7 +17,7 @@
   {% include 'header.njk' %}
 
   {{ content | safe }}
-
+  {% block content %}{% endblock %}
   </main>
   {% include 'footer.njk' %}
   <script src="{{ config.baseUrl }}assets/js/uswds.min.js" type="text/javascript"></script>
