@@ -21,3 +21,17 @@ Finally, if you need to create a production build locally (perhaps for troublesh
 ```
 npm run build
 ```
+
+## Using Docker
+
+To build the container:
+
+```
+docker build -t fac/11ty .
+```
+
+To run the container on the local directory:
+
+```
+docker run -p 3000:3000 -p 3001:3001 -it -v ${PWD}/src:/app fac/11ty
+```
