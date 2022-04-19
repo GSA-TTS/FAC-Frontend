@@ -63,7 +63,7 @@ fieldsets:
         >Indicates a required field.
       </p>
       {% for f in fieldsets %}
-      <fieldset class="usa-fieldset">
+      <fieldset class="usa-fieldset question">
         <legend class="usa-legend">
           {{ f.legend }}
           {% if f.required %}
@@ -83,5 +83,15 @@ fieldsets:
 
       </fieldset>
       {% endfor %}
+      <ul class="usa-button-group">
+        <li class="usa-button-group__item">
+          <a href="javascript:void(0);" class="usa-button usa-button--outline">
+            Cancel
+          </a>
+        </li>
+        <li class="usa-button-group__item">
+          <button class="usa-button">Continue</button>
+        </li>
+      </ul>
   </form>
 {%- endblock -%}
