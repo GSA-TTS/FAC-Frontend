@@ -5,6 +5,10 @@
     name="{{ params.group }}"
     value="{{ params.value }}"
     type="radio"
+    {% if params.required %}
+      aria-required="true"
+      required
+    {% endif %}
   />
   <label class="usa-radio__label" for="{{ params.id }}">
     {{ params.label }}
