@@ -9,7 +9,8 @@
     "build": "npx gulp copyAssets && npx gulp compile && npx @11ty/eleventy",
     "federalist": "npm run build",
     "cy:open": "npx cypress open",
-    "cy:run": "npx cypress run"
+    "cy:run": "npx cypress run",
+    "test:e2e:ci": "npx start-server-and-test start 8080 cy:run"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "concurrently": "^7.1.0",
     "cypress": "^9.5.4",
     "dotenv": "^16.0.0",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "start-server-and-test": "^1.14.0"
   }
 }
