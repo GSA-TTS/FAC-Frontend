@@ -21,3 +21,19 @@ Finally, if you need to create a production build locally (perhaps for troublesh
 ```
 npm run build
 ```
+
+## Testing
+
+To run the end-to-end test suite in a browser, run
+
+```
+npm run test:cy:open
+```
+
+For to run the tests headlessly and have them report results to the console, it's:
+
+```
+npm run test:cy:run
+```
+
+Both of the above assume that the development server is running, so be sure to start that first. Alternatively, `npm run test:e2e:ci` will start the dev server, run the test suite, and shut the server down afterward all in one command.
