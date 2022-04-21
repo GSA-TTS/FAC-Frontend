@@ -20,4 +20,4 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run Cypress
-        run: npm test:e2e:ci
+        run: npm run test:e2e:ci
