@@ -1,3 +1,6 @@
+@use '_form.scss';
+@use '_prototyping.scss';
+
 .login-banner {
   background-color: #fff;
   border: 1px solid #d9e8f6;
@@ -46,16 +49,4 @@
   .usa-header--basic .usa-nav {
     align-items: flex-end;
   }
-}
-
-// Prototyping styles
-.usa-card__img img {
-  font-size: 0;
-  min-height: 8rem;
-}
-
-.usa-hero {
-  background-color: rgb(240, 240, 240);
-  background-image: none;
-  min-height: 16rem;
 }

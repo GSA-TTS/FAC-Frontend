@@ -1,0 +1,16 @@
+<div class="usa-radio">
+  <input
+    class="usa-radio__input"
+    id="{{ params.id }}"
+    name="{{ params.group }}"
+    value="{{ params.value }}"
+    type="radio"
+    {% if params.required %}
+      aria-required="true"
+      required
+    {% endif %}
+  />
+  <label class="usa-radio__label" for="{{ params.id }}">
+    {{ params.label }}
+  </label>
+</div>
