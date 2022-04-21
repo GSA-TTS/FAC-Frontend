@@ -19,4 +19,5 @@ jobs:
           node-version: '17.x'
       - name: Install dependencies
         run: npm install
-      - run: npm test:e2e:ci
+      - name: Run Cypress
+        run: npm test:e2e:ci
