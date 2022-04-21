@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx gulp copyAssets && npx gulp watch & npx @11ty/eleventy --serve",
     "build": "npx gulp copyAssets && npx gulp compile && npx @11ty/eleventy",
-    "federalist": "npm run build"
+    "federalist": "npm run build",
+    "cy:open": "npx cypress open",
+    "cy:run": "npx cypress run"
   },
   "keywords": [],
   "author": "",
