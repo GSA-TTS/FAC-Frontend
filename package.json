@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx gulp copyAssets && npx gulp watch & npx @11ty/eleventy --serve",
     "build": "npx gulp copyAssets && npx gulp compile && npx @11ty/eleventy",
-    "federalist": "npm run build"
+    "federalist": "npm run build",
+    "cy:open": "npx cypress open",
+    "cy:run": "npx cypress run",
+    "test:e2e:ci": "npx start-server-and-test start 8080 cy:run"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +20,9 @@
     "@uswds/compile": "^1.0.0-beta.2",
     "@uswds/uswds": "^3.0.0-beta.4",
     "concurrently": "^7.1.0",
+    "cypress": "^9.5.4",
     "dotenv": "^16.0.0",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "start-server-and-test": "^1.14.0"
   }
 }
