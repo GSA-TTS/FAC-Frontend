@@ -5,8 +5,28 @@
 .question {
   margin-bottom: 3rem;
 
+  &--error {
+    box-shadow: -5px 0 0 0 #b50909;
+  }
+
   .usa-legend {
     font-weight: 700;
+  }
+}
+
+.usa-radio .usa-error-message {
+  display: none;
+}
+
+.usa-radio--error {
+  .usa-error-message {
+    display: block;
+  }
+
+  .usa-radio__input:checked+[class*="__label"]::before {
+    background-color: #b50909;
+    box-shadow: 0 0 0 2px #b50909,
+                inset 0 0 0 2px #fff;
   }
 }
 
