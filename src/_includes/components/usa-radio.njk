@@ -13,4 +13,7 @@
   <label class="usa-radio__label" for="{{ params.id }}">
     {{ params.label }}
   </label>
+  {%- if params.errorMessage -%}
+    <span class="usa-error-message">{{ params.errorMessage }}</span>
+  {%- endif -%}
 </div>

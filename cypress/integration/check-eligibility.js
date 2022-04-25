@@ -22,4 +22,35 @@ describe('Create New Audit', () => {
       cy.focused().should('have.attr', 'type', 'radio');
     })
   })
+
+  describe('Validation', () => {
+    it('does not show any errors initially', () => {
+      cy.get('[class*=--error]').should('have.length', 0);
+    })
+
+    it('should mark errors when invalid properties are checked', () => {
+      // This needs to be a click on the label rather than a
+      // check on the input itself because of the CSS magic
+      // USWDS does to make the fancy radio buttons
+      cy.get('label[for=entity-none]').click();
+      cy.get('label[for=spend-no]').click();
+      cy.get('label[for=us-no]').click();
+      cy.get('[class*=--error]').should('have.length', 3);
+    })
+
+    it('should display error messages for invalid entities', () => {
+      cy.get('.usa-error-message:visible').should('have.length', 3);
+    })
+
+    it('should remove errors when valid properties are checked', () => {
+      cy.get('label[for=entity-state]').click();
+      cy.get('label[for=spend-yes]').click();
+      cy.get('label[for=us-yes]').click();
+      cy.get('[class*=--error]').should('have.length', 0);
+    })
+
+    it('should hide error messages when invalid entities are fixed', () => {
+      cy.get('.usa-error-message:visible').should('have.length', 0);
+    })
+  })
 })

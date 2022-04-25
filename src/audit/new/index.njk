@@ -24,9 +24,11 @@ fieldsets:
       - label: Unknown
         id: entity-unknown
         value: unknown
+        error_message: The FAC only accepts submissions from States, Local governments, Indian tribes or Tribal organizations, Institutions of higher education (IHEs), and Non-profits
       - label: None of the these (for example, for-profit)
         id: entity-none
         value: none
+        error_message: The FAC only accepts submissions from States, Local governments, Indian tribes or Tribal organizations, Institutions of higher education (IHEs), and Non-profits
 
   - group: met_spending_threshold
     legend: Did this entity spend $750,000 or more in federal awards during its audit period in accordance with Uniform Guidance?
@@ -38,6 +40,7 @@ fieldsets:
       - label: No
         id: spend-no
         value: false
+        error_message: The FAC only accepts submissions from non-Federal entities that spend $750,000 or more in federal awards during its audit period (fiscal period begin dates on or after 12/26/2014) in accordance with Uniform Guidance
 
   - group: is_usa_based
     legend: Is this entity U.S. based?
@@ -49,6 +52,7 @@ fieldsets:
       - label: No
         id: us-no
         value: false
+        error_message: The FAC only accepts submissions from U.S.-based entities
 ---
 {%- extends "form.njk" -%}
 {%- block form -%}
@@ -77,7 +81,8 @@ fieldsets:
               group: f.group,
               id: o.id,
               value: o.value,
-              required: true
+              required: true,
+              errorMessage: o.error_message
             })
           }}
         {% endfor %}
