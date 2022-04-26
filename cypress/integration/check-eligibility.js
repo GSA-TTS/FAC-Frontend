@@ -42,6 +42,10 @@ describe('Create New Audit', () => {
       cy.get('.usa-error-message:visible').should('have.length', 3);
     })
 
+    it('should disable the "Continue" button when an entity is invalid', () => {
+      cy.get('button').contains('Continue').should('be.disabled');
+    })
+
     it('should remove errors when valid properties are checked', () => {
       cy.get('label[for=entity-state]').click();
       cy.get('label[for=spend-yes]').click();
@@ -51,6 +55,10 @@ describe('Create New Audit', () => {
 
     it('should hide error messages when invalid entities are fixed', () => {
       cy.get('.usa-error-message:visible').should('have.length', 0);
+    })
+
+    it('should enable the "Continue" button when entities are fixed', () => {
+      cy.get('button').contains('Continue').should('not.be.disabled');
     })
   })
 })
