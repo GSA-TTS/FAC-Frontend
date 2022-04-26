@@ -12,7 +12,11 @@
     "cy:run": "npx cypress run",
     "test:e2e:ci": "npx start-server-and-test start 8080 cy:run",
     "eslint:check": "npx eslint --ignore-path .gitignore .",
-    "eslint:fix": "npx eslint --fix --ignore-path .gitignore ."
+    "eslint:fix": "npx eslint --fix --ignore-path .gitignore .",
+    "stylelint:check": "npx stylelint --ignore-pattern uswds src/scss",
+    "stylelint:fix": "npx stylelint --fix --ignore-pattern uswds src/scss",
+    "check:all": "npm run eslint:check && npm run stylelint:check",
+    "fix:all": "npm run eslint:fix && npm run stylelint:fix"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +34,10 @@
     "eslint-plugin-prettier": "^4.0.0",
     "js-yaml": "^4.1.0",
     "prettier": "^2.6.2",
-    "start-server-and-test": "^1.14.0"
+    "start-server-and-test": "^1.14.0",
+    "stylelint": "^14.8.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^25.0.0",
+    "stylelint-config-standard-scss": "^3.0.0"
   }
 }
