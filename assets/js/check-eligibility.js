@@ -31,6 +31,11 @@
     return !INVALID_ENTITY_TYPES[name].includes(id);
   }
 
+  function setFormDisabled(shouldDisable) {
+    const continueBtn = document.getElementById('continue');
+    continueBtn.disabled = shouldDisable;
+  }
+
   function resetErrorStates(el) {
     const inputsWithErrors = Array.from(el.querySelectorAll('.usa-radio--error'));
     inputsWithErrors.forEach(i => i.classList.remove('usa-radio--error'));
@@ -53,6 +58,9 @@
     inputs.forEach(input => {
       validations.forEach(validation => validation(input));
     })
+
+    const allValid = allResponsesValid();
+    setFormDisabled(!allValid);
   }
 
   function allResponsesValid() {
@@ -69,7 +77,10 @@
 
     const questions = Array.from(document.querySelectorAll('.question'));
     questions.forEach(q => {
-      q.addEventListener('change', e => validateEntity(e.target));
+      q.addEventListener('change', e => { 
+        validateEntity(e.target);
+        runAllValidations();
+      });
     });
   }
 
