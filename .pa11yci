@@ -1,0 +1,14 @@
+{
+  "urls": [
+    "http://localhost:8080",
+    "http://localhost:8080/audit/new"
+  ],
+  "defaults": {
+    "concurrency": 4,
+    "standard": "WCAG2AA",
+    "runners": [
+      "htmlcs",
+      "axe"
+    ]
+  }
+}
