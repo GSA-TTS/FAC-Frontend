@@ -23,3 +23,5 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import '@cypress-audit/lighthouse/commands';
+import '@cypress-audit/pa11y/commands';
