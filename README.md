@@ -37,3 +37,7 @@ npm run test:cy:run
 ```
 
 Both of the above assume that the development server is running, so be sure to start that first. Alternatively, `npm run test:e2e:ci` will start the dev server, run the test suite, and shut the server down afterward all in one command.
+
+## Linting & Styling
+
+This project uses [Prettier](https://prettier.io/), [eslint](https://eslint.org/), and [stylelint](https://stylelint.io/) to ensure code is correct and formatted consistently. Git will run these tools automatically before applying a commit, but you should install the editor plugins for each tool to apply formatting and lint your code automatically.
