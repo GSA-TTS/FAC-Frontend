@@ -18,7 +18,8 @@
     "check:all": "npm run eslint:check && npm run stylelint:check",
     "fix:all": "npm run eslint:fix && npm run stylelint:fix",
     "pa11y": "npx pa11y-ci",
-    "pa11y:ci": "npx start-server-and-test start 8080 pa11y"
+    "pa11y:ci": "npx start-server-and-test start 8080 pa11y",
+    "postinstall": "husky install"
   },
   "keywords": [],
   "author": "",
