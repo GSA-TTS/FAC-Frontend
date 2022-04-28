@@ -13,9 +13,8 @@
 </head>
 
 <body>
-  <main id="main-content">
   {% include 'header.njk' %}
-
+  <main id="main-content">
   {{ content | safe }}
   {% block content %}{% endblock %}
   </main>

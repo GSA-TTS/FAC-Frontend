@@ -1,7 +1,13 @@
 {
   "urls": [
-    "http://localhost:8080",
-    "http://localhost:8080/audit/new"
+    {
+      "url": "http://localhost:8080",
+      "hideElements": ".sign-in-logo span, header button span"
+    },
+    {
+      "url": "http://localhost:8080/audit/new",
+      "hideElements": ".sign-in-logo span, header button span, .usa-step-indicator__segment-label"
+    }
   ],
   "defaults": {
     "concurrency": 4,
