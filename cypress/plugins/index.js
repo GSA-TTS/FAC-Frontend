@@ -19,8 +19,8 @@
 const { lighthouse, prepareAudit } = require('@cypress-audit/lighthouse');
 const { pa11y } = require('@cypress-audit/pa11y');
 
-module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, launchOptions) => {
+module.exports = (on) => {
+  on('before:browser:launch', (_, launchOptions) => {
     prepareAudit(launchOptions);
   });
 
