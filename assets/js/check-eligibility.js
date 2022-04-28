@@ -47,7 +47,7 @@
 
   function validateEntity(entity) {
     const radioEl = entity.parentElement;
-    const fieldsetEl = radioEl.parentElement
+    const fieldsetEl = radioEl.parentElement;
     resetErrorStates(fieldsetEl);
 
     if (!isValidEntity(entity) && entity.checked) {
