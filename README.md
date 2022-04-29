@@ -30,7 +30,7 @@ To run the end-to-end test suite in a browser, run
 npm run test:cy:open
 ```
 
-For to run the tests headlessly and have them report results to the console, it's:
+To run the tests headlessly and have them report results to the console, it's:
 
 ```
 npm run test:cy:run
