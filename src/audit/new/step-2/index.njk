@@ -36,13 +36,17 @@ explanatory_text:
   more: For more information about this transition, visit SAM.gov or the Federal Service Desk, FSD.gov. You can search for help at FSD any time or request help from an FSD agent Monday–Friday 8 a.m. to 8 p.m. ET.
 ---
 {%- extends "form.njk" -%}
+
 {%- block form -%}
+<div class="grid-container">
   {{
     component('usa-step-indicator', {
       currentStep: 2,
       totalSteps: 4
     })
   }}
+</div>
+<div class="grid-container auditee-information">
   <div class="grid-row">
     <form class="usa-form usa-form--large tablet:grid-col" id="check-eligibility">
       <fieldset class="usa-fieldset">
@@ -87,7 +91,7 @@ explanatory_text:
           </li>
         </ul>
     </form>
-    <div class="tablet:grid-col">
+    <div class="ueid-explanation tablet:grid-col usa-prose font-sans-sm">
       <h3>{{ explanatory_text.heading }}</h3>
       <p>{{ explanatory_text.explanation }}</p>
       <ul>
@@ -99,4 +103,5 @@ explanatory_text:
       <p>{{ explanatory_text.more }}</p>
     </div>
   </div>
+</div>
 {%- endblock -%}
