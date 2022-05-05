@@ -1,0 +1,15 @@
+<div class="usa-form-group">
+  <label class="usa-label" id="{{ params.id }}-label" for="{{ params.id }}"
+    >{{ params.label | safe }}</label
+  >
+  <div class="usa-hint" id="{{ params.id }}-hint">mm/dd/yyyy</div>
+  <div class="usa-date-picker">
+    <input
+      class="usa-input"
+      id="{{ params.id }}-label"
+      name="{{ params.id }}"
+      aria-labelledby="{{ params.id }}-label"
+      aria-describedby="{{ params.id }}-hint"
+    />
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="usa-form-group">
+  <label class="usa-label" for="{{ params.id }}">{{ params.label }}</label>
+  {% if params.errorMessage %}
+  <span class="usa-error-message" id="{{ params.id }}-error-message" role="alert">
+    {{params.errorMessage}}
+  </span>
+  {% endif %}
+  <input
+    class="usa-input"
+    id="{{ params.id }}"
+    name="{{ params.id }}"
+    {# TODO: move this to JS
+    aria-describedby="{{ id }}-error-message"
+    #}
+  />
+</div>
