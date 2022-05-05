@@ -1,0 +1,105 @@
+---
+title: Create new audit
+
+fieldsets:
+  - group: user_provided_organization_type
+    legend: Which organizational type best describes this entity?
+    required: true
+    options:
+      - label: State
+        id: entity-state
+        value: state
+      - label: Local Government
+        id: entity-local
+        value: local
+      - label: Indian tribe or tribal organization
+        id: entity-tribe
+        value: tribal
+      - label: Institution of Higher Education (IHE)
+        id: entity-ihe
+        value: institution of higher education
+      - label: Non-profit
+        id: entity-nonprofit
+        value: non-profit
+      - label: Unknown
+        id: entity-unknown
+        value: unknown
+        error_message: The FAC only accepts submissions from States, Local governments, Indian tribes or Tribal organizations, Institutions of higher education (IHEs), and Non-profits
+      - label: None of the these (for example, for-profit)
+        id: entity-none
+        value: none
+        error_message: The FAC only accepts submissions from States, Local governments, Indian tribes or Tribal organizations, Institutions of higher education (IHEs), and Non-profits
+
+  - group: met_spending_threshold
+    legend: Did this entity spend $750,000 or more in federal awards during its audit period in accordance with Uniform Guidance?
+    required: true
+    options:
+      - label: Yes
+        id: spend-yes
+        value: true
+      - label: No
+        id: spend-no
+        value: false
+        error_message: The FAC only accepts submissions from non-Federal entities that spend $750,000 or more in federal awards during its audit period (fiscal period begin dates on or after 12/26/2014) in accordance with Uniform Guidance
+
+  - group: is_usa_based
+    legend: Is this entity U.S. based?
+    required: true
+    options:
+      - label: Yes
+        id: us-yes
+        value: true
+      - label: No
+        id: us-no
+        value: false
+        error_message: The FAC only accepts submissions from U.S.-based entities
+---
+{%- extends "form.njk" -%}
+{%- block form -%}
+  <form class="usa-form usa-form--large" id="check-eligibility">
+    <fieldset class="usa-fieldset">
+      <legend class="usa-legend usa-legend--large">Does your entity meet the single audit criteria?</legend>
+      <p>
+        <abbr
+          title="required"
+          class="usa-hint usa-hint--required"
+          >*</abbr
+        >Indicates a required field.
+      </p>
+      {% for f in fieldsets %}
+      <fieldset class="usa-fieldset question">
+        <legend class="usa-legend">
+          {{ f.legend }}
+          {% if f.required %}
+            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+          {% endif %}
+        </legend>
+        {% for o in f.options %}
+          {{
+            component('usa-radio', {
+              label: o.label,
+              group: f.group,
+              id: o.id,
+              value: o.value,
+              required: true,
+              errorMessage: o.error_message
+            })
+          }}
+        {% endfor %}
+
+      </fieldset>
+      {% endfor %}
+      <ul class="usa-button-group">
+        <li class="usa-button-group__item">
+          <a href="javascript:void(0);" class="usa-button usa-button--outline">
+            Cancel
+          </a>
+        </li>
+        <li class="usa-button-group__item">
+          <button class="usa-button" id="continue">Continue</button>
+        </li>
+      </ul>
+  </form>
+  <script>const authToken = "{{ config.temporaryAuthToken }}"</script>
+  <script src="{{ config.baseUrl }}assets/js/check-eligibility.js"></script>
+{%- endblock -%}
