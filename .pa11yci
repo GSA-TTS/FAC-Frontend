@@ -1,0 +1,14 @@
+{
+  "urls": [
+    "http://localhost:8080",
+    "http://localhost:8080/audit/new/"
+  ],
+  "defaults": {
+    "standard": "WCAG2AA",
+    "runners": [
+      "htmlcs",
+      "axe"
+    ],
+    "hideElements": ".sign-in-logo span, header button span, .usa-step-indicator__segment-label"
+  }
+}

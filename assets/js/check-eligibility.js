@@ -7,26 +7,28 @@
     const headers = new Headers();
 
     headers.append('Content-type', 'application/json');
+    /* eslint-disable-next-line no-undef */
     headers.append('Authorization', 'Basic ' + authToken); // authToken is set in a script tag right before this script loads
 
     fetch(ENDPOINT, {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify(formData)
-    }).then(resp => resp.json())
-      .then(data => console.log(data)); // Just log the response for now
+      body: JSON.stringify(formData),
+    })
+      .then((resp) => resp.json())
+      .then((data) => console.log(data)); // Just log the response for now
   }
 
   function serializeFormData(formData) {
     return Object.fromEntries(formData);
   }
 
-  function isValidEntity({name, id}) {
+  function isValidEntity({ name, id }) {
     const INVALID_ENTITY_TYPES = {
-      user_provided_organization_type: ["entity-none"],
-      met_spending_threshold: ["spend-no"],
-      is_usa_based: ["us-no"]
-    }
+      user_provided_organization_type: ['entity-none'],
+      met_spending_threshold: ['spend-no'],
+      is_usa_based: ['us-no'],
+    };
 
     return !INVALID_ENTITY_TYPES[name].includes(id);
   }
@@ -37,8 +39,10 @@
   }
 
   function resetErrorStates(el) {
-    const inputsWithErrors = Array.from(el.querySelectorAll('.usa-radio--error'));
-    inputsWithErrors.forEach(i => i.classList.remove('usa-radio--error'));
+    const inputsWithErrors = Array.from(
+      el.querySelectorAll('.usa-radio--error')
+    );
+    inputsWithErrors.forEach((i) => i.classList.remove('usa-radio--error'));
   }
 
   function validateEntity(entity) {
@@ -48,16 +52,16 @@
 
     if (!isValidEntity(entity) && entity.checked) {
       radioEl.classList.add('usa-radio--error');
-    };
+    }
   }
 
   function runAllValidations() {
     const inputs = Array.from(document.querySelectorAll('.question input'));
     const validations = [validateEntity];
 
-    inputs.forEach(input => {
-      validations.forEach(validation => validation(input));
-    })
+    inputs.forEach((input) => {
+      validations.forEach((validation) => validation(input));
+    });
 
     const allValid = allResponsesValid();
     setFormDisabled(!allValid);
@@ -73,11 +77,11 @@
       e.preventDefault();
       if (!allResponsesValid()) return;
       submitForm();
-    })
+    });
 
     const questions = Array.from(document.querySelectorAll('.question'));
-    questions.forEach(q => {
-      q.addEventListener('change', e => { 
+    questions.forEach((q) => {
+      q.addEventListener('change', (e) => {
         validateEntity(e.target);
         runAllValidations();
       });

@@ -56,6 +56,12 @@ fieldsets:
 ---
 {%- extends "form.njk" -%}
 {%- block form -%}
+  {{ 
+    component('usa-step-indicator', {
+      currentStep: 1,
+      totalSteps: 4
+    }) 
+  }}
   <form class="usa-form usa-form--large" id="check-eligibility">
     <fieldset class="usa-fieldset">
       <legend class="usa-legend usa-legend--large">Does your entity meet the single audit criteria?</legend>

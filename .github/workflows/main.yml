@@ -2,13 +2,12 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -21,3 +20,5 @@ jobs:
         run: npm install
       - name: Run Cypress
         run: npm run test:e2e:ci
+      - name: Run pa11y
+        run: npm run pa11y:ci
