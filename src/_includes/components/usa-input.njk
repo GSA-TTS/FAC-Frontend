@@ -1,5 +1,8 @@
 <div class="usa-form-group">
-  <label class="usa-label" for="{{ params.id }}">
+  <label
+    class="usa-label"
+    for="{{ params.id }}"
+  >
     {{ params.label }}
     {% if params.required %}
       <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
@@ -14,6 +17,10 @@
     class="usa-input"
     id="{{ params.id }}"
     name="{{ params.id }}"
+    {% if params.required %}
+      aria-required="true"
+      required
+    {% endif %}
     {# TODO: move this to JS
     aria-describedby="{{ id }}-error-message"
     #}
