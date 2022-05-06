@@ -1,5 +1,10 @@
 <div class="usa-form-group">
-  <label class="usa-label" for="{{ params.id }}">{{ params.label }}</label>
+  <label class="usa-label" for="{{ params.id }}">
+    {{ params.label }}
+    {% if params.required %}
+      <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+    {% endif %}
+  </label>
   {% if params.errorMessage %}
   <span class="usa-error-message" id="{{ params.id }}-error-message" role="alert">
     {{params.errorMessage}}
