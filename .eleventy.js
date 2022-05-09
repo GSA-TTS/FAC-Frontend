@@ -9,7 +9,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addDataExtension('yaml', (contents) => yaml.load(contents));
 
   eleventyConfig.addPassthroughCopy('assets/img');
-  const jsPath = glob.sync(path.join('src','js','*.js'));
+  const jsPath = glob.sync(path.join('.','src','js','*.js'));
 
   eleventyConfig.on('afterBuild', () => {
     return esbuild.build({
@@ -19,11 +19,11 @@ module.exports = function (eleventyConfig) {
       sourcemap: process.env.ELEVENTY_ENV !== "production",
       target: ['chrome58', 'firefox57', 'safari11', 'edge18'],
       bundle: true,
-      format: 'iife'
+      format: 'iife',
     });
   });
 
-  eleventyConfig.addWatchTarget("./js/")
+  eleventyConfig.addWatchTarget("./src/js/")
 
   return {
     dir: {
