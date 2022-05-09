@@ -6,11 +6,22 @@ inputs:
     label: Auditee Unique Entity Identifier (UEI)
     required: true
     field_type: text
+    validations:
+      - operation: length
+        constraint: '== 12'
+        error_message: UEI is twelve characters long
 
   - id: confirm_auditee_ueid
     label: Re-enter Auditee Unique Entity Identifier (UEI)
     required: true
     field_type: text
+    validations:
+      - operation: length
+        constraint: '== 12'
+        error_message: UEI is twelve characters long
+      - operation: must-match
+        constraint: auditee_ueid
+        error_message: This field should match the one before it
 
   - id: auditee_name
     label: Auditee name
@@ -65,7 +76,8 @@ explanatory_text:
                 label: i.label,
                 id: i.id,
                 required: i.required,
-                errorMessage: o.error_message
+                errorMessage: i.error_message,
+                validations: i.validations
               })
             }}
           {% elif i.field_type == "date" %}
@@ -74,7 +86,7 @@ explanatory_text:
                 label: i.label,
                 id: i.id,
                 required: i.required,
-                errorMessage: o.error_message
+                errorMessage: i.error_message
               })
             }}
           {% endif %}
@@ -103,5 +115,7 @@ explanatory_text:
       <p>{{ explanatory_text.more }}</p>
     </div>
   </div>
+<script>const authToken = "{{ config.temporaryAuthToken }}"</script>
+<script src="{{ config.baseUrl }}assets/js/check-ueid.js"></script>
 </div>
 {%- endblock -%}

@@ -21,6 +21,9 @@
       aria-required="true"
       required
     {% endif %}
+    {% for v in params.validations %}
+      data-validate-{{v.operation}}="{{v.constraint}}"
+    {% endfor %}
     {# TODO: move this to JS
     aria-describedby="{{ id }}-error-message"
     #}
