@@ -16,57 +16,98 @@ describe('Create New Audit', () => {
 
       cy.get('.usa-button').contains('Continue').click();
     });
-
-    it('sets focus on the first invalid input', () => {
-      cy.get('.usa-button').contains('Continue').click();
-      cy.focused().should('have.attr', 'name', 'auditee_ueid');
-    });
   });
 
-  // describe('Validation', () => {
-  //   it('does not show any errors initially', () => {
-  //     cy.get('[class*=--error]').should('have.length', 0);
-  //   });
+  describe('Validation', () => {
+    it('does not show any errors initially', () => {
+      cy.get('[class*=--error]').should('have.length', 0);
+    });
 
-  //   it('should mark errors when invalid properties are checked', () => {
-  //     // This needs to be a click on the label rather than a
-  //     // check on the input itself because of the CSS magic
-  //     // USWDS does to make the fancy radio buttons
-  //     cy.get('label[for=entity-none]').click();
-  //     cy.get('label[for=spend-no]').click();
-  //     cy.get('label[for=us-no]').click();
-  //     cy.get('[class*=--error]').should('have.length', 3);
-  //   });
+    it('should mark errors when invalid properties are checked', () => {
+      cy.get('#auditee_ueid').click().blur();
+      cy.get('#confirm_auditee_ueid').click().blur();
+      cy.get('#auditee_name').click().blur();
+      cy.get('[class*=usa-form-group--error]').should('have.length', 3);
+    });
 
-  //   it('should display error messages for invalid entities', () => {
-  //     cy.get('.usa-error-message:visible').should('have.length', 3);
-  //   });
+    describe('Auditee UEID', () => {
+      it('should display an error message when left blank', () => {
+        cy.get('#auditee_ueid').click().blur();
+        cy.get('#auditee_ueid-not-null').should('be.visible');
+      });
 
-  //   it('should disable the "Continue" button when an entity is invalid', () => {
-  //     cy.get('button').contains('Continue').should('be.disabled');
-  //   });
+      it('should remove the error message when input is supplied', () => {
+        cy.get('#auditee_ueid').type('ASDF').blur();
+        cy.get('#auditee_ueid-not-null').should('not.be.visible');
+      });
 
-  //   it('should remove errors when valid properties are checked', () => {
-  //     cy.get('label[for=entity-state]').click();
-  //     cy.get('label[for=spend-yes]').click();
-  //     cy.get('label[for=us-yes]').click();
-  //     cy.get('[class*=--error]').should('have.length', 0);
-  //   });
+      it('should indicate when the supplied input is too short', () => {
+        cy.get('#auditee_ueid-length').should('be.visible');
+      });
 
-  //   it('should hide error messages when invalid entities are fixed', () => {
-  //     cy.get('.usa-error-message:visible').should('have.length', 0);
-  //   });
+      it('should indicate when the supplied input is too long', () => {
+        cy.get('#auditee_ueid').clear().type('ASDFASDFASDFA').blur();
+        cy.get('#auditee_ueid-length').should('be.visible');
+      });
 
-  //   it('should enable the "Continue" button when entities are fixed', () => {
-  //     cy.get('button').contains('Continue').should('not.be.disabled');
-  //   });
-  // });
-
-  describe('Accessibility', () => {
-    it('should get a perfect Lighthouse score for accessibility', () => {
-      cy.lighthouse({
-        accessibility: 100,
+      it('should remove the error message when the input is correct', () => {
+        cy.get('#auditee_ueid').clear().type('ASDFASDFASDF').blur();
+        cy.get('#auditee_ueid-length').should('not.be.visible');
       });
     });
+
+    describe('Auditee UEID Confirmation', () => {
+      it('should display an error message when input does not match UEID field', () => {
+        cy.get('#confirm_auditee_ueid').type('ASDF').blur();
+        cy.get('#confirm_auditee_ueid-must-match').should('be.visible');
+      });
+
+      it('should remove the error message when input matches UEID field', () => {
+        cy.get('#confirm_auditee_ueid').type('ASDFASDF').blur();
+        cy.get('#confirm_auditee_ueid-must-match').should('not.be.visible');
+      });
+    });
+
+    describe('Auditee Name', () => {
+      it('should display an error message when left blank', () => {
+        cy.get('#auditee_name').click().blur();
+        cy.get('#auditee_name-not-null').should('be.visible');
+      });
+
+      it('should remove the error message when input is supplied', () => {
+        cy.get('#auditee_name').type('Thurgood Marshall').blur();
+        cy.get('#auditee_name-not-null').should('not.be.visible');
+      });
+    });
+    // it('should display error messages for invalid entities', () => {
+    //   cy.get('.usa-error-message:visible').should('have.length', 3);
+    // });
+
+    // it('should disable the "Continue" button when an entity is invalid', () => {
+    //   cy.get('button').contains('Continue').should('be.disabled');
+    // });
+
+    // it('should remove errors when valid properties are checked', () => {
+    //   cy.get('label[for=entity-state]').click();
+    //   cy.get('label[for=spend-yes]').click();
+    //   cy.get('label[for=us-yes]').click();
+    //   cy.get('[class*=--error]').should('have.length', 0);
+    // });
+
+    // it('should hide error messages when invalid entities are fixed', () => {
+    //   cy.get('.usa-error-message:visible').should('have.length', 0);
+    // });
+
+    // it('should enable the "Continue" button when entities are fixed', () => {
+    //   cy.get('button').contains('Continue').should('not.be.disabled');
+    // });
   });
+
+  // describe('Accessibility', () => {
+  //   it('should get a perfect Lighthouse score for accessibility', () => {
+  //     cy.lighthouse({
+  //       accessibility: 100,
+  //     });
+  //   });
+  // });
 });
