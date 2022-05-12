@@ -1,7 +1,8 @@
 {
   "urls": [
     "http://localhost:8080",
-    "http://localhost:8080/audit/new/"
+    "http://localhost:8080/audit/new/step-1",
+    "http://localhost:8080/audit/new/step-2"
   ],
   "defaults": {
     "standard": "WCAG2AA",
