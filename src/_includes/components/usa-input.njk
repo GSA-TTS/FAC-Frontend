@@ -9,23 +9,26 @@
     {% endif %}
   </label>
   {% if params.errorMessage %}
-  <span class="usa-error-message" id="{{ params.id }}-error-message" role="alert">
+  <span
+    class="usa-error-message"
+    id="{{ params.id }}-error-message"
+    role="alert"
+    hidden
+    >
     {{params.errorMessage}}
-    {% if params.validations %}
-      <ul>
-      {% for v in params.validations %}
-        <li id="{{ params.id + v.operation }}">
-          {{ v.error_message }}
-        </li>
-      {% endfor %}
-      </ul>
-    {% endif %}
   </span>
   {% endif %}
   {% if params.validations %}
-  <ul class="usa-error-message" id="{{ params.id }}-error-message" role="alert">
+  <ul class="usa-error-message"
+    id="{{ params.id }}-error-message"
+    role="alert"
+    hidden
+    >
     {% for v in params.validations %}
-      <li id="{{ params.id + v.operation }}">
+      <li
+        id="{{ params.id }}-{{ v.operation }}"
+        hidden
+        >
         {{ v.error_message }}
       </li>
     {% endfor %}
@@ -42,6 +45,6 @@
     {% for v in params.validations %}
       data-validate-{{v.operation}}="{{v.constraint}}"
     {% endfor %}
-    aria-describedby="{{ id }}-error-message"
+    aria-describedby="{{ params.id }}-error-message"
   />
 </div>

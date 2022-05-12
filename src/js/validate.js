@@ -1,18 +1,43 @@
 export const checkValidity = (field) => {
-  const results = [];
+  const errors = [];
   const checks = parseChecks(field);
 
   for (const [operation, constraint] of Object.entries(checks)) {
-    results.push(validations[operation](field, constraint));
+    const result = validations[operation](field, constraint);
+    if (result.error) {
+      toggleErrorClass(field, true);
+      toggleErrorMessages(field.id, result, true);
+      errors.push(validations[operation](field, constraint));
+    } else {
+      toggleErrorMessages(field.id, result, result.error);
+    }
   }
 
-  console.log(results);
-  return results;
+  if (errors.length == 0) {
+    toggleErrorClass(field, false);
+    toggleErrorMessages(field.id, null, false);
+  }
+
+  return errors;
 };
 
-// const markInvalid = (field) => {
-//   field.classList.add('usa-input--error');
-// };
+const toggleErrorMessages = (id, error, isInvalid) => {
+  const errorContainer = document.getElementById(`${id}-error-message`);
+  const containerParent = errorContainer.parentElement;
+
+  toggleErrorClass(containerParent, isInvalid, 'usa-form-group--error');
+
+  if (error) {
+    const errorMessage = document.getElementById(`${id}-${error.validation}`);
+    errorMessage.hidden = !isInvalid;
+  }
+};
+
+const toggleErrorClass = (field, isInvalid, errorClass) => {
+  const klass = errorClass ? errorClass : 'usa-input--error';
+
+  isInvalid ? field.classList.add(klass) : field.classList.remove(klass);
+};
 
 const filterObjectByKey = (objToFilter, condition) => {
   const filteredObj = {};
@@ -27,31 +52,49 @@ const parseChecks = (field) => {
   const containsValidate = (str) => str.match('validate');
   const validations = filterObjectByKey(field.dataset, containsValidate);
 
-  if (field.required) validations['validateNotNull'] = true;
   return validations;
 };
 
 const validations = {
   validateNotNull: (field) => {
-    if (!field.value) return { error: 'Field cannot be null' };
+    const result = {
+      error: false,
+      fieldId: field.id,
+      validation: 'not-null',
+    };
+
+    return !field.value ? { ...result, error: true } : result;
   },
 
   validateMustMatch: (field, matchField) => {
     const matchFieldEl = document.querySelector(`input#${matchField}`);
-    if (!field.value != matchFieldEl.value) {
-      return {
-        error: 'Field must match the one before it',
-      };
-    }
+    const result = {
+      error: false,
+      fieldId: field.id,
+      validation: 'must-match',
+    };
+
+    return field.value != matchFieldEl.value
+      ? { ...result, error: true }
+      : result;
   },
 
   validateLength: (field, compStr) => {
     const [comparator, compValue] = compStr.split(' ');
-    const value = field.value;
+    const valueLength = field.value.length;
+    const compValueLength = parseInt(compValue);
+
+    const result = {
+      error: false,
+      fieldId: field.id,
+      validation: 'length',
+    };
+
     switch (comparator) {
       case '==':
-        if (value == compValue)
-          return { error: `Must be ${compValue} characters long` };
+        return valueLength != compValueLength
+          ? { ...result, error: true }
+          : result;
     }
   },
 };
