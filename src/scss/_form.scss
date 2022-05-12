@@ -58,4 +58,8 @@ a.usa-button {
   ul.usa-error-message {
     display: none;
   }
+
+  .usa-form-group--error ul.usa-error-message {
+    display: block;
+  }
 }

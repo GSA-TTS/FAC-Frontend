@@ -7,6 +7,8 @@ inputs:
     required: true
     field_type: text
     validations:
+      - operation: not-null
+        error_message: Can't be null
       - operation: length
         constraint: '== 12'
         error_message: UEI is twelve characters long
@@ -16,6 +18,8 @@ inputs:
     required: true
     field_type: text
     validations:
+      - operation: not-null
+        error_message: Can't be null
       - operation: length
         constraint: '== 12'
         error_message: UEI is twelve characters long
@@ -27,6 +31,9 @@ inputs:
     label: Auditee name
     required: true
     field_type: text
+    validations:
+      - operation: not-null
+        error_message: Can't be null
 
   - id: auditee_fy_start_date
     label: Auditee fiscal period <strong>start</strong> date for this submission
