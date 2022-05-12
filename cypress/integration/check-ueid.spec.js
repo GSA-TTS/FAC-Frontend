@@ -79,35 +79,13 @@ describe('Create New Audit', () => {
         cy.get('#auditee_name-not-null').should('not.be.visible');
       });
     });
-    // it('should display error messages for invalid entities', () => {
-    //   cy.get('.usa-error-message:visible').should('have.length', 3);
-    // });
-
-    // it('should disable the "Continue" button when an entity is invalid', () => {
-    //   cy.get('button').contains('Continue').should('be.disabled');
-    // });
-
-    // it('should remove errors when valid properties are checked', () => {
-    //   cy.get('label[for=entity-state]').click();
-    //   cy.get('label[for=spend-yes]').click();
-    //   cy.get('label[for=us-yes]').click();
-    //   cy.get('[class*=--error]').should('have.length', 0);
-    // });
-
-    // it('should hide error messages when invalid entities are fixed', () => {
-    //   cy.get('.usa-error-message:visible').should('have.length', 0);
-    // });
-
-    // it('should enable the "Continue" button when entities are fixed', () => {
-    //   cy.get('button').contains('Continue').should('not.be.disabled');
-    // });
   });
 
-  // describe('Accessibility', () => {
-  //   it('should get a perfect Lighthouse score for accessibility', () => {
-  //     cy.lighthouse({
-  //       accessibility: 100,
-  //     });
-  //   });
-  // });
+  describe('Accessibility', () => {
+    it('should get a perfect Lighthouse score for accessibility', () => {
+      cy.lighthouse({
+        accessibility: 100,
+      });
+    });
+  });
 });
