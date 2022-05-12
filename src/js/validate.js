@@ -6,6 +6,7 @@ export const checkValidity = (field) => {
     const result = validations[operation](field, constraint);
     if (result.error) {
       toggleErrorClass(field, true);
+      toggleErrorMessageContainer(field.id, true);
       toggleErrorMessages(field.id, result, true);
       errors.push(validations[operation](field, constraint));
     } else {
@@ -16,17 +17,19 @@ export const checkValidity = (field) => {
   if (errors.length == 0) {
     toggleErrorClass(field, false);
     toggleErrorMessages(field.id, null, false);
+    toggleErrorMessageContainer(field.id, false);
   }
 
   return errors;
 };
 
-const toggleErrorMessages = (id, error, isInvalid) => {
+const toggleErrorMessageContainer = (id, shouldDisplay) => {
   const errorContainer = document.getElementById(`${id}-error-message`);
-  const containerParent = errorContainer.parentElement;
+  const parent = errorContainer.parentElement;
+  toggleErrorClass(parent, shouldDisplay, 'usa-form-group--error');
+};
 
-  toggleErrorClass(containerParent, isInvalid, 'usa-form-group--error');
-
+const toggleErrorMessages = (id, error, isInvalid) => {
   if (error) {
     const errorMessage = document.getElementById(`${id}-${error.validation}`);
     errorMessage.hidden = !isInvalid;
