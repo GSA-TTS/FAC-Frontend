@@ -1,6 +1,6 @@
 describe('Create New Audit', () => {
   before(() => {
-    cy.visit('/audit/new/');
+    cy.visit('/audit/new/step-1');
   });
 
   describe('A Blank Form', () => {
