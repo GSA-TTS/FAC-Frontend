@@ -13,7 +13,6 @@
     class="usa-error-message"
     id="{{ params.id }}-error-message"
     role="alert"
-    hidden
     >
     {{params.errorMessage}}
   </span>
@@ -22,7 +21,6 @@
   <ul class="usa-error-message"
     id="{{ params.id }}-error-message"
     role="alert"
-    hidden
     >
     {% for v in params.validations %}
       <li
