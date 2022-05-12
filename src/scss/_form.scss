@@ -19,10 +19,9 @@
     display: block;
   }
 
-  .usa-radio__input:checked+[class*="__label"]::before {
+  .usa-radio__input:checked + [class*='__label']::before {
     background-color: #b50909;
-    box-shadow: 0 0 0 2px #b50909,
-                inset 0 0 0 2px #fff;
+    box-shadow: 0 0 0 2px #b50909, inset 0 0 0 2px #fff;
   }
 }
 
@@ -50,9 +49,9 @@ a.usa-button {
     padding: 2rem;
   }
 
-  .ueid-explanation>h3 {
-    font-family: 'Source Sans Pro Web', 'Helvetica Neue',
-                  Helvetica, Roboto, Arial, sans-serif;
+  .ueid-explanation > h2 {
+    font-family: 'Source Sans Pro Web', 'Helvetica Neue', Helvetica, Roboto,
+      Arial, sans-serif;
   }
 
   ul.usa-error-message {

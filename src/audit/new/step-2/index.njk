@@ -111,14 +111,14 @@ explanatory_text:
         </ul>
     </form>
     <div class="ueid-explanation tablet:grid-col usa-prose font-sans-sm">
-      <h3>{{ explanatory_text.heading }}</h3>
+      <h2>{{ explanatory_text.heading }}</h2>
       <p>{{ explanatory_text.explanation }}</p>
       <ul>
       {% for gloss in explanatory_text.gloss %}
         <li>{{ gloss }}</li>
       {% endfor %}
       </ul>
-      <h3>{{ explanatory_text.subheading }}</h3>
+      <h2>{{ explanatory_text.subheading }}</h2>
       <p>{{ explanatory_text.more }}</p>
     </div>
   </div>
