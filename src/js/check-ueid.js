@@ -1,24 +1,35 @@
 import { checkValidity } from './validate';
+import { queryAPI } from './api';
 
 (function () {
-  const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/eligibility';
   const FORM = document.forms[1];
 
   function submitForm() {
     const formData = serializeFormData(new FormData(FORM));
-    const headers = new Headers();
-
-    headers.append('Content-type', 'application/json');
     /* eslint-disable-next-line no-undef */
-    headers.append('Authorization', 'Basic ' + authToken); // authToken is set in a script tag right before this script loads
+    // queryAPI(ENDPOINT, formData, { authToken, method: 'POST' });
+  }
 
-    fetch(ENDPOINT, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(formData),
-    })
-      .then((resp) => resp.json())
-      .then((data) => console.log(data)); // Just log the response for now
+  function handleUEIDResponse(response) {
+    console.log(response);
+  }
+
+  function handleApiError(error) {
+    console.error(error);
+  }
+
+  function validateUEID() {
+    const uei = document.getElementById('auditee_ueid').value;
+    queryAPI(
+      '/sac/ueivalidation',
+      { uei },
+      {
+        /* eslint-disable-next-line no-undef */
+        authToken,
+        method: 'POST',
+      },
+      [handleUEIDResponse, handleApiError]
+    );
   }
 
   function serializeFormData(formData) {
@@ -56,6 +67,12 @@ import { checkValidity } from './validate';
   }
 
   function attachEventHandlers() {
+    const btnValidateUEI = document.getElementById('validate-UEI');
+    btnValidateUEI.addEventListener('click', (e) => {
+      e.preventDefault();
+      validateUEID();
+    });
+
     FORM.addEventListener('submit', (e) => {
       e.preventDefault();
       // if (!allResponsesValid()) return;

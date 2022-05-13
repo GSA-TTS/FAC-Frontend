@@ -27,6 +27,10 @@ inputs:
         constraint: auditee_ueid
         error_message: This field should match the one before it
 
+  - id: check_ueid
+    label: Validate UEI
+    field_type: button
+
   - id: auditee_name
     label: Auditee name
     required: true
@@ -87,6 +91,10 @@ explanatory_text:
                 validations: i.validations
               })
             }}
+          {% elif i.field_type == "button" %}
+          <button class="usa-button usa-button--secondary usa-button--unstyled" id="validate-UEI">
+            {{ i.label }}
+          </button>
           {% elif i.field_type == "date" %}
             {{
               component('usa-date-picker', {
