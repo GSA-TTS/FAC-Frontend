@@ -51,14 +51,14 @@ const filterObjectByKey = (objToFilter, condition) => {
   return filteredObj;
 };
 
-const parseChecks = (field) => {
+export const parseChecks = (field) => {
   const containsValidate = (str) => str.match('validate');
   const validations = filterObjectByKey(field.dataset, containsValidate);
 
   return validations;
 };
 
-const validations = {
+export const validations = {
   validateNotNull: (field) => {
     const result = {
       error: false,
