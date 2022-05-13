@@ -1,0 +1,107 @@
+---
+title: Create new audit
+
+fieldsets:
+  - group: auditee-certifying-official
+    legend: Auditee certifying official
+  - group: auditor-certifying-official
+    legend: Auditor certifying official
+  - group: auditee-contacts
+    legend: Auditee contacts
+
+inputs:
+  - id: _name
+    label: Name
+    required: false
+    field_type: text
+  - id: _email
+    label: Email address
+    required: false
+    field_type: text
+  - id: _re_email
+    label: Re-enter email address
+    required: false
+    field_type: text
+
+summary:
+  id: audit_submission_access
+  heading: Key information
+  items: [
+    { content: "In this section, list anyone who needs access to the audit submission." },
+	  { content: 'You can make changes later using the <a class="usa-link" href="javascript:void(0);">Account Tools</a> option on the <a class="usa-link" href="javascript:void(0);">account homepage.</a>' }
+  ]
+---
+{%- extends "form.njk" -%}
+
+{%- block form -%}
+<div class="grid-container">
+  {{
+    component('usa-step-indicator', {
+      currentStep: 3,
+      totalSteps: 4
+    })
+  }}
+</div>
+<div class="grid-container audit-submission-access">
+  <div class="grid-row">
+    <form class="usa-form usa-form--large" id="check-eligibility">
+      <fieldset class="usa-fieldset">
+        <legend class="usa-legend usa-legend--large">Who will need access to this audit?</legend>
+          {{
+            component('usa-summary', {
+              id: summary.id,
+              heading: summary.heading,
+              items: summary.items
+            })
+          }}
+        <p>
+          <abbr
+            title="required"
+            class="usa-hint usa-hint--required"
+            >*</abbr
+          >Indicates a required field.
+        </p>
+        {% for f in fieldsets %}
+        {% set outer_loop = loop %}
+        <fieldset class="usa-fieldset question">
+          <legend class="usa-legend">
+            {{ f.legend }}
+            {% if f.required %}
+              <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+            {% endif %}
+          </legend>
+          <div class="grid-container">
+            <div class="grid-row grid-gap">
+              {% for i in inputs %}
+              <div class="tablet:grid-col-fill">
+                {{
+                  component('usa-input', {
+                    label: i.label,
+                    id: f.group + outer_loop.index + i.id,
+                    required: i.required,
+                    errorMessage: i.error_message,
+                    validations: i.validations
+                  })
+                }}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </fieldset>
+        {% endfor %}
+        <ul class="usa-button-group">
+          <li class="usa-button-group__item">
+            <a href="javascript:void(0);" class="usa-button usa-button--outline">
+              Cancel
+            </a>
+          </li>
+          <li class="usa-button-group__item">
+            <button class="usa-button" id="create">Create</button>
+          </li>
+        </ul>
+    </form>
+  </div>
+  <script>const authToken = "{{ config.temporaryAuthToken }}"</script>
+  <script src="{{ config.baseUrl }}assets/js/check-ueid.js"></script>
+</div>
+{%- endblock -%}
