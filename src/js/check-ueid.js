@@ -10,8 +10,35 @@ import { queryAPI } from './api';
     // queryAPI(ENDPOINT, formData, { authToken, method: 'POST' });
   }
 
-  function handleUEIDResponse(response) {
-    console.log(response);
+  function handleUEIDResponse({ valid, response, errors }) {
+    if (valid) {
+      handleValidUei(response.auditee_name);
+    } else {
+      handleInvalidUei(errors);
+    }
+  }
+
+  function handleValidUei(message) {
+    const messageContainer = document.getElementById('uei-success');
+    const entityNameContainer = messageContainer.querySelector('span');
+    entityNameContainer.innerText = message;
+    messageContainer.hidden = false;
+  }
+
+  function handleInvalidUei(errors) {
+    const messageContainer = document.querySelector(
+      '.usa-form-group.validate-uei'
+    );
+    const errorContainer = document.getElementById('uei-error-message');
+    messageContainer.classList.add('usa-form-group--error');
+
+    errors.uei.forEach((error) => {
+      const errorEl = document.createElement('li');
+      errorEl.innerText = error;
+      errorContainer.appendChild(errorEl);
+    });
+
+    errorContainer.hidden = false;
   }
 
   function handleApiError(error) {

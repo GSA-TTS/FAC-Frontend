@@ -92,9 +92,22 @@ explanatory_text:
               })
             }}
           {% elif i.field_type == "button" %}
-          <button class="usa-button usa-button--secondary usa-button--unstyled" id="validate-UEI">
-            {{ i.label }}
-          </button>
+          <div class="usa-form-group validate-uei">
+            <ul class="usa-error-message"
+              id="uei-error-message"
+              role="alert"
+              >
+            </ul>
+            <button class="usa-button usa-button--secondary usa-button--unstyled" id="validate-UEI">
+              {{ i.label }}
+            </button>
+            <div id="uei-success" role="alert" hidden>
+              <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+                <use xlink:href="/assets/img/sprite.svg#check_circle"></use>
+              </svg>
+              <span></span>
+            </div>
+          </div>
           {% elif i.field_type == "date" %}
             {{
               component('usa-date-picker', {

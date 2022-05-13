@@ -61,4 +61,22 @@ a.usa-button {
   .usa-form-group--error ul.usa-error-message {
     display: block;
   }
+
+  .validate-uei {
+    margin-top: 0em;
+  }
+
+  .validate-uei button {
+    margin-top: 1em;
+  }
+
+  #uei-success {
+    margin-top: .5em;
+
+    & svg {
+      fill: #538200;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
 }
