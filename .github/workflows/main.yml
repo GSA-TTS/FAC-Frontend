@@ -22,3 +22,5 @@ jobs:
         run: npm run test:e2e:ci
       - name: Run pa11y
         run: npm run pa11y:ci
+      - name: Run Unit Tests
+        run: npm run test
