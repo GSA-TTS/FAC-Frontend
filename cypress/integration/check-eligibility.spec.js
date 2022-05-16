@@ -39,7 +39,10 @@ describe('Create New Audit', () => {
     });
 
     it('should display error messages for invalid entities', () => {
-      cy.get('.usa-error-message:visible').should('have.length', 3);
+      cy.get('.usa-error-message:visible', { timeout: 1000 }).should(
+        'have.length',
+        3
+      );
     });
 
     it('should disable the "Continue" button when an entity is invalid', () => {
@@ -54,7 +57,10 @@ describe('Create New Audit', () => {
     });
 
     it('should hide error messages when invalid entities are fixed', () => {
-      cy.get('.usa-error-message:visible').should('have.length', 0);
+      cy.get('.usa-error-message:visible', { timeout: 1000 }).should(
+        'have.length',
+        0
+      );
     });
 
     it('should enable the "Continue" button when entities are fixed', () => {
