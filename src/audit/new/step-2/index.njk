@@ -33,11 +33,8 @@ inputs:
 
   - id: auditee_name
     label: Auditee name
-    required: true
+    disabled: true
     field_type: text
-    validations:
-      - operation: not-null
-        error_message: Can't be null
 
   - id: auditee_fy_start_date_start
     label: Auditee fiscal period <strong>start</strong> date for this submission
@@ -88,7 +85,8 @@ explanatory_text:
                 id: i.id,
                 required: i.required,
                 errorMessage: i.error_message,
-                validations: i.validations
+                validations: i.validations,
+                disabled: i.disabled
               })
             }}
           {% elif i.field_type == "button" %}
@@ -101,12 +99,6 @@ explanatory_text:
             <button class="usa-button usa-button--secondary usa-button--unstyled" id="validate-UEI">
               {{ i.label }}
             </button>
-            <div id="uei-success" role="alert" hidden>
-              <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
-                <use xlink:href="{{ config.baseUrl }}assets/img/sprite.svg#check_circle"></use>
-              </svg>
-              <span></span>
-            </div>
           </div>
           {% elif i.field_type == "date" %}
             {{

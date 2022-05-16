@@ -21,11 +21,8 @@ function handleUEIDResponse({ valid, response, errors }) {
 function handleValidUei(message) {
   const ueiFormGroup = document.querySelector('.usa-form-group.validate-uei');
   const errorContainer = document.getElementById('uei-error-message');
-  const successMessageContainer = document.getElementById('uei-success');
-  const entityNameContainer = successMessageContainer.querySelector('span');
 
-  entityNameContainer.innerText = message;
-  successMessageContainer.hidden = false;
+  document.getElementById('auditee_name').value = message;
   errorContainer.hidden = true;
   errorContainer.innerHTML = '';
   ueiFormGroup.classList.remove('usa-form-group--error');

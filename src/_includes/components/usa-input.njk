@@ -40,6 +40,9 @@
       aria-required="true"
       required
     {% endif %}
+    {% if params.disabled %}
+      disabled="true"
+    {% endif %}
     {% for v in params.validations %}
       data-validate-{{v.operation}}="{{v.constraint}}"
     {% endfor %}
