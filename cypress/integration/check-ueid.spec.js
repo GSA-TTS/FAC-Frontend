@@ -5,7 +5,7 @@ describe('Create New Audit', () => {
 
   describe('A Blank Form', () => {
     it('marks empty responses as invalid', () => {
-      cy.get('.auditee-information input:invalid').should('have.length', 3);
+      cy.get('.auditee-information input:invalid').should('have.length', 2);
     });
 
     it('will not submit', () => {
@@ -26,8 +26,7 @@ describe('Create New Audit', () => {
     it('should mark errors when invalid properties are checked', () => {
       cy.get('#auditee_ueid').click().blur();
       cy.get('#confirm_auditee_ueid').click().blur();
-      cy.get('#auditee_name').click().blur();
-      cy.get('[class*=usa-form-group--error]').should('have.length', 3);
+      cy.get('[class*=usa-form-group--error]').should('have.length', 2);
     });
 
     describe('Auditee UEID', () => {
@@ -73,18 +72,6 @@ describe('Create New Audit', () => {
       it('should remove the error message when input matches UEID field', () => {
         cy.get('#confirm_auditee_ueid').type('ASDFASDF').blur();
         cy.get('#confirm_auditee_ueid-must-match').should('not.be.visible');
-      });
-    });
-
-    describe('Auditee Name', () => {
-      it('should display an error message when left blank', () => {
-        cy.get('#auditee_name').click().blur();
-        cy.get('#auditee_name-not-null').should('be.visible');
-      });
-
-      it('should remove the error message when input is supplied', () => {
-        cy.get('#auditee_name').type('Thurgood Marshall').blur();
-        cy.get('#auditee_name-not-null').should('not.be.visible');
       });
     });
 
@@ -137,7 +124,8 @@ describe('Create New Audit', () => {
         });
 
         cy.get('#uei-error-message li').should('have.length', 0);
-        cy.get('#uei-success span').contains(
+        cy.get('#auditee_name').should(
+          'have.value',
           'INTERNATIONAL BUSINESS MACHINES CORPORATION'
         );
       });
