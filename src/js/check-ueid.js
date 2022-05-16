@@ -67,27 +67,14 @@ function setFormDisabled(shouldDisable) {
   continueBtn.disabled = shouldDisable;
 }
 
-function resetErrorStates(el) {
-  const inputsWithErrors = Array.from(el.querySelectorAll('.usa-radio--error'));
-  inputsWithErrors.forEach((i) => i.classList.remove('usa-radio--error'));
-}
-
-function runAllValidations() {
-  const inputs = Array.from(
-    document.querySelectorAll('#check-eligibility input')
-  );
-
-  inputs.forEach((input) => {
-    checkValidity(input);
-  });
-
-  const allValid = allResponsesValid();
-  setFormDisabled(!allValid);
-}
-
 function allResponsesValid() {
   const inputsWithErrors = document.querySelectorAll('[class *="--error"]');
   return inputsWithErrors.length === 0;
+}
+
+function performValidations(field) {
+  const errors = checkValidity(field);
+  setFormDisabled(errors.length > 0);
 }
 
 function attachEventHandlers() {
@@ -99,8 +86,8 @@ function attachEventHandlers() {
 
   FORM.addEventListener('submit', (e) => {
     e.preventDefault();
-    // if (!allResponsesValid()) return;
-    // submitForm();
+    if (!allResponsesValid()) return;
+    submitForm();
   });
 
   const fieldsNeedingValidation = Array.from(
@@ -108,7 +95,7 @@ function attachEventHandlers() {
   );
   fieldsNeedingValidation.forEach((q) => {
     q.addEventListener('blur', (e) => {
-      checkValidity(e.target);
+      performValidations(e.target);
     });
   });
 }

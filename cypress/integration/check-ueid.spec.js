@@ -36,6 +36,10 @@ describe('Create New Audit', () => {
         cy.get('#auditee_ueid-not-null').should('be.visible');
       });
 
+      it('should disable the submit button when fields are invalid', () => {
+        cy.get('button').contains('Continue').should('be.disabled');
+      });
+
       it('should remove the error message when input is supplied', () => {
         cy.get('#auditee_ueid').type('ASDF').blur();
         cy.get('#auditee_ueid-not-null').should('not.be.visible');
@@ -53,6 +57,10 @@ describe('Create New Audit', () => {
       it('should remove the error message when the input is correct', () => {
         cy.get('#auditee_ueid').clear().type('ASDFASDFASDF').blur();
         cy.get('#auditee_ueid-length').should('not.be.visible');
+      });
+
+      it('should enable the "Continue" button when entities are fixed', () => {
+        cy.get('button').contains('Continue').should('not.be.disabled');
       });
     });
 
