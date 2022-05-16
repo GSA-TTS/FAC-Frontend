@@ -1,4 +1,4 @@
-import { validations, parseChecks } from '../src/js/validate';
+import { parseChecks } from '../src/js/validate';
 
 const ueidFormGroup = `
 <div class="usa-form-group">

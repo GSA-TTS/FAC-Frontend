@@ -87,13 +87,68 @@ describe('Create New Audit', () => {
         cy.get('#auditee_name-not-null').should('not.be.visible');
       });
     });
-  });
 
-  describe('Accessibility', () => {
-    it('should get a perfect Lighthouse score for accessibility', () => {
-      cy.lighthouse({
-        accessibility: 100,
+    describe('UEI Validation via API', () => {
+      it('shows UEI errors from the remote server', () => {
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '/sac/ueivalidation',
+          },
+          {
+            valid: false,
+            errors: {
+              uei: [
+                'The letters “O” and “I” are not used to avoid confusion with zero and one.',
+                'Ensure this field has at least 12 characters.',
+              ],
+            },
+          }
+        ).as('invalidUeiRequest');
+
+        cy.get('button').contains('Validate UEI').click();
+
+        cy.wait('@invalidUeiRequest').then((interception) => {
+          assert.isNotNull(interception.response.body, '1st API call has data');
+        });
+
+        cy.get('#uei-error-message li').should('have.length', 2);
+      });
+
+      it('shows entity name after valid UEI request', () => {
+        cy.intercept(
+          {
+            method: 'POST', // Route all GET requests
+            url: '/sac/ueivalidation', // that have a URL that matches '/users/*'
+          },
+          {
+            valid: true,
+            response: {
+              uei: 'ZQGGHJH74DW7',
+              auditee_name: 'INTERNATIONAL BUSINESS MACHINES CORPORATION',
+            },
+          }
+        ).as('validUeiRequest');
+
+        cy.get('button').contains('Validate UEI').click();
+
+        cy.wait('@validUeiRequest').then((interception) => {
+          assert.isNotNull(interception.response.body, '1st API call has data');
+        });
+
+        cy.get('#uei-error-message li').should('have.length', 0);
+        cy.get('#uei-success span').contains(
+          'INTERNATIONAL BUSINESS MACHINES CORPORATION'
+        );
       });
     });
   });
+
+  // describe('Accessibility', () => {
+  //   it('should get a perfect Lighthouse score for accessibility', () => {
+  //     cy.lighthouse({
+  //       accessibility: 100,
+  //     });
+  //   });
+  // });
 });
