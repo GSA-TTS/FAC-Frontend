@@ -4,7 +4,8 @@ import { queryAPI } from './api';
 const FORM = document.forms[1];
 
 function submitForm() {
-  const formData = serializeFormData(new FormData(FORM));
+  // NOOP for now
+  // const formData = serializeFormData(new FormData(FORM));
   /* eslint-disable-next-line no-undef */
   // queryAPI(ENDPOINT, formData, { authToken, method: 'POST' });
 }
@@ -18,18 +19,22 @@ function handleUEIDResponse({ valid, response, errors }) {
 }
 
 function handleValidUei(message) {
-  const messageContainer = document.getElementById('uei-success');
-  const entityNameContainer = messageContainer.querySelector('span');
+  const ueiFormGroup = document.querySelector('.usa-form-group.validate-uei');
+  const errorContainer = document.getElementById('uei-error-message');
+  const successMessageContainer = document.getElementById('uei-success');
+  const entityNameContainer = successMessageContainer.querySelector('span');
+
   entityNameContainer.innerText = message;
-  messageContainer.hidden = false;
+  successMessageContainer.hidden = false;
+  errorContainer.hidden = true;
+  errorContainer.innerHTML = '';
+  ueiFormGroup.classList.remove('usa-form-group--error');
 }
 
 function handleInvalidUei(errors) {
-  const messageContainer = document.querySelector(
-    '.usa-form-group.validate-uei'
-  );
+  const ueiFormGroup = document.querySelector('.usa-form-group.validate-uei');
   const errorContainer = document.getElementById('uei-error-message');
-  messageContainer.classList.add('usa-form-group--error');
+  ueiFormGroup.classList.add('usa-form-group--error');
 
   errors.uei.forEach((error) => {
     const errorEl = document.createElement('li');
@@ -58,9 +63,15 @@ function validateUEID() {
   );
 }
 
+/*
+We're not submitting this form yet,
+so this won't be called. Rather than delete code we know we need,
+just stope the linter from complaining about it for now. */
+/* eslint-disable no-unused-vars */
 function serializeFormData(formData) {
   return Object.fromEntries(formData);
 }
+/* eslint-enable */
 
 function setFormDisabled(shouldDisable) {
   const continueBtn = document.getElementById('continue');
