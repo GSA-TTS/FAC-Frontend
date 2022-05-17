@@ -63,7 +63,7 @@ a.usa-button {
   }
 
   .validate-uei {
-    margin-top: 0em;
+    margin-top: 0;
   }
 
   .validate-uei button {
@@ -80,3 +80,13 @@ a.usa-button {
     }
   }
 }
+
+/* stylelint-disable */
+#auditee_name {
+  cursor: not-allowed;
+}
+
+#auditee_name-error-message {
+  display: none;
+}
+/* stylelint-enable */
