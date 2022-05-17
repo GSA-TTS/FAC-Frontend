@@ -30,10 +30,23 @@ To run the end-to-end test suite in a browser, run
 npm run test:cy:open
 ```
 
-For to run the tests headlessly and have them report results to the console, it's:
+To run the tests headlessly and have them report results to the console, it's:
 
 ```
 npm run test:cy:run
 ```
 
 Both of the above assume that the development server is running, so be sure to start that first. Alternatively, `npm run test:e2e:ci` will start the dev server, run the test suite, and shut the server down afterward all in one command.
+### Accessibility Scanning
+
+The CI pipeline includes multiple accessibility checks, including [`axe-core`](https://github.com/dequelabs/axe-core) and [`HTML_CodeSniffer`](https://squizlabs.github.io/HTML_CodeSniffer/) as part of [`pa11y-ci`](https://github.com/pa11y/pa11y-ci), and the [Lighthouse accessibility audit](https://web.dev/lighthouse-accessibility/). While automated testing is not a substitute for manual accessibility auditing, these three tools together provide solid coverage of §508 requirements and WCAG 2.1/2.2 guidelines.
+
+Lighthouse runs as part of the Cypress test suite, but to run the `pa11y-ci` scan locally, just run:
+
+```
+npm run pa11y:ci
+```
+
+## Linting & Styling
+
+This project uses [Prettier](https://prettier.io/), [eslint](https://eslint.org/), and [stylelint](https://stylelint.io/) to ensure code is correct and formatted consistently. Git will run these tools automatically before applying a commit, but you should install the editor plugins for each tool to apply formatting and lint your code automatically.

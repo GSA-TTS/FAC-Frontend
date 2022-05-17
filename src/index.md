@@ -1,5 +1,6 @@
 ---
 layout: home.njk
+title: Federal Audit Clearinghouse — Home
 
 hero:
   image: /assets/uswds/img/hero.png
