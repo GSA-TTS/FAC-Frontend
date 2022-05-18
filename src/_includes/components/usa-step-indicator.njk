@@ -10,29 +10,25 @@
     {{
       component('usa-step-indicator-segment', {
         label: 'Submission criteria check',
-        current: params.currentStep == 1,
-        completed: params.currentStep > 1
+        current: params.currentStep == 1
       })
     }}
     {{
       component('usa-step-indicator-segment', {
         label: 'Auditee information',
-        current: params.currentStep == 2,
-        completed: params.currentStep > 2
+        current: params.currentStep == 2
       })
     }}
     {{
       component('usa-step-indicator-segment', {
         label: 'Audit submission access',
-        current: params.currentStep == 3,
-        completed: params.currentStep > 3
+        current: params.currentStep == 3
       })
     }}
     {{
       component('usa-step-indicator-segment', {
         label: 'Create new audit',
-        current: params.currentStep == 4,
-        completed: params.currentStep > 4
+        current: params.currentStep == 4
       })
     }}
   </ol>
