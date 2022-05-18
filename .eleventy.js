@@ -30,12 +30,14 @@ module.exports = function (eleventyConfig) {
         '.woff': 'file',
         '.woff2': 'file',
       },
-      plugins: [sassPlugin({
-        loadPaths: [
-          "./node_modules/@uswds",
-          "./node_modules/@uswds/uswds/packages",
-        ],
-      })]
+      plugins: [
+        sassPlugin({
+          loadPaths: [
+            "./node_modules/@uswds",
+            "./node_modules/@uswds/uswds/packages",
+          ],
+        }),
+      ]
     });
   });
 
