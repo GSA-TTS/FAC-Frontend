@@ -33,6 +33,14 @@ a.usa-button {
   form {
     max-width: 100%;
   }
+
+  ul.usa-error-message {
+    display: none;
+  }
+
+  .usa-form-group--error ul.usa-error-message {
+    display: block;
+  }
 }
 
 .auditee-information {
