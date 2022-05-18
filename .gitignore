@@ -1,4 +1,6 @@
 _site/
 node_modules/
 .env
+coverage
 cypress/videos
+cypress/screenshots
