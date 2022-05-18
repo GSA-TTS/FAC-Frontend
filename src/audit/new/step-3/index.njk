@@ -18,15 +18,18 @@ dynamic_fieldsets:
 inputs:
   - id: _name
     label: Name
-    required: false
+    required: true
     field_type: text
   - id: _email
     label: Email address
-    required: false
+    required: true
     field_type: text
+    validations:
+      - operation: email
+        error_message: An email address should have a username, an '@' symbol, and a domain name
   - id: _re_email
     label: Re-enter email address
-    required: false
+    required: true
     field_type: text
 
 summary:
@@ -50,7 +53,7 @@ summary:
 </div>
 <div class="grid-container audit-submission-access">
   <div class="grid-row">
-    <form class="usa-form usa-form--large" id="check-eligibility">
+    <form class="usa-form usa-form--large" id="grant-access">
       <fieldset class="usa-fieldset">
         <legend class="usa-legend usa-legend--large">Who will need access to this audit?</legend>
         {{
@@ -74,13 +77,18 @@ summary:
             <p>{{ f.instruction }}</p>
             <div class="grid-row grid-gap">
               {% for i in inputs %}
+              {% set validations = [{
+                "operation": "must-match",
+                "constraint": f.group + "_email",
+                "error_message": "This field should match the one before it"
+              }] if i.id === "_re_email" else i.validations %}
                 <div class="tablet:grid-col-fill">
                   {{ component('usa-input', {
                     label: i.label,
                     id: f.group + i.id,
                     required: i.required,
                     errorMessage: i.error_message,
-                    validations: i.validations
+                    validations: validations
                   }) }}
                 </div>
               {% endfor %}
@@ -95,6 +103,11 @@ summary:
           <div class="grid-container">
             <div class="grid-row grid-gap">
               {% for i in inputs %}
+              {% set validations = [{
+                "operation": "must-match",
+                "constraint": f.group + "_email",
+                "error_message": "This field should match the one before it"
+              }] if i.id === "_re_email" else i.validations %}
                 <div class="tablet:grid-col-fill">
                   {{
                     component('usa-input', {
@@ -102,7 +115,7 @@ summary:
                       id: f.group + i.id,
                       required: i.required,
                       errorMessage: i.error_message,
-                      validations: i.validations
+                      validations: validations
                   })
                 }}
                 </div>
@@ -130,6 +143,6 @@ summary:
       </form>
     </div>
     <script>const authToken = "{{ config.temporaryAuthToken }}"</script>
-    <script src="{{ config.baseUrl }}assets/js/check-ueid.js"></script>
+    <script src="{{ config.baseUrl }}assets/js/check-access.js"></script>
   </div>
 {%- endblock -%}
