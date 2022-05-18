@@ -19,13 +19,74 @@
     display: block;
   }
 
-  .usa-radio__input:checked+[class*="__label"]::before {
+  .usa-radio__input:checked + [class*='__label']::before {
     background-color: #b50909;
-    box-shadow: 0 0 0 2px #b50909,
-                inset 0 0 0 2px #fff;
+    box-shadow: 0 0 0 2px #b50909, inset 0 0 0 2px #fff;
   }
 }
 
 a.usa-button {
   text-decoration: none;
 }
+
+.auditee-information {
+  background-color: #f0f0f0;
+  max-width: 100%;
+
+  .grid-row {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 64em;
+  }
+
+  form {
+    background-color: #fff;
+  }
+
+  form,
+  .ueid-explanation {
+    margin: 2rem;
+    padding: 2rem;
+  }
+
+  .ueid-explanation > h2 {
+    font-family: 'Source Sans Pro Web', 'Helvetica Neue', Helvetica, Roboto,
+      Arial, sans-serif;
+  }
+
+  ul.usa-error-message {
+    display: none;
+  }
+
+  .usa-form-group--error ul.usa-error-message {
+    display: block;
+  }
+
+  .validate-uei {
+    margin-top: 0;
+  }
+
+  .validate-uei button {
+    margin-top: 1em;
+  }
+
+  #uei-success {
+    margin-top: .5em;
+
+    & svg {
+      fill: #538200;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+/* stylelint-disable */
+#auditee_name {
+  cursor: not-allowed;
+}
+
+#auditee_name-error-message {
+  display: none;
+}
+/* stylelint-enable */
