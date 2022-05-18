@@ -42,8 +42,10 @@ function handleInvalidUei(errors) {
   errorContainer.hidden = false;
 }
 
-function handleApiError(error) {
-  console.error(error);
+function handleApiError() {
+  const errorMsg = `We can’t connect to SAM.gov to confirm your UEI. We're sorry for the delay. You can continue, but we'll need to confirm your UEI before your audit can be certified.`;
+
+  handleInvalidUei({ uei: [errorMsg] });
 }
 
 function validateUEID() {

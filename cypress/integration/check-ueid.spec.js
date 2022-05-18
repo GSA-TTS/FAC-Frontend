@@ -129,14 +129,34 @@ describe('Create New Audit', () => {
           'INTERNATIONAL BUSINESS MACHINES CORPORATION'
         );
       });
+
+      it('handles API errors', () => {
+        cy.intercept(
+          {
+            method: 'POST', // Route all GET requests
+            url: '/sac/ueivalidation', // that have a URL that matches '/users/*'
+          },
+          {
+            statusCode: 500,
+          }
+        ).as('apiError');
+
+        cy.get('button').contains('Validate UEI').click();
+
+        cy.wait('@apiError').then((interception) => {
+          assert.isNotNull(interception.response.body, '1st API call has data');
+        });
+
+        cy.get('#uei-error-message li').should('have.length', 1);
+      });
     });
   });
 
-  // describe('Accessibility', () => {
-  //   it('should get a perfect Lighthouse score for accessibility', () => {
-  //     cy.lighthouse({
-  //       accessibility: 100,
-  //     });
-  //   });
-  // });
+  describe('Accessibility', () => {
+    it('should get a perfect Lighthouse score for accessibility', () => {
+      cy.lighthouse({
+        accessibility: 100,
+      });
+    });
+  });
 });
