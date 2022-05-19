@@ -15,6 +15,8 @@ dynamic_fieldsets:
   - group: auditor_contacts
     legend: Auditor contacts
 
+dynamic_fieldset_instruction: These individuals will have access to the single audit submission but will not have the ability to certify the submission.
+
 inputs:
   - id: _name
     label: Name
@@ -39,6 +41,8 @@ summary:
     { content: "In this section, list anyone who needs access to the audit submission." },
 	  { content: 'You can make changes later using the <a class="usa-link" href="javascript:void(0);">Account Tools</a> option on the <a class="usa-link" href="javascript:void(0);">account homepage.</a>' }
   ]
+
+email_notice: The above contacts will receive an e-mail once this audit is created.
 ---
 {%- extends "form.njk" -%}
 
@@ -71,10 +75,10 @@ summary:
           >Indicates a required field.
         </p>
         {% for f in static_fieldsets %}
-        <fieldset class="usa-fieldset question">
-          <legend class="usa-legend">{{ f.legend }}</legend>
+        <fieldset class="usa-fieldset question" aria-labelledby="{{ f.group }}_legend {{ f.group }}_instruction">
+          <legend id="{{ f.group }}_legend" class="usa-legend">{{ f.legend }}</legend>
           <div class="grid-container">
-            <p>{{ f.instruction }}</p>
+            <p id="{{ f.group }}_instruction">{{ f.instruction }}</p>
             <div class="grid-row grid-gap">
               {% for i in inputs %}
               {% set validations = [{
@@ -96,10 +100,10 @@ summary:
           </div>
         </fieldset>
         {% endfor %}
-        <p>These individuals will have access to the single audit submission but will not have the ability to certify the submission.</p>
+        <p id="dynamic_fieldset_instruction">{{ dynamic_fieldset_instruction }}</p>
         {% for f in dynamic_fieldsets %}
-        <fieldset class="usa-fieldset question">
-          <legend class="usa-legend">{{ f.legend }}</legend>
+        <fieldset class="usa-fieldset question" aria-labelledby="{{ f.group }}_legend dynamic_fieldset_instruction">
+          <legend id="{{ f.group }}_legend" class="usa-legend">{{ f.legend }}</legend>
           <div class="grid-container">
             <div class="grid-row grid-gap">
               {% for i in inputs %}
@@ -127,6 +131,7 @@ summary:
           </div>
         </fieldset>
         {% endfor %}
+        <p id="email_notice">{{ email_notice }}</p>
         <ul class="usa-button-group">
           <li class="usa-button-group__item">
             <a href="javascript:void(0);" class="usa-button usa-button--outline">
@@ -134,10 +139,7 @@ summary:
             </a>
           </li>
           <li class="usa-button-group__item">
-            <button class="usa-button" id="create">Create</button>
-          </li>
-          <li class="usa-button-group__item flex-align-self-end">
-            <a class="usa-link" href="javascript:void(0);">Skip this for now</a>
+            <button class="usa-button" id="create" aria-describedby="email_notice">Create</button>
           </li>
         </ul>
       </form>
