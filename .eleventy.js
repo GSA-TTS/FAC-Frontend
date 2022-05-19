@@ -24,11 +24,11 @@ module.exports = function (eleventyConfig) {
       bundle: true,
       format: 'iife',
       loader: {
-        '.png': 'dataurl',
-        '.svg': 'dataurl',
-        '.ttf': 'dataurl',
-        '.woff': 'dataurl',
-        '.woff2': 'dataurl',
+        '.png': 'file',
+        '.svg': 'file',
+        '.ttf': 'file',
+        '.woff': 'file',
+        '.woff2': 'file',
       },
       plugins: [
         sassPlugin({
