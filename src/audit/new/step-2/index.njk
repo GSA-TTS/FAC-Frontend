@@ -30,6 +30,7 @@ inputs:
   - id: check_ueid
     label: Validate UEI
     field_type: button
+    tooltip_text: Check SAM.gov for the UEI you entered. If UEI found, auditee name will autopopulate
 
   - id: auditee_name
     label: Auditee name
@@ -97,7 +98,13 @@ explanatory_text:
               role="alert"
               >
             </ul>
-            <button class="usa-button usa-button--secondary usa-button--unstyled" id="validate-UEI">
+            <button class="usa-button
+                           usa-button--secondary
+                           usa-button--unstyled
+                           usa-tooltip"
+                    data-position="right"
+                    title="{{ i.tooltip_text }}"
+                    id="validate-UEI">
               {{ i.label }}
             </button>
           </div>
