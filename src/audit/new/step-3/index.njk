@@ -1,0 +1,156 @@
+---
+title: Create new audit
+
+static_fieldsets:
+  - group: auditee_certifying_official
+    legend: Auditee certifying official
+    instruction: This individual will electronically certify (sign) the audit submission on behalf of the auditee.
+  - group: auditor_certifying_official
+    legend: Auditor certifying official
+    instruction: This individual will electronically certify (sign) the audit submission on behalf of the auditor.
+
+dynamic_fieldsets:
+  - group: auditee_contacts
+    legend: Auditee contacts
+  - group: auditor_contacts
+    legend: Auditor contacts
+
+dynamic_fieldset_instruction: These individuals will have access to the single audit submission but will not have the ability to certify the submission.
+
+inputs:
+  - id: _name
+    label: Name
+    required: true
+    field_type: text
+    validations:
+      - operation: not-null
+        error_message: Can't be null
+  - id: _email
+    label: Email address
+    required: true
+    field_type: text
+    validations:
+      - operation: not-null
+        error_message: Can't be null
+      - operation: email
+        error_message: An email address should have a username, an '@' symbol, and a domain name
+  - id: _re_email
+    label: Re-enter email address
+    required: true
+    field_type: text
+
+summary:
+  id: audit_submission_access
+  heading: Key information
+  items: [
+    { content: "In this section, list anyone who needs access to the audit submission." },
+    { content: "If you’ll need access to the audit submission, list yourself." },
+	  { content: 'You can make changes later using the <a class="usa-link" href="javascript:void(0);">Account Tools</a> option on the <a class="usa-link" href="javascript:void(0);">account homepage.</a>' }
+  ]
+
+email_notice: The above contacts will receive an e-mail once this audit is created.
+---
+{%- extends "form.njk" -%}
+
+{%- block form -%}
+<div class="grid-container">
+  {{
+    component('usa-step-indicator', {
+      currentStep: 3,
+      totalSteps: 4
+    })
+  }}
+</div>
+<div class="grid-container audit-submission-access">
+  <div class="grid-row">
+    <form class="usa-form usa-form--large" id="grant-access">
+      <fieldset class="usa-fieldset">
+        <legend class="usa-legend usa-legend--large">Who will need access to this audit?</legend>
+        {{
+          component('usa-summary', {
+              id: summary.id,
+              heading: summary.heading,
+              items: summary.items
+            })
+          }}
+        <p>
+          <abbr
+            title="required"
+            class="usa-hint usa-hint--required"
+            >*</abbr
+          >Indicates a required field.
+        </p>
+        {% for f in static_fieldsets %}
+        <fieldset class="usa-fieldset question" aria-labelledby="{{ f.group }}_legend {{ f.group }}_instruction">
+          <legend id="{{ f.group }}_legend" class="usa-legend">{{ f.legend }}</legend>
+          <div class="grid-container">
+            <p id="{{ f.group }}_instruction">{{ f.instruction }}</p>
+            <div class="grid-row grid-gap">
+              {% for i in inputs %}
+              {% set validations = [{
+                "operation": "must-match",
+                "constraint": f.group + "_email",
+                "error_message": "This field should match the one before it"
+              }] if i.id === "_re_email" else i.validations %}
+                <div class="tablet:grid-col-fill">
+                  {{ component('usa-input', {
+                    label: i.label,
+                    id: f.group + i.id,
+                    required: i.required,
+                    errorMessage: i.error_message,
+                    validations: validations
+                  }) }}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </fieldset>
+        {% endfor %}
+        <p id="dynamic_fieldset_instruction">{{ dynamic_fieldset_instruction }}</p>
+        {% for f in dynamic_fieldsets %}
+        <fieldset class="usa-fieldset question" aria-labelledby="{{ f.group }}_legend dynamic_fieldset_instruction">
+          <legend id="{{ f.group }}_legend" class="usa-legend">{{ f.legend }}</legend>
+          <div class="grid-container">
+            <div class="grid-row grid-gap">
+              {% for i in inputs %}
+              {% set validations = [{
+                "operation": "must-match",
+                "constraint": f.group + "_email",
+                "error_message": "This field should match the one before it"
+              }] if i.id === "_re_email" else i.validations %}
+                <div class="tablet:grid-col-fill">
+                  {{
+                    component('usa-input', {
+                      label: i.label,
+                      id: f.group + i.id,
+                      required: i.required,
+                      errorMessage: i.error_message,
+                      validations: validations
+                  })
+                }}
+                </div>
+              {% endfor %}
+            </div>
+            <p>
+              <a class="usa-link" href="javascript:void(0);">Add another contact</a>
+            </p>
+          </div>
+        </fieldset>
+        {% endfor %}
+        <p id="email_notice">{{ email_notice }}</p>
+        <ul class="usa-button-group">
+          <li class="usa-button-group__item">
+            <a href="javascript:void(0);" class="usa-button usa-button--outline">
+              Cancel
+            </a>
+          </li>
+          <li class="usa-button-group__item">
+            <button class="usa-button" id="create" aria-describedby="email_notice">Create</button>
+          </li>
+        </ul>
+      </form>
+    </div>
+    <script>const authToken = "{{ config.temporaryAuthToken }}"</script>
+    <script src="{{ config.baseUrl }}assets/js/check-access.js"></script>
+  </div>
+{%- endblock -%}

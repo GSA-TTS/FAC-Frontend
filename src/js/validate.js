@@ -59,6 +59,19 @@ export const parseChecks = (field) => {
 };
 
 export const validations = {
+  validateEmail: (field) => {
+    const result = {
+      error: false,
+      fieldId: field.id,
+      validation: 'email',
+    };
+
+    const minimal_email_regex = /.+@.+\..+/;
+    return field.value && !minimal_email_regex.test(field.value)
+      ? { ...result, error: true }
+      : result;
+  },
+
   validateNotNull: (field) => {
     const result = {
       error: false,
