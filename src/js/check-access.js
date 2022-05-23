@@ -17,6 +17,13 @@ function performValidations(field) {
   setFormDisabled(errors.length > 0);
 }
 
+function appendContactField(btnEl) {
+  const inputContainer = btnEl.parentElement;
+  const template = inputContainer.querySelector('template');
+  const newRow = template.content.cloneNode(true);
+  inputContainer.insertBefore(newRow, template);
+}
+
 function attachEventHandlers() {
   FORM.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -30,6 +37,16 @@ function attachEventHandlers() {
   fieldsNeedingValidation.forEach((q) => {
     q.addEventListener('blur', (e) => {
       performValidations(e.target);
+    });
+  });
+
+  const addContactButtons = Array.from(
+    document.querySelectorAll('.add-contact')
+  );
+  addContactButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      appendContactField(e.target);
     });
   });
 }

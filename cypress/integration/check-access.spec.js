@@ -322,6 +322,13 @@ describe('Create New Audit', () => {
           );
         });
       });
+
+      it('should allow adding new contact fields', () => {
+        cy.get('.auditee_contacts').within(() => {
+          cy.get('button').click();
+          cy.get('.grid-row').should('have.length', 2);
+        });
+      });
     });
 
     describe('Auditor contacts', () => {
@@ -407,6 +414,13 @@ describe('Create New Audit', () => {
           cy.get('#auditor_contacts_re_email-must-match').should(
             'not.be.visible'
           );
+        });
+      });
+
+      it('should allow adding new contact fields', () => {
+        cy.get('.auditor_contacts').within(() => {
+          cy.get('button').click();
+          cy.get('.grid-row').should('have.length', 2);
         });
       });
     });
