@@ -110,7 +110,7 @@ email_notice: The above contacts will receive an e-mail once this audit is creat
         {% for f in dynamic_fieldsets %}
         <fieldset class="usa-fieldset question" aria-labelledby="{{ f.group }}_legend dynamic_fieldset_instruction">
           <legend id="{{ f.group }}_legend" class="usa-legend">{{ f.legend }}</legend>
-          <div class="grid-container">
+          <div class="grid-container {{ f.group }}">
             <div class="grid-row grid-gap">
               {% for i in inputs %}
               {% set validations = [{
@@ -131,9 +131,28 @@ email_notice: The above contacts will receive an e-mail once this audit is creat
                 </div>
               {% endfor %}
             </div>
-            <p>
-              <a class="usa-link" href="javascript:void(0);">Add another contact</a>
-            </p>
+            <template id="{{ f.group }}-template">
+              <div class="grid-row grid-gap">
+                {% for i in inputs %}
+                {% set validations = [{
+                  "operation": "must-match",
+                  "constraint": f.group + "_email",
+                  "error_message": "This field should match the one before it"
+                }] if i.id === "_re_email" else i.validations %}
+                  <div class="tablet:grid-col-fill">
+                    {{
+                      component('usa-input', {
+                        label: i.label,
+                        id: f.group + i.id,
+                        required: i.required,
+                        errorMessage: i.error_message,
+                        validations: validations
+                    })
+                  }}
+                  </div>
+                {% endfor %}
+              </template>
+              <button class="usa-button usa-button--unstyled add-contact" href="javascript:void(0);">Add another contact</button>
           </div>
         </fieldset>
         {% endfor %}
