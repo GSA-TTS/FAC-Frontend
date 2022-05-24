@@ -12,6 +12,7 @@ function submitForm() {
 
 function handleUEIDResponse({ valid, response, errors }) {
   if (valid) {
+    recordFYEndDate(response.auditee_fiscal_year_end_date);
     handleValidUei(response.auditee_name);
   } else {
     handleInvalidUei(errors);
@@ -62,6 +63,29 @@ function validateUEID() {
   );
 }
 
+function recordFYEndDate(fyEndDate) {
+  FORM.dataset.fyEndDate = fyEndDate;
+}
+
+function validateFyEndDate(fyInput) {
+  const samFy = FORM.dataset.fyEndDate;
+  if (fyInput.value == '') return;
+
+  const fyFormGroup = document.querySelector('.usa-form-group.validate-fy');
+  const fyErrorContainer = document.getElementById('fy-error-message');
+  const userFy = {};
+  [userFy.year, userFy.month, userFy.day] = fyInput.value.split('-');
+  [samFy.month, samFy.day] = samFy.split('/');
+
+  if (userFy.year < 2022) {
+    const errorEl = document.createElement('li');
+    errorEl.innerText = 'We are currently only accepting audits from FY22';
+    fyErrorContainer.appendChild(errorEl);
+    fyFormGroup.classList.add('usa-form-group--error');
+    fyErrorContainer.focus();
+  }
+}
+
 /*
 We're not submitting this form yet,
 so this won't be called. Rather than delete code we know we need,
@@ -107,6 +131,11 @@ function attachEventHandlers() {
     q.addEventListener('blur', (e) => {
       performValidations(e.target);
     });
+  });
+
+  const fyInput = document.getElementById('auditee_fy_start_date_end');
+  fyInput.addEventListener('change', (e) => {
+    validateFyEndDate(e.target);
   });
 }
 
