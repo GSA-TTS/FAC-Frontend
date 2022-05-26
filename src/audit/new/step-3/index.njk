@@ -151,8 +151,13 @@ email_notice: The above contacts will receive an e-mail once this audit is creat
                   }}
                   </div>
                 {% endfor %}
+                <button class="usa-button usa-button--unstyled delete-contact" aria-label="Delete contact" title="Delete contact">
+                  <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+                    <use xlink:href="{{ config.baseUrl }}assets/img/sprite.svg#cancel"></use>
+                  </svg>
+                </button>
               </template>
-              <button class="usa-button usa-button--unstyled add-contact" href="javascript:void(0);">Add another contact</button>
+              <button class="usa-button usa-button--unstyled add-contact">Add another contact</button>
           </div>
         </fieldset>
         {% endfor %}

@@ -99,6 +99,19 @@ a.usa-button {
   }
 }
 
+.delete-contact {
+  margin: 0 !important;
+  margin-top: auto !important;
+  margin-bottom: .5rem !important;
+  padding: 0 !important;
+
+  .usa-icon {
+    fill: #d83933;
+    height: 1.5em;
+    width: 1.5em;
+  }
+}
+
 /* stylelint-disable */
 #auditee_name {
   cursor: not-allowed;
