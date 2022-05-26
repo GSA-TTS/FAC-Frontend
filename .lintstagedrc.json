@@ -1,4 +1,4 @@
 {
-  "*.js": ["npm run eslint:fix"],
-  "*.scss": ["npm run stylelint:fix"]
+  "*.js": ["npm run fix:eslint"],
+  "*.scss": ["npm run fix:stylelint"]
 }
