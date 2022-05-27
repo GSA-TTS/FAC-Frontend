@@ -12,7 +12,6 @@ function submitForm() {
 
 function handleUEIDResponse({ valid, response, errors }) {
   if (valid) {
-    recordFYEndDate(response.auditee_fiscal_year_end_date);
     handleValidUei(response.auditee_name);
   } else {
     handleInvalidUei(errors);
@@ -63,27 +62,29 @@ function validateUEID() {
   );
 }
 
-function recordFYEndDate(fyEndDate) {
-  FORM.dataset.fyEndDate = fyEndDate;
-}
-
-function validateFyEndDate(fyInput) {
-  const samFy = FORM.dataset.fyEndDate;
+function validateFyStartDate(fyInput) {
   if (fyInput.value == '') return;
 
   const fyFormGroup = document.querySelector('.usa-form-group.validate-fy');
   const fyErrorContainer = document.getElementById('fy-error-message');
   const userFy = {};
   [userFy.year, userFy.month, userFy.day] = fyInput.value.split('-');
-  [samFy.month, samFy.day] = samFy.split('/');
 
-  if (userFy.year < 2022) {
+  if (userFy.year < 2020) {
     const errorEl = document.createElement('li');
-    errorEl.innerText = 'We are currently only accepting audits from FY22';
+    errorEl.innerHTML =
+      'We are currently only accepting audits from FY22.\
+      To submit an audit for a different fiscal period, \
+      visit the <a href="https://facides.census.gov/Account/Login.aspx">Census Bureau</a>.';
     fyErrorContainer.appendChild(errorEl);
     fyFormGroup.classList.add('usa-form-group--error');
     fyErrorContainer.focus();
+  } else {
+    fyFormGroup.classList.remove('usa-form-group--error');
+    fyErrorContainer.innerHTML = '';
   }
+
+  setFormDisabled(!allResponsesValid());
 }
 
 /*
@@ -103,7 +104,7 @@ function setFormDisabled(shouldDisable) {
 
 function allResponsesValid() {
   const inputsWithErrors = document.querySelectorAll('[class *="--error"]');
-  return inputsWithErrors.length === 0;
+  return inputsWithErrors.length == 0;
 }
 
 function performValidations(field) {
@@ -133,9 +134,9 @@ function attachEventHandlers() {
     });
   });
 
-  const fyInput = document.getElementById('auditee_fy_start_date_end');
+  const fyInput = document.getElementById('auditee_fy_start_date_start');
   fyInput.addEventListener('change', (e) => {
-    validateFyEndDate(e.target);
+    validateFyStartDate(e.target);
   });
 }
 
