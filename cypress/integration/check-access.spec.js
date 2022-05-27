@@ -329,6 +329,11 @@ describe('Create New Audit', () => {
           cy.get('.grid-row').should('have.length', 2);
         });
       });
+
+      it('should allow deleting additional contact fields', () => {
+        cy.get('.auditee_contacts .delete-contact').click();
+        cy.get('.auditee_contacts .grid-row').should('have.length', 1);
+      });
     });
 
     describe('Auditor contacts', () => {
@@ -422,6 +427,11 @@ describe('Create New Audit', () => {
           cy.get('button').click();
           cy.get('.grid-row').should('have.length', 2);
         });
+      });
+
+      it('should allow deleting additional contact fields', () => {
+        cy.get('.auditor_contacts .delete-contact').click();
+        cy.get('.auditor_contacts .grid-row').should('have.length', 1);
       });
     });
   });
