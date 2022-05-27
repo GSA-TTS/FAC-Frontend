@@ -22,6 +22,26 @@ function appendContactField(btnEl) {
   const template = inputContainer.querySelector('template');
   const newRow = template.content.cloneNode(true);
   inputContainer.insertBefore(newRow, template);
+  const deleteBtns = Array.from(document.querySelectorAll('.delete-contact'));
+
+  deleteBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      deleteContactField(e.target);
+    });
+  });
+}
+
+function deleteContactField(el) {
+  const nodeName = el.nodeName;
+  const inputContainer =
+    nodeName == 'use'
+      ? el.parentElement.parentElement.parentElement
+      : nodeName == 'svg'
+      ? el.parentElement.parentElement
+      : el.parentElement;
+
+  inputContainer.remove();
 }
 
 function attachEventHandlers() {
