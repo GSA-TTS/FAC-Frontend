@@ -150,6 +150,18 @@ describe('Create New Audit', () => {
         cy.get('#uei-error-message li').should('have.length', 1);
       });
     });
+
+    describe('Fiscal Year Validation', () => {
+      it('should show an error if the user enters a date before 1/1/2020', () => {
+        cy.get('#auditee_fy_start_date_start').type('12/31/2019');
+        cy.get('#fy-error-message li').should('have.length', 1);
+      });
+
+      it('should not show an error if the user enters a date after 12/31/2019', () => {
+        cy.get('#auditee_fy_start_date_start').clear().type('12/31/2020');
+        cy.get('#fy-error-message li').should('have.length', 0);
+      });
+    });
   });
 
   describe('Accessibility', () => {

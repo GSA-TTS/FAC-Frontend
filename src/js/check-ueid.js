@@ -62,6 +62,31 @@ function validateUEID() {
   );
 }
 
+function validateFyStartDate(fyInput) {
+  if (fyInput.value == '') return;
+
+  const fyFormGroup = document.querySelector('.usa-form-group.validate-fy');
+  const fyErrorContainer = document.getElementById('fy-error-message');
+  const userFy = {};
+  [userFy.year, userFy.month, userFy.day] = fyInput.value.split('-');
+
+  if (userFy.year < 2020) {
+    const errorEl = document.createElement('li');
+    errorEl.innerHTML =
+      'We are currently only accepting audits from FY22.\
+      To submit an audit for a different fiscal period, \
+      visit the <a href="https://facides.census.gov/Account/Login.aspx">Census Bureau</a>.';
+    fyErrorContainer.appendChild(errorEl);
+    fyFormGroup.classList.add('usa-form-group--error');
+    fyErrorContainer.focus();
+  } else {
+    fyFormGroup.classList.remove('usa-form-group--error');
+    fyErrorContainer.innerHTML = '';
+  }
+
+  setFormDisabled(!allResponsesValid());
+}
+
 /*
 We're not submitting this form yet,
 so this won't be called. Rather than delete code we know we need,
@@ -79,7 +104,7 @@ function setFormDisabled(shouldDisable) {
 
 function allResponsesValid() {
   const inputsWithErrors = document.querySelectorAll('[class *="--error"]');
-  return inputsWithErrors.length === 0;
+  return inputsWithErrors.length == 0;
 }
 
 function performValidations(field) {
@@ -107,6 +132,11 @@ function attachEventHandlers() {
     q.addEventListener('blur', (e) => {
       performValidations(e.target);
     });
+  });
+
+  const fyInput = document.getElementById('auditee_fy_start_date_start');
+  fyInput.addEventListener('change', (e) => {
+    validateFyStartDate(e.target);
   });
 }
 

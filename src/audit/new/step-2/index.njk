@@ -69,7 +69,7 @@ explanatory_text:
 </div>
 <div class="grid-container auditee-information">
   <div class="grid-row">
-    <form class="usa-form usa-form--large tablet:grid-col" id="check-eligibility">
+    <form class="usa-form usa-form--large tablet:grid-col" id="check-eligibility" data-fy-end-date="">
       <fieldset class="usa-fieldset">
         <legend class="usa-legend usa-legend--large">Auditee information</legend>
         <p>
@@ -109,6 +109,15 @@ explanatory_text:
             </button>
           </div>
           {% elif i.field_type == "date" %}
+          <div class="usa-form-group validate-fy">
+            {% if i.id == "auditee_fy_start_date_start" %}
+            <ul class="usa-error-message"
+              id="fy-error-message"
+              role="alert"
+              tabindex="-1"
+              >
+            </ul>
+            {% endif %}
             {{
               component('usa-date-picker', {
                 label: i.label,
@@ -117,6 +126,7 @@ explanatory_text:
                 errorMessage: i.error_message
               })
             }}
+          </div>
           {% endif %}
         {% endfor %}
         </fieldset>
