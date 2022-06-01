@@ -6,8 +6,8 @@
     <div class="usa-navbar">
       <div class="usa-logo" id="basic-logo">
         <em class="usa-logo__text">
-          <a href="javascript:void(0)" title="&lt;Project title&gt;">
-            {{ global.site_name }}
+          <a href="javascript:void(0)" title="FAC.gov">
+            <strong>FAC</strong>.gov  
           </a>
         </em>
       </div>
@@ -24,14 +24,14 @@
 
             <li class="usa-nav__primary-item">
               <button
-                class="usa-accordion__button usa-nav__link usa-current"
+                class="usa-accordion__button usa-nav__link"
                 aria-expanded="false"
-                aria-controls="basic-nav-section-one"
+                aria-controls="basic-nav-section-{{ loop.index }}"
               >
               <span>{{ section.text }}</span>
               </button>
 
-              <ul id="basic-nav-section-one" class="usa-nav__submenu">
+              <ul id="basic-nav-section-{{ loop.index }}" class="usa-nav__submenu">
                 {% for link in section.links %}
                   <li class="usa-nav__submenu-item">
                     <a href="{{ link.href }}">{{ link.text }}</a>
@@ -48,28 +48,10 @@
           {% endif %}
         {% endfor %}
       </ul>
-      <div class="sign-in-search">
-        <a class="usa-button sign-in-logo" href="https://secure.login.gov/" tabindex="0">Sign in with
-          <span>Login.gov</span>
+      <div class="sign-in">
+        <a class="sign-in-logo" href="https://secure.login.gov/" tabindex="0">
+          Submit an audit
         </a>
-        <form class="usa-search usa-search--small" role="search">
-          <label class="usa-sr-only" for="basic-search-field-en-small">
-            Search
-          </label>
-          <input
-            class="usa-input"
-            id="basic-search-field-en-small"
-            type="search"
-            name="search"
-          />
-          <button class="usa-button" type="submit">
-            <img
-              src="{{ config.baseUrl }}assets/img/usa-icons-bg/search--white.svg"
-              class="usa-search__submit-icon"
-              alt="Search"
-            />
-          </button>
-        </form>
       </div>
     </nav>
   </div>
