@@ -1,17 +1,14 @@
   <section class="usa-hero" aria-label="Introduction">
     <div class="grid-container">
-      <h1 class="usa-hero__heading text-ink">Your one-stop shop for federal grant audits</h1>
-    </div>
-    {# <div class="grid-container">
-      <div class="usa-hero__callout">
-        <h1 class="usa-hero__heading">
-          <span class="usa-hero__heading--alt">{{ hero.callout.alt }}</span>{{ hero.callout.text }}
-        </h1>
-        <p>
-          Support the callout with some short explanatory text. You don’t need
-          more than a couple of sentences.
-        </p>
-        <a class="usa-button" href="{{ hero.button.href }}">{{ hero.button.text }}</a>
+      <h1 class="usa-hero__heading">{{ hero.callout.text }}</h1>
+      <p>{{ hero.content | safe }}</p>
+      <div class="usa-button-group">
+        <a class="usa-button" href="{{ hero.buttons.primary.href }}">
+          {{ hero.buttons.primary.text }}
+        </a>
+        <a class="usa-button usa-button--outline" href="{{ hero.buttons.secondary.href }}">
+          {{ hero.buttons.secondary.text }}
+        </a>
       </div>
-    </div> #}
+    </div>
   </section>

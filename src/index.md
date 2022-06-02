@@ -3,34 +3,14 @@ layout: home.njk
 title: Federal Audit Clearinghouse — Home
 
 hero:
-  image: /assets/uswds/img/hero.png
   callout:
-    alt: "Hero callout:"
-    text: Bring attention to a current priority
-  button:
-    href: /callout/
-    text: Call to action
-  link:
-    text: Link to more about that priority
-    href: /link/
-  content: Support the callout with some short explanatory text. You don't need more than a couple of sentences.
-
-cards:
-  - heading: Submit audits
-    image:
-      src: 
-      alt: Alternative text
-    body: Submit a new audit or revise or certify an existing one. 
-  - heading: Review audits
-    image:
-      src: 
-      alt: Alternative text
-    body: Review publicly available audits online.
-  - heading: Download audit data
-    image:
-      src: 
-      alt: Alternative text
-    button:
-      href: /
-      text: Download audit data
+    text: Search, upload, and download federal audit documents
+  content: The FAC is transitioning to the General Services Administration to help the public  in oversight, transparency and assessment of Federal award audit requirements. Only audits from 2021 will be searchable on this site until we migrate systems, so please use the <a href="https://facides.census.gov/Account/Login.aspx">legacy FAC IMS</a> to search older records.
+  buttons:
+    primary:
+      href: /callout/
+      text: Log in to submit an audit
+    secondary:
+      href: /callout/
+      text: Find audit information on the legacy FAC IMS
 ---
