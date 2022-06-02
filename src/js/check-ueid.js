@@ -1,7 +1,7 @@
 import { checkValidity } from './validate';
 import { queryAPI } from './api';
 
-const FORM = document.forms[1];
+const FORM = document.forms[0];
 
 function submitForm() {
   // NOOP for now

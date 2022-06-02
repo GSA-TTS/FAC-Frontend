@@ -1,6 +1,6 @@
 (function () {
   const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/eligibility';
-  const FORM = document.forms[1];
+  const FORM = document.forms[0];
 
   function submitForm() {
     const formData = serializeFormData(new FormData(FORM));
