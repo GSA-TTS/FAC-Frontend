@@ -1,6 +1,6 @@
 import { checkValidity } from './validate';
 
-const FORM = document.forms[1];
+const FORM = document.forms[0];
 
 function setFormDisabled(shouldDisable) {
   const continueBtn = document.getElementById('create');

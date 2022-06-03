@@ -2,11 +2,17 @@ site_name: Federal Audit Clearinghouse
 
 navigation:
   primary:
-    - text: Link
-      href: https://gsa.gov
-    - text: Section 1
+    - text: Find audit information
       links:
         - text: Link 1
           href: https://example.com
         - text: Link 2
           href: https://example.com
+    - text: Resources
+      links:
+        - text: Link 1
+          href: https://example.com
+    - text: FAQs
+      href: https://example.gov
+    - text: Contact Us
+      href: https://example.gov

@@ -1,0 +1,29 @@
+@use 'uswds-core' as *;
+
+.usa-hero {
+  background-color: color('base-lightest');
+  background-image: none;
+}
+
+.usa-hero__heading {
+  font-size: size('sans', 14);  /* stylelint-disable-line */
+}
+
+.usa-hero__heading,
+.usa-hero p {
+  color: color('ink');
+  font-family: family('sans'); /* stylelint-disable-line */
+}
+
+@media (min-width: 64em) {
+  .usa-hero {
+    min-height: 30rem;
+
+    .usa-hero__heading,
+    p,
+    .usa-button-group {
+      margin-bottom: 2rem;
+      width: 66%;
+    }  
+  }
+}
