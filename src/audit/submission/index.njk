@@ -1,5 +1,24 @@
 ---
 title: Submission Form
+
+sidenav:
+  links:
+    - text: General information
+      href: #general-information
+      links:
+        - text: Fiscal period dates
+          href: '#fiscal-period-dates'
+        - text: Type of uniform guidance audit
+          href: '#audit-type'
+        - text: Audit period covered        
+          href: '#audit-period'
+        - text: Auditee identificaion numbers
+          href: '#auditee-identification-numbers'
+        - text: Auditee identificaion numbers
+          href: '#auditee-identification-numbers'
+        - text: Primary Auditor Information
+          href: '#primary-auditor-information'
+
 fieldsets:
   - group: fiscal-period-dates
     legend: Fiscal Period Dates
@@ -165,13 +184,19 @@ fieldsets:
               - value: test
                 label: Test Value
 submit: Save & continue to next section
-
 ---
 {%- extends "form.njk" -%}
 {%- block form -%}
 <div class="grid-container">
-  <form class="usa-form usa-form--large sf-sac" id="general-info">
-
+  <div class="grid-row grid-gap">
+    <nav class="desktop:grid-col-3 sticky-nav" aria-label="Secondary navigation">
+      {{
+        component('usa-sidenav', {
+          links: sidenav.links
+        }) 
+      }}
+    </nav>
+    <form class="desktop:grid-col-9 usa-form usa-form--large sf-sac" id="general-info">
       <fieldset class="usa-fieldset">
         <legend class="usa-legend usa-legend--large">General information</legend>
         <p>
@@ -183,7 +208,7 @@ submit: Save & continue to next section
         </p>
         {%- for f in fieldsets -%}
           <fieldset class="usa-fieldset">
-            <legend class="usa-legend">{{ f.legend }}</legend>
+            <legend class="usa-legend" id="f.group">{{ f.legend }}</legend>
             {%- for i in f.inputs -%}
               {% if i.field_type == "text" %}
                 {{
@@ -234,6 +259,9 @@ submit: Save & continue to next section
                   errorMessage: i.error_message
                 }) }}
               {%- elif i.field_type == "fieldset" -%}
+                {#%- 
+                TODO: There should be a way to DRY this up
+                -%#}
                 <fieldset class="usa-fieldset">
                   <legend class="usa-legend">{{ i.legend }}</legend>
                   {%- for n in i.inputs -%}

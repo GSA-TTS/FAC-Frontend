@@ -121,3 +121,11 @@ a.usa-button {
   display: none;
 }
 /* stylelint-enable */
+
+@media (min-width: 64em) {
+  .sticky-nav {
+    align-self: flex-start;
+    position: sticky;
+    top: 0;
+  }
+}
