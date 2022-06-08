@@ -1,0 +1,15 @@
+  <div class="usa-checkbox">
+    <input
+      class="usa-checkbox__input"
+      id="{{ params.id }}"
+      type="checkbox"
+      name="{{ params.name }}"
+      value="{{ params.value }}"
+      {%- if params.checked -%}
+        checked="{{ params.checked }}"
+      {%- endif -%}
+    />
+    <label class="usa-checkbox__label" for="{{ params.id }}">
+      {{ params.label }}
+    </label>
+  </div>

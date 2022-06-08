@@ -1,0 +1,298 @@
+---
+title: Submission Form
+fieldsets:
+  - group: fiscal-period-dates
+    legend: Fiscal Period Dates
+    inputs:
+      - field_type: date
+        id: fy-start
+        label: Fiscal period start date
+        required: true
+      - field_type: date
+        id: fy-end
+        label: Fiscal period end date
+        required: true
+  - group: audit-type
+    legend: Type of uniform guidance audit
+    required: true
+    inputs:
+      - field_type: radio
+        options:
+          - label: Single Audit
+            id: audit-type-single 
+            value: single
+          - label: Program-Specific Audit
+            id: audit-type-program-specific
+            value: single
+  - group: audit-period
+    legend: Audit period covered
+    required: true
+    inputs:
+      - field_type: radio
+        options:
+          - label: Annual
+            id: audit-period-annual
+            value: annual
+          - label: Biennial
+            id: audit-period-biennial
+            value: biennial
+          - label: Other
+            id: audit-period-other
+            value: other
+  - group: auditee-identification-numbers
+    legend: Auditee identificaion numbers
+    inputs:
+      - field_type: text
+        label: Auditee Employer Identification Number (EIN)
+        required: true
+        id: auditee-ein
+      - field_type: checkbox
+        label: By checking this box, I verify that the Auditee EIN is NOT a social security number.
+        id: ein-not-ssn
+      - field_type: radio
+        label: Are multiple EINs covered in this report?
+        id: multiple-eins
+        required: true
+        options:
+          - label: Yes
+            id: multiple-eins-yes
+            value: multiple-eins-yes
+          - label: No
+            id: multiple-eins-no
+            value: multiple-eins-no
+  - group: auditee-information
+    legend: Auditee information
+    inputs:
+      - field_type: text
+        label: Auditee name
+        required: true
+        id: auditee-name
+      - field_type: fieldset
+        legend: Auditee address
+        required: true
+        inputs:
+          - field_type: text
+            label: Street
+            required: true
+            id: auditee-address-street
+          - field_type: text
+            label: City
+            required: true
+            id: auditee-address-city
+          - field_type: text
+            label: State
+            required: true
+            id: auditee-address-state
+          - field_type: text
+            label: ZIP code
+            required: true
+            id: auditee-address-zip
+      - field_type: fieldset
+        legend: Auditee contact
+        required: true
+        inputs:
+          - field_type: text
+            label: Name
+            required: true
+            id: auditee-contact-name
+          - field_type: text
+            label: Title
+            required: true
+            id: auditee-contact-title
+      - field_type: text
+        label: Auditee telephone
+        required: true
+        id: auditee-telephone
+      - field_type: select
+        label: Auditee e-mail
+        required: true
+        id: auditee-email
+  - group: primary-auditor-information
+    legend: Primary Auditor Information
+    inputs:
+      - field_type: text
+        label: Audit firm/organization name
+        required: true
+        id: audit-firm-name
+      - field_type: text
+        label: Audit firm/organization EIN
+        required: true
+        id: audit-firm-ein
+      - field_type: checkbox
+        label: By checking this box, I verify that the Auditor EIN is NOT a social security number.
+        id: auditor-ein-not-ssn
+      - field_type: fieldset
+        legend: Audit firm/organization address
+        required: true
+        inputs:
+          - field_type: text
+            label: Street
+            required: true
+            id: auditor-address-street
+          - field_type: text
+            label: City
+            required: true
+            id: auditor-address-city
+          - field_type: text
+            label: State
+            required: true
+            id: auditor-address-state
+          - field_type: text
+            label: ZIP code
+            required: true
+            id: auditor-address-zip
+          - field_type: fieldset
+            legend: Primary auditor contact
+            required: true
+            inputs:
+              - field_type: text
+                label: Name
+                required: true
+                id: auditor-contact-name
+              - field_type: text
+                label: Title
+                required: true
+                id: auditor-contact-title
+          - field_type: text
+            label: Primary auditor telephone
+            required: true
+            id: auditor-telephone
+          - field_type: select
+            label: Primary auditor e-mail
+            required: true
+            id: auditor-email
+            options:
+              - value: test
+                label: Test Value
+submit: Save & continue to next section
+
+---
+{%- extends "form.njk" -%}
+{%- block form -%}
+<div class="grid-container">
+  <form class="usa-form usa-form--large sf-sac" id="general-info">
+
+      <fieldset class="usa-fieldset">
+        <legend class="usa-legend usa-legend--large">General information</legend>
+        <p>
+          <abbr
+            title="required"
+            class="usa-hint usa-hint--required"
+            >*</abbr
+          >Indicates a required field.
+        </p>
+        {%- for f in fieldsets -%}
+          <fieldset class="usa-fieldset">
+            <legend class="usa-legend">{{ f.legend }}</legend>
+            {%- for i in f.inputs -%}
+              {% if i.field_type == "text" %}
+                {{
+                  component('usa-input', {
+                    label: i.label,
+                    id: i.id,
+                    required: i.required,
+                    errorMessage: i.error_message,
+                    validations: i.validations,
+                    disabled: i.disabled
+                  })
+                }}
+              {%- elif i.field_type == "radio" -%}
+                  {% for o in i.options %}
+                    {{
+                      component('usa-radio', {
+                        label: o.label,
+                        group: f.group,
+                        id: o.id,
+                        value: o.value,
+                        errorMessage: o.error_message
+                      })
+                    }}
+                  {%- endfor -%}
+              {%- elif i.field_type == "checkbox" -%}
+                {{
+                  component('usa-checkbox', {
+                    label: i.label,
+                    name: f.group,
+                    id: i.id,
+                    value: i.value,
+                    errorMessage: i.error_message
+                  })
+                }}
+              {%- elif i.field_type == "date" -%}
+                {{ component('usa-date-picker', {
+                  label: i.label,
+                  id: i.id,
+                  required: i.required,
+                  errorMessage: i.error_message
+                }) }}
+              {%- elif i.field_type == "select" -%}
+                {{ component('usa-select', {
+                  label: i.label,
+                  id: i.id,
+                  options: i.options,
+                  required: i.required,
+                  errorMessage: i.error_message
+                }) }}
+              {%- elif i.field_type == "fieldset" -%}
+                <fieldset class="usa-fieldset">
+                  <legend class="usa-legend">{{ i.legend }}</legend>
+                  {%- for n in i.inputs -%}
+                    {% if n.field_type == "text" %}
+                      {{
+                        component('usa-input', {
+                          label: n.label,
+                          id: n.id,
+                          required: n.required,
+                          errorMessage: n.error_message,
+                          validations: n.validations,
+                          disabled: n.disabled
+                        })
+                      }}
+                    {%- elif n.field_type == "radio" -%}
+                        {% for o in n.options %}
+                          {{
+                            component('usa-radio', {
+                              label: o.label,
+                              group: n.group,
+                              id: o.id,
+                              value: o.value,
+                              errorMessage: o.error_message
+                            })
+                          }}
+                        {%- endfor -%}
+                    {%- elif i.field_type == "checkbox" -%}
+                      {{
+                        component('usa-checkbox', {
+                          label: n.label,
+                          name: i.group,
+                          id: n.id,
+                          value: n.value,
+                          errorMessage: n.error_message
+                        })
+                      }}
+                    {%- elif n.field_type == "date" -%}
+                      {{ component('usa-date-picker', {
+                        label: n.label,
+                        id: n.id,
+                        required: n.required,
+                        errorMessage: n.error_message
+                      }) }}
+                    {%- elif n.field_type == "select" -%}
+                      {{ component('usa-select', {
+                        label: n.label,
+                        id: n.id,
+                        options: n.options,
+                        required: n.required,
+                        errorMessage: n.error_message
+                      }) }}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </fieldset>
+              {%- endif -%}
+            {%- endfor -%}
+          </fieldset>
+        {%- endfor -%}
+      </fieldset>
+    </form>
+</div>
+{%- endblock -%}

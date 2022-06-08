@@ -1,0 +1,7 @@
+  <label class="usa-label" for="{{ params.id }}">{{ params.label }}</label>
+  <select class="usa-select" name="options" id="{{ params.id }}">
+    <option value>- Select -</option>
+    {%- for o in params.options -%}
+      <option value="{{ o.value }}">{{ o.label }}</option>
+    {%- endfor -%}
+  </select>
