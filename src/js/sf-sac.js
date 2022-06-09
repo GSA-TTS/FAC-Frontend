@@ -2,7 +2,7 @@ function highlightActiveNavSection() {
   let currentFieldsetId;
 
   const fieldsets = document.querySelectorAll('fieldset[id]');
-  const navLinks = document.querySelectorAll('.usa-sidenav__item a');
+  const navLinks = document.querySelectorAll('li .usa-sidenav__item a');
 
   fieldsets.forEach((f) => {
     const fieldsetTop = f.offsetTop;
@@ -13,11 +13,11 @@ function highlightActiveNavSection() {
 
   navLinks.forEach((l) => {
     if (currentFieldsetId) {
-      l.parentElement.classList.remove('usa-current');
+      l.classList.remove('usa-current');
     }
 
     if (l.getAttribute('href') == `#${currentFieldsetId}`) {
-      l.parentElement.classList.add('usa-current');
+      l.classList.add('usa-current');
     }
   });
 }
