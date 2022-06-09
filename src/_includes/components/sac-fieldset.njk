@@ -1,7 +1,7 @@
 {% set f = params.fieldset %}
 
-<fieldset class="usa-fieldset">
-  <legend class="usa-legend" id="f.group">{{ f.legend }}</legend>
+<fieldset class="usa-fieldset" id="{{ f.group }}">
+  <legend class="usa-legend">{{ f.legend }}</legend>
   {%- for i in f.inputs -%}
     {% if i.field_type == "text" %}
       {{
