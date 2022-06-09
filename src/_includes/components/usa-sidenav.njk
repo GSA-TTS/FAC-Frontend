@@ -1,17 +1,17 @@
   <ul class="usa-sidenav">
     {%- for l in params.links -%}
       <li class="usa-sidenav__item">
-        <a href="{{ l.href }}" {% if l.current == params.currentParent %}class="usa-current"{% endif %}>{{ l.text }}</a>
+        <a href="{{ l.href }}" {% if l.current %}class="usa-current"{% endif %}>{{ l.text }}</a>
         {%- if l.links -%}
           <ul class="usa-sidenav__sublist">
             {%- for i in l.links -%}
               <li class="usa-sidenav__item">
-                <a href="{{ i.href }}" {% if i.current == params.currentChild %}class="usa-current"{% endif %}>{{ i.text }}</a>
+                <a href="{{ i.href }}">{{ i.text }}</a>
                 {%- if i.links -%}
                   <ul class="usa-sidenav__sublist">
                     {%- for n in i.links -%}
                       <li class="usa-sidenav__item">
-                        <a href="{{ n.href }}" {% if n.current == params.currentGrandchild %}class="usa-current"{% endif %}>{{ n.text }}</a>
+                        <a href="{{ n.href }}">{{ n.text }}</a>
                       </li>
                     {%- endfor -%}
                   </ul>

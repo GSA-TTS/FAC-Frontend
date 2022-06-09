@@ -5,6 +5,7 @@ sidenav:
   links:
     - text: General information
       href: #general-information
+      current: true
       links:
         - text: Fiscal period dates
           href: '#fiscal-period-dates'
@@ -12,10 +13,10 @@ sidenav:
           href: '#audit-type'
         - text: Audit period covered        
           href: '#audit-period'
-        - text: Auditee identificaion numbers
+        - text: Auditee identification numbers
           href: '#auditee-identification-numbers'
-        - text: Auditee identificaion numbers
-          href: '#auditee-identification-numbers'
+        - text: Auditee information
+          href: '#auditee-information'
         - text: Primary Auditor Information
           href: '#primary-auditor-information'
 
@@ -216,4 +217,5 @@ submit: Save & continue to next section
       </fieldset>
     </form>
 </div>
+<script src="{{ config.baseUrl }}assets/js/sf-sac.js"></script>
 {%- endblock -%}
