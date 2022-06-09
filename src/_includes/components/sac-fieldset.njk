@@ -1,7 +1,12 @@
 {% set f = params.fieldset %}
 
 <fieldset class="usa-fieldset" id="{{ f.group }}">
-  <legend class="usa-legend">{{ f.legend }}</legend>
+  <legend class="usa-legend">
+    {{ f.legend }}
+    {%- if f.required -%}
+      <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+    {%- endif -%}
+  </legend>
   {%- for i in f.inputs -%}
     {% if i.field_type == "text" %}
       {{
@@ -15,6 +20,15 @@
         })
       }}
     {%- elif i.field_type == "radio" -%}
+      <fieldset class="usa-fieldset radio">
+      {%- if i.label -%}
+        <legend class="usa-legend">
+          {{i.label}}
+          {%- if i.required -%}
+            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+          {%- endif -%}
+        </legend>  
+      {%- endif -%}
       {% for o in i.options %}
         {{
           component('usa-radio', {
@@ -26,6 +40,7 @@
           })
         }}
       {%- endfor -%}
+      </fieldset>
     {%- elif i.field_type == "checkbox" -%}
       {{
         component('usa-checkbox', {

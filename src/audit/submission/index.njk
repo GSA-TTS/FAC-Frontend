@@ -80,6 +80,21 @@ fieldsets:
           - label: No
             id: multiple-eins-no
             value: multiple-eins-no
+      - field_type: text
+        label: Auditee Unique Entity Identifier (UEI)
+        required: true
+        id: auditee-uei
+      - field_type: radio
+        label: Are multiple UEIs covered in this report?
+        id: multiple-ueis
+        required: true
+        options:
+          - label: Yes
+            id: multiple-ueis-yes
+            value: multiple-ueis-yes
+          - label: No
+            id: multiple-ueis-no
+            value: multiple-ueis-no
   - group: auditee-information
     legend: Auditee information
     inputs:
@@ -109,7 +124,6 @@ fieldsets:
             id: auditee-address-zip
       - field_type: fieldset
         legend: Auditee contact
-        required: true
         inputs:
           - field_type: text
             label: Name

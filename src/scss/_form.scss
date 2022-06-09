@@ -133,7 +133,7 @@ a.usa-button {
 }
 
 .sf-sac {
-  fieldset {
+  fieldset:not(.radio) {
     margin-bottom: units(4);
 
     fieldset { 
@@ -147,8 +147,20 @@ a.usa-button {
         margin-top: units(2);
       }
 
-      fieldset label {
-        color: color('gray-cool-50');
+      fieldset {
+        &.radio {
+          legend {
+            font-size: size('sans', 'md');
+          }
+
+          & + .usa-form-group {
+            margin-top: units(4);
+          }
+        }
+
+        label {
+          color: color('gray-cool-50');
+        }
       }
     }
   }
