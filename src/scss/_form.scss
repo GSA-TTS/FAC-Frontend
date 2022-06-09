@@ -1,3 +1,5 @@
+@use 'uswds-core' as *;
+
 .usa-form {
   padding-bottom: 2rem;
 }
@@ -127,5 +129,27 @@ a.usa-button {
     align-self: flex-start;
     position: sticky;
     top: 0;
+  }
+}
+
+.sf-sac {
+  fieldset {
+    margin-bottom: units(4);
+
+    fieldset { 
+      margin-top: units(4);
+
+      legend {
+        font-size: size('sans', 'lg');
+      }
+
+      .usa-form-group {
+        margin-top: units(2);
+      }
+
+      fieldset label {
+        color: color('gray-cool-50');
+      }
+    }
   }
 }
