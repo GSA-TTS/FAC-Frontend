@@ -6,7 +6,7 @@ function highlightActiveNavSection() {
 
   fieldsets.forEach((f) => {
     const fieldsetTop = f.offsetTop;
-    if (scrollY >= fieldsetTop) {
+    if (scrollY >= fieldsetTop + 100) {
       currentFieldsetId = f.id;
     }
   });
