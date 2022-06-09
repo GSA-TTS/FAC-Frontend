@@ -158,7 +158,7 @@ a.usa-button {
           }
         }
 
-        label {
+        label:not(.usa-radio__label) {
           color: color('gray-cool-50');
         }
       }
