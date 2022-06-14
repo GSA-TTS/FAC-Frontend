@@ -1,3 +1,22 @@
+import { checkValidity } from './validate';
+
+const FORM = document.forms[0];
+
+function setFormDisabled(shouldDisable) {
+  const continueBtn = document.getElementById('continue');
+  continueBtn.disabled = shouldDisable;
+}
+
+function allResponsesValid() {
+  const inputsWithErrors = document.querySelectorAll('[class *="--error"]');
+  return inputsWithErrors.length === 0;
+}
+
+function performValidations(field) {
+  const errors = checkValidity(field);
+  setFormDisabled(errors.length > 0);
+}
+
 function highlightActiveNavSection() {
   let currentFieldsetId;
 
@@ -23,6 +42,31 @@ function highlightActiveNavSection() {
 }
 
 function attachEventHandlers() {
+  const fieldsNeedingValidation = Array.from(
+    document.querySelectorAll('.sf-sac input')
+  );
+
+  FORM.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    performValidations(e.target);
+    if (!allResponsesValid()) return;
+    // submitForm();
+  });
+
+  fieldsNeedingValidation.forEach((q) => {
+    q.addEventListener('blur', (e) => {
+      performValidations(e.target);
+    });
+  });
+
+  const submitBtn = document.getElementById('continue');
+  submitBtn.addEventListener('click', () => {
+    fieldsNeedingValidation.forEach((q) => {
+      performValidations(q);
+    });
+  });
+
   window.addEventListener('scroll', highlightActiveNavSection);
 }
 

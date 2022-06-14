@@ -36,7 +36,8 @@
             group: f.group,
             id: o.id,
             value: o.value,
-            errorMessage: o.error_message
+            errorMessage: o.error_message,
+            validations: i.validations
           })
         }}
       {%- endfor -%}
@@ -48,7 +49,8 @@
           name: f.group,
           id: i.id,
           value: i.value,
-          errorMessage: i.error_message
+          errorMessage: i.error_message,
+          validations: i.validations
         })
       }}
     {%- elif i.field_type == "date" -%}
@@ -65,7 +67,8 @@
         id: i.id,
         options: i.options,
         required: i.required,
-        errorMessage: i.error_message
+        errorMessage: i.error_message,
+        validations: i.validations
       }) 
     }}
     {%- elif i.field_type == "fieldset" -%}

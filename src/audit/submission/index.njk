@@ -28,7 +28,7 @@ sidenav:
     - text: Findings text
     - text: CAP text
     - text: Additional EINs
-    - text: Additional EINs
+    - text: Additional UEIs
     - text: Secondary auditors
     - text: Finalize
       href: /
@@ -37,17 +37,20 @@ fieldsets:
   - group: fiscal-period-dates
     legend: Fiscal Period Dates
     inputs:
-      - field_type: date
+      - field_type: text
         id: fy-start
         label: Fiscal period start date
-        required: true
-      - field_type: date
+        disabled: true
+      - field_type: text
         id: fy-end
         label: Fiscal period end date
-        required: true
+        disabled: true
   - group: audit-type
     legend: Type of uniform guidance audit
     required: true
+    validations:
+      - operation: not-null
+        error_message: This field is required
     inputs:
       - field_type: radio
         options:
@@ -79,6 +82,9 @@ fieldsets:
         label: Auditee Employer Identification Number (EIN)
         required: true
         id: auditee-ein
+        validations:
+          - operation: not-null
+            error_message: This field is required
       - field_type: checkbox
         label: By checking this box, I verify that the Auditee EIN is NOT a social security number.
         id: ein-not-ssn
@@ -95,8 +101,8 @@ fieldsets:
             value: multiple-eins-no
       - field_type: text
         label: Auditee Unique Entity Identifier (UEI)
-        required: true
         id: auditee-uei
+        disabled: true
       - field_type: radio
         label: Are multiple UEIs covered in this report?
         id: multiple-ueis
@@ -113,7 +119,7 @@ fieldsets:
     inputs:
       - field_type: text
         label: Auditee name
-        required: true
+        disabled: true
         id: auditee-name
       - field_type: fieldset
         legend: Auditee address
@@ -121,39 +127,42 @@ fieldsets:
         inputs:
           - field_type: text
             label: Street
-            required: true
             id: auditee-address-street
+            disabled: true
           - field_type: text
             label: City
-            required: true
             id: auditee-address-city
+            disabled: true
           - field_type: text
             label: State
-            required: true
             id: auditee-address-state
+            disabled: true
           - field_type: text
             label: ZIP code
-            required: true
             id: auditee-address-zip
+            disabled: true
       - field_type: fieldset
         legend: Auditee contact
         inputs:
           - field_type: text
             label: Name
-            required: true
             id: auditee-contact-name
+            disabled: true
           - field_type: text
             label: Title
-            required: true
             id: auditee-contact-title
+            disabled: true
       - field_type: text
         label: Auditee telephone
-        required: true
         id: auditee-telephone
+        disabled: true
       - field_type: select
         label: Auditee e-mail
         required: true
         id: auditee-email
+        validations:
+          - operation: not-null
+            error_message: This field is required
   - group: primary-auditor-information
     legend: Primary Auditor Information
     inputs:
@@ -161,10 +170,16 @@ fieldsets:
         label: Audit firm/organization name
         required: true
         id: audit-firm-name
+        validations:
+          - operation: not-null
+            error_message: This field is required
       - field_type: text
         label: Audit firm/organization EIN
         required: true
         id: audit-firm-ein
+        validations:
+          - operation: not-null
+            error_message: This field is required
       - field_type: checkbox
         label: By checking this box, I verify that the Auditor EIN is NOT a social security number.
         id: auditor-ein-not-ssn
@@ -176,18 +191,30 @@ fieldsets:
             label: Street
             required: true
             id: auditor-address-street
+            validations:
+              - operation: not-null
+                error_message: This field is required
           - field_type: text
             label: City
             required: true
             id: auditor-address-city
+            validations:
+              - operation: not-null
+                error_message: This field is required
           - field_type: text
             label: State
             required: true
             id: auditor-address-state
+            validations:
+              - operation: not-null
+                error_message: This field is required
           - field_type: text
             label: ZIP code
             required: true
             id: auditor-address-zip
+            validations:
+              - operation: not-null
+                error_message: This field is required
           - field_type: fieldset
             legend: Primary auditor contact
             required: true
@@ -196,14 +223,23 @@ fieldsets:
                 label: Name
                 required: true
                 id: auditor-contact-name
+                validations:
+                  - operation: not-null
+                    error_message: This field is required
               - field_type: text
                 label: Title
                 required: true
                 id: auditor-contact-title
+                validations:
+                  - operation: not-null
+                    error_message: This field is required
           - field_type: text
             label: Primary auditor telephone
             required: true
             id: auditor-telephone
+            validations:
+              - operation: not-null
+                error_message: This field is required
           - field_type: select
             label: Primary auditor e-mail
             required: true
@@ -255,6 +291,10 @@ submit: Save & continue to next section
             }) 
           }}
         {%- endfor -%}
+
+        <button class="usa-button" id="continue">
+          {{ submit }}
+        </button>
       </fieldset>
     </form>
 </div>
