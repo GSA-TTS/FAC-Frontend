@@ -153,6 +153,23 @@ a.usa-button {
   }
 }
 
+.audit-metadata {
+  margin-bottom: units(4);
+  margin-top: units(4);
+
+  dt {
+    font-weight: bold;
+
+    &::after {
+      content: ":";
+    }
+  }
+
+  dd {
+    margin-inline-start: 0;
+  }
+}
+
 .sf-sac {
   fieldset:not(.radio) {
     margin-bottom: units(4);

@@ -216,6 +216,20 @@ submit: Save & continue to next section
 {%- extends "form.njk" -%}
 {%- block form -%}
 <div class="grid-container">
+  <dl class="grid-row grid-gap audit-metadata">
+    <div class="tablet:grid-col">
+      <dt>Auditee entity name</dt>
+      <dd>Lorem Ipsum Ltd.</dd>
+    </div>
+    <div class="tablet:grid-col">
+      <dt>Report ID</dt>
+      <dd>923109</dd>
+    </div>
+    <div class="tablet:grid-col">
+      <dt>Version</dt>
+      <dd>1</dd>
+    </div>
+  </dl>
   <div class="grid-row grid-gap">
     <nav class="desktop:grid-col-3 sticky-nav" aria-label="Secondary navigation">
       {{
