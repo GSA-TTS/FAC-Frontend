@@ -16,7 +16,12 @@
       body: JSON.stringify(formData),
     })
       .then((resp) => resp.json())
-      .then((data) => console.log(data)); // Just log the response for now
+      .then((data) => {
+        console.log(data);
+        const isElegible = data.eligible;
+        const nextUrl = '../step-2/'; //data.next; //Hard coded for now
+        if (isElegible) window.location.href = nextUrl;
+      });
   }
 
   function serializeFormData(formData) {
