@@ -1,12 +1,23 @@
   <ul class="usa-sidenav">
     {%- for l in params.links -%}
       <li class="usa-sidenav__item">
-        <a href="{{ l.href }}" {% if l.current %}class="usa-current"{% endif %}>{{ l.text }}</a>
+        <a {{ 'href=' + l.href if 'href' in l }} {{ "class=usa-current" if l.current }}>
+          {{ l.text }}
+          {%- if not 'href' in l -%}
+          <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+            <use xlink:href="/assets/img/sprite.svg#lock_outline"></use>
+          </svg>
+          {%- endif -%}
+        </a>
         {%- if l.links -%}
           <ul class="usa-sidenav__sublist">
             {%- for i in l.links -%}
               <li class="usa-sidenav__item">
-                <a href="{{ i.href }}">{{ i.text }}</a>
+                {%- if i.href -%}
+                  <a href="{{ i.href }}">{{ i.text }}</a>
+                {%- else  -%}
+                  <a>{{ i.text }}</a>
+                {%- endif  -%}
                 {%- if i.links -%}
                   <ul class="usa-sidenav__sublist">
                     {%- for n in i.links -%}

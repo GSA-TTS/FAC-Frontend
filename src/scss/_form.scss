@@ -129,6 +129,27 @@ a.usa-button {
     align-self: flex-start;
     position: sticky;
     top: 0;
+
+    .usa-sidenav a:not([href]),
+    .usa-sidenav a:not([href]):hover, 
+    .usa-sidenav a:not([href]):active, 
+    .usa-sidenav a:not([href]):visited {
+      color: color('base-light');
+      cursor: not-allowed;
+    }
+
+    a:not(.usa-button) {
+      display: flex;
+      width: 100%;
+
+      svg {
+        align-self: center;
+        fill: color('base');
+        margin-left: auto;
+      }
+    }
+
+    .usa-sidenav .usa-current { font-weight: bold;}
   }
 }
 
