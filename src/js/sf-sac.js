@@ -43,11 +43,12 @@ function highlightActiveNavSection() {
 
 function attachEventHandlers() {
   const fieldsNeedingValidation = Array.from(
-    document.querySelectorAll('.sf-sac input')
+    document.querySelectorAll('.sf-sac input[data-validate-not-null]')
   );
 
   FORM.addEventListener('submit', (e) => {
     e.preventDefault();
+    console.log(fieldsNeedingValidation);
 
     performValidations(e.target);
     if (!allResponsesValid()) return;

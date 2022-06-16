@@ -60,6 +60,9 @@ fieldsets:
           - label: Program-Specific Audit
             id: audit-type-program-specific
             value: single
+        validations:
+          - operation: not-null
+            error_message: This field is required
   - group: audit-period
     legend: Audit period covered
     required: true
@@ -75,6 +78,9 @@ fieldsets:
           - label: Other
             id: audit-period-other
             value: other
+        validations:
+          - operation: not-null
+            error_message: This field is required
   - group: auditee-identification-numbers
     legend: Auditee identification numbers
     inputs:
@@ -88,6 +94,9 @@ fieldsets:
       - field_type: checkbox
         label: By checking this box, I verify that the Auditee EIN is NOT a social security number.
         id: ein-not-ssn
+        validations:
+          - operation: not-null
+            error_message: EIN may not be a social security number
       - field_type: radio
         label: Are multiple EINs covered in this report?
         id: multiple-eins
@@ -99,6 +108,9 @@ fieldsets:
           - label: No
             id: multiple-eins-no
             value: multiple-eins-no
+        validations:
+          - operation: not-null
+            error_message: This field is required
       - field_type: text
         label: Auditee Unique Entity Identifier (UEI)
         id: auditee-uei
@@ -114,6 +126,9 @@ fieldsets:
           - label: No
             id: multiple-ueis-no
             value: multiple-ueis-no
+        validations:
+          - operation: not-null
+            error_message: This field is required          
   - group: auditee-information
     legend: Auditee information
     inputs:
@@ -183,6 +198,9 @@ fieldsets:
       - field_type: checkbox
         label: By checking this box, I verify that the Auditor EIN is NOT a social security number.
         id: auditor-ein-not-ssn
+        validations:
+          - operation: not-null
+            error_message: EIN may not be a social security number
       - field_type: fieldset
         legend: Audit firm/organization address
         required: true

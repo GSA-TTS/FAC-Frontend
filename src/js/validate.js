@@ -1,23 +1,25 @@
 export const checkValidity = (field) => {
   const errors = [];
   const checks = parseChecks(field);
+  const identifier = field.type == 'radio' ? field.name : field.id;
 
   for (const [operation, constraint] of Object.entries(checks)) {
     const result = validations[operation](field, constraint);
+
     if (result.error) {
       toggleErrorClass(field, true);
-      toggleErrorMessageContainer(field.id, true);
-      toggleErrorMessages(field.id, result, true);
+      toggleErrorMessageContainer(identifier, true, field);
+      toggleErrorMessages(identifier, result, true);
       errors.push(validations[operation](field, constraint));
     } else {
-      toggleErrorMessages(field.id, result, result.error);
+      toggleErrorMessages(identifier, result, result.error);
     }
   }
 
   if (errors.length == 0) {
     toggleErrorClass(field, false);
-    toggleErrorMessages(field.id, null, false);
-    toggleErrorMessageContainer(field.id, false);
+    toggleErrorMessages(identifier, null, false);
+    toggleErrorMessageContainer(identifier, false);
   }
 
   return errors;
@@ -79,7 +81,20 @@ export const validations = {
       validation: 'not-null',
     };
 
-    return !field.value ? { ...result, error: true } : result;
+    if (field.type == 'checkbox') {
+      return !field.checked ? { ...result, error: true } : result;
+    }
+
+    switch (field.type) {
+      case 'text':
+        return !field.value ? { ...result, error: true } : result;
+      case 'radio':
+        return !field.checked ? { ...result, error: true } : result;
+      case 'checkbox':
+        return !field.checked ? { ...result, error: true } : result;
+    }
+
+    return !field.value || !field.checked ? { ...result, error: true } : result;
   },
 
   validateMustMatch: (field, matchField) => {

@@ -8,8 +8,26 @@
       {%- if params.checked -%}
         checked="{{ params.checked }}"
       {%- endif -%}
+      {% for v in params.validations %}
+        data-validate-{{v.operation}}="{{v.constraint}}"
+      {% endfor %}
     />
     <label class="usa-checkbox__label" for="{{ params.id }}">
       {{ params.label }}
     </label>
+    {% if params.validations %}
+    <ul class="usa-error-message"
+      id="{{ params.id }}-error-message"
+      role="alert"
+      >
+      {% for v in params.validations %}
+        <li
+          id="{{ params.id }}-{{ v.operation }}"
+          hidden
+          >
+          {{ v.error_message }}
+        </li>
+      {% endfor %}
+    </ul>
+    {%- endif -%}
   </div>

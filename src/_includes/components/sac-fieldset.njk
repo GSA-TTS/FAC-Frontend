@@ -21,6 +21,21 @@
       }}
     {%- elif i.field_type == "radio" -%}
       <fieldset class="usa-fieldset radio">
+        {% if i.validations %}
+          <ul class="usa-error-message"
+            id="{{ f.group }}-error-message"
+            role="alert"
+            >
+            {% for v in i.validations %}
+              <li
+                id="{{ f.group }}-{{ v.operation }}"
+                hidden
+                >
+                {{ v.error_message }}
+              </li>
+            {% endfor %}
+          </ul>
+        {%- endif -%}
       {%- if i.label -%}
         <legend class="usa-legend">
           {{i.label}}
