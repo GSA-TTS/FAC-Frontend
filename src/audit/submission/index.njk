@@ -48,11 +48,9 @@ fieldsets:
   - group: audit-type
     legend: Type of uniform guidance audit
     required: true
-    validations:
-      - operation: not-null
-        error_message: This field is required
     inputs:
       - field_type: radio
+        group: audit-type
         options:
           - label: Single Audit
             id: audit-type-single 
@@ -99,7 +97,7 @@ fieldsets:
             error_message: EIN may not be a social security number
       - field_type: radio
         label: Are multiple EINs covered in this report?
-        id: multiple-eins
+        group: multiple-eins
         required: true
         options:
           - label: Yes
@@ -117,7 +115,7 @@ fieldsets:
         disabled: true
       - field_type: radio
         label: Are multiple UEIs covered in this report?
-        id: multiple-ueis
+        group: multiple-ueis
         required: true
         options:
           - label: Yes
