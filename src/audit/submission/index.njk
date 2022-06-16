@@ -286,7 +286,8 @@ submit: Save & continue to next section
     <nav class="desktop:grid-col-3 sticky-nav" aria-label="Secondary navigation">
       {{
         component('usa-sidenav', {
-          links: sidenav.links
+          links: sidenav.links,
+          baseUrl: config.baseUrl
         }) 
       }}
     </nav>
