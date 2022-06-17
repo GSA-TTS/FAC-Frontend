@@ -19,7 +19,7 @@
       .then((data) => {
         console.log(data);
         const isElegible = data.eligible;
-        const nextUrl = '../step-2/'; //data.next; //Hard coded for now
+        const nextUrl = '../step-2/'; //Replace with final URL
         if (isElegible) window.location.href = nextUrl;
       });
   }
@@ -57,6 +57,8 @@
 
     if (!isValidEntity(entity) && entity.checked) {
       radioEl.classList.add('usa-radio--error');
+      // Add error MSG.
+      // *******
     }
   }
 
