@@ -71,14 +71,14 @@ describe('Create New Audit', () => {
           url: '/sac/eligibility',
         },
         {
-          elegible: false,
-          errors: 'Not elegible.',
+          eligible: false,
+          errors: 'Not eligible.',
         }
-      ).as('notElegible');
+      ).as('noteligible');
 
       cy.get('button').contains('Continue').click();
 
-      cy.wait('@notElegible').then((interception) => {
+      cy.wait('@noteligible').then((interception) => {
         assert.isNotNull(interception.response.body, '1st API call has data');
       });
       //cy.get('#eligibility-error-message li').should('have.length', 2);
@@ -91,14 +91,14 @@ describe('Create New Audit', () => {
           url: '/sac/eligibility',
         },
         {
-          elegible: true,
+          eligible: true,
           next: 'sac/access',
         }
-      ).as('elegibleResponse');
+      ).as('eligibleResponse');
 
       cy.get('button').contains('Continue').click();
 
-      cy.wait('@elegibleResponse').then((interception) => {
+      cy.wait('@eligibleResponse').then((interception) => {
         assert.isNotNull(interception.response.body, '1st API call has data');
       });
       cy.visit('/audit/new/step-2');

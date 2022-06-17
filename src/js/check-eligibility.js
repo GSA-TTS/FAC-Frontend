@@ -18,9 +18,9 @@
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
-        const isElegible = data.eligible;
+        const iseligible = data.eligible;
         const nextUrl = '../step-2/'; //Replace with final URL
-        if (isElegible) window.location.href = nextUrl;
+        if (iseligible) window.location.href = nextUrl;
       });
   }
 
