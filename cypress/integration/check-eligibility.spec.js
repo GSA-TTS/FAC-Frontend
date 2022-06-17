@@ -54,7 +54,7 @@ describe('Create New Audit', () => {
       cy.get('[class*=--error]').should('have.length', 0);
     });
 
-    it('should hide error messages when invalid entities are fixed', () => {
+    xit('should hide error messages when invalid entities are fixed', () => {
       cy.get('.usa-error-message:visible').should('have.length', 0);
     });
 
