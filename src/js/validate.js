@@ -10,9 +10,11 @@ export const checkValidity = (field) => {
       toggleErrorClass(field, true);
       toggleErrorMessageContainer(identifier, true, field);
       toggleErrorMessages(identifier, result, true);
+      toggleAriaDescribedBy(field, identifier, true);
       errors.push(validations[operation](field, constraint));
     } else {
       toggleErrorMessages(identifier, result, result.error);
+      toggleAriaDescribedBy(field, identifier, false);
     }
   }
 
@@ -42,6 +44,14 @@ const toggleErrorClass = (field, isInvalid, errorClass) => {
   const klass = errorClass ? errorClass : 'usa-input--error';
 
   isInvalid ? field.classList.add(klass) : field.classList.remove(klass);
+};
+
+const toggleAriaDescribedBy = (field, id, isInvalid) => {
+  if (isInvalid) {
+    field.setAttribute('aria-describedby', `${id}-error-message`);
+  } else {
+    field.removeAttribute('aria-describedby');
+  }
 };
 
 const filterObjectByKey = (objToFilter, condition) => {

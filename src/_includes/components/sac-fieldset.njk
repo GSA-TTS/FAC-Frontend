@@ -20,29 +20,29 @@
         })
       }}
     {%- elif i.field_type == "radio" -%}
-      <fieldset class="usa-fieldset radio">
-        {% if i.validations %}
-          <ul class="usa-error-message"
-            id="{{ i.group }}-error-message"
-            role="alert"
-            >
-            {% for v in i.validations %}
-              <li
-                id="{{ i.group }}-{{ v.operation }}"
-                hidden
-                >
-                {{ v.error_message }}
-              </li>
-            {% endfor %}
-          </ul>
-        {%- endif -%}
       {%- if i.label -%}
-        <legend class="usa-legend">
-          {{i.label}}
-          {%- if i.required -%}
-            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-          {%- endif -%}
-        </legend>  
+        <fieldset class="usa-fieldset radio">
+          <legend class="usa-legend">
+            {{i.label}}
+            {%- if i.required -%}
+              <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+            {%- endif -%}
+          </legend>  
+      {%- endif -%}
+      {% if i.validations %}
+        <ul class="usa-error-message"
+          id="{{ i.group }}-error-message"
+          role="alert"
+          >
+          {% for v in i.validations %}
+            <li
+              id="{{ i.group }}-{{ v.operation }}"
+              hidden
+              >
+              {{ v.error_message }}
+            </li>
+          {% endfor %}
+        </ul>
       {%- endif -%}
       {% for o in i.options %}
         {{
@@ -56,7 +56,9 @@
           })
         }}
       {%- endfor -%}
-      </fieldset>
+      {%- if i.label -%}
+        </fieldset>
+      {%- endif -%}
     {%- elif i.field_type == "checkbox" -%}
       {{
         component('usa-checkbox', {
