@@ -81,7 +81,6 @@ describe('Create New Audit', () => {
       cy.wait('@notElegible').then((interception) => {
         assert.isNotNull(interception.response.body, '1st API call has data');
       });
-
       //cy.get('#eligibility-error-message li').should('have.length', 2);
     });
 
