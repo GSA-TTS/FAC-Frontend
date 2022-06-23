@@ -11,8 +11,7 @@ describe('Create New Audit', () => {
     it('will not submit', () => {
       cy.get('.usa-form--large').invoke('submit', (e) => {
         e.preventDefault();
-        // Commented out the throw error due it being called in later tests. Not sure if this is correct.
-        //throw new Error('Form was submitted'); // The test will fail if this error is thrown
+        throw new Error('Form was submitted'); // The test will fail if this error is thrown
       });
 
       cy.get('.usa-button').contains('Continue').click();
@@ -60,48 +59,6 @@ describe('Create New Audit', () => {
 
     it('should enable the "Continue" button when entities are fixed', () => {
       cy.get('button').contains('Continue').should('not.be.disabled');
-    });
-  });
-
-  describe('Eligibility validation via API', () => {
-    it('should return eligibility errors from the remote server', () => {
-      cy.intercept(
-        {
-          method: 'POST',
-          url: '/sac/eligibility',
-        },
-        {
-          eligible: false,
-          errors: 'Not eligible.',
-        }
-      ).as('noteligible');
-
-      cy.get('button').contains('Continue').click();
-
-      cy.wait('@noteligible').then((interception) => {
-        assert.isNotNull(interception.response.body, '1st API call has data');
-      });
-      //cy.get('#eligibility-error-message li').should('have.length', 2);
-    });
-
-    it('should return success response and move to the next page', () => {
-      cy.intercept(
-        {
-          method: 'POST',
-          url: '/sac/eligibility',
-        },
-        {
-          eligible: true,
-          next: 'sac/access',
-        }
-      ).as('eligibleResponse');
-
-      cy.get('button').contains('Continue').click();
-
-      cy.wait('@eligibleResponse').then((interception) => {
-        assert.isNotNull(interception.response.body, '1st API call has data');
-      });
-      cy.visit('/audit/new/step-2');
     });
   });
 
