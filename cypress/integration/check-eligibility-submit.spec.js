@@ -45,14 +45,10 @@ describe('Create New Audit', () => {
 
       cy.wait('@eligibleResponse').then((interception) => {
         assert.isNotNull(interception.response.body, '1st API call has data');
+        // Test eligible value for true
+        // Test URL
+        cy.url().should('include', '/audit/new/step-2/');
       });
-      cy.url().should('contain', '/audit/new/step-2/');
-      cy.url().should('include', '/audit/new/step-2/');
-      /*cy.visit('/audit/new/step-2');
-      cy.get('.usa-step-indicator__segment--current').contains(
-        'Auditee information'
-      );
-      */
     });
   });
 
