@@ -1,5 +1,8 @@
+import { getApiToken } from './auth';
+
 (function () {
-  const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/eligibility';
+  //const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/eligibility';
+  const ENDPOINT = 'http://localhost:8000/sac/eligibility';
   const FORM = document.forms[0];
 
   function submitForm() {
@@ -8,15 +11,19 @@
 
     headers.append('Content-type', 'application/json');
     /* eslint-disable-next-line no-undef */
-    headers.append('Authorization', 'Basic ' + authToken); // authToken is set in a script tag right before this script loads
+    //headers.append('Authorization', 'Basic ' + authToken); // authToken is set in a script tag right before this script loads
 
-    fetch(ENDPOINT, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(formData),
-    })
-      .then((resp) => resp.json())
-      .then((data) => console.log(data)); // Just log the response for now
+    getApiToken().then((token) => {
+      headers.append('Authorization', 'Token ' + token);
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(formData),
+      })
+        .then((resp) => resp.json())
+        .then((data) => console.log(data)); // Just log the response for now
+    });
   }
 
   function serializeFormData(formData) {
