@@ -16,7 +16,12 @@
       body: JSON.stringify(formData),
     })
       .then((resp) => resp.json())
-      .then((data) => console.log(data)); // Just log the response for now
+      .then((data) => {
+        console.log(data);
+        const iseligible = data.eligible;
+        const nextUrl = '../step-2/'; //Replace with final URL
+        if (iseligible) window.location.href = nextUrl;
+      });
   }
 
   function serializeFormData(formData) {
@@ -52,6 +57,8 @@
 
     if (!isValidEntity(entity) && entity.checked) {
       radioEl.classList.add('usa-radio--error');
+      // Add error MSG.
+      // *******
     }
   }
 
