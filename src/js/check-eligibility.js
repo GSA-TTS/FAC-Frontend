@@ -10,8 +10,6 @@ import { getApiToken } from './auth';
     const headers = new Headers();
 
     headers.append('Content-type', 'application/json');
-    /* eslint-disable-next-line no-undef */
-    //headers.append('Authorization', 'Basic ' + authToken); // authToken is set in a script tag right before this script loads
 
     getApiToken().then((token) => {
       headers.append('Authorization', 'Token ' + token);
@@ -22,7 +20,12 @@ import { getApiToken } from './auth';
         body: JSON.stringify(formData),
       })
         .then((resp) => resp.json())
-        .then((data) => console.log(data)); // Just log the response for now
+        .then((data) => {
+          console.log(data);
+          const iseligible = data.eligible;
+          const nextUrl = '../step-2/'; //Replace with final URL
+          if (iseligible) window.location.href = nextUrl;
+        });
     });
   }
 
@@ -59,6 +62,8 @@ import { getApiToken } from './auth';
 
     if (!isValidEntity(entity) && entity.checked) {
       radioEl.classList.add('usa-radio--error');
+      // Add error MSG.
+      // *******
     }
   }
 
