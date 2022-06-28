@@ -19,6 +19,7 @@
   {% block content %}{% endblock %}
   </main>
   {% include 'footer.njk' %}
+  <script>const baseUrl = "{{ config.baseUrl }}"</script>
   <script src="{{ config.baseUrl }}assets/js/app.js" type="text/javascript"></script>
   <script src="{{ config.baseUrl }}assets/js/auth.js" type="text/javascript"></script>  
 </body>

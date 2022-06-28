@@ -4,8 +4,10 @@ import crypto from 'crypto-js';
 const settings = {
   authority: 'https://idp.int.identitysandbox.gov',
   client_id: 'urn:gov:gsa:openidconnect.profiles:sp:sso:gsa:gsa-fac-pkce-01',
-  redirect_uri: window.location.origin + '/auth/post-login',
-  post_logout_redirect_uri: window.location.origin + '/',
+  /* eslint-disable-next-line no-undef */
+  redirect_uri: baseUrl + 'auth/post-login', // baseUrl is set in a script tag right before this script loads
+  /* eslint-disable-next-line no-undef */
+  post_logout_redirect_uri: baseUrl,
   response_type: 'code',
   scope: 'openid email roles',
 
