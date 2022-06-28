@@ -56,8 +56,11 @@ export const getApiToken = () => {
         const headers = new Headers();
         headers.append('Authorization', 'Bearer ' + userInfo.id_token);
 
+        const ENDPOINT = 'https://fac-dev.app.cloud.gov/api/auth/token';
+        //const ENDPOINT = 'http://localhost:8000/api/auth/token';
+
         // exchange the login.gov JWT for the FAC API token
-        fetch('http://localhost:8000/api/auth/token', {
+        fetch(ENDPOINT, {
           method: 'POST',
           headers: headers,
         })

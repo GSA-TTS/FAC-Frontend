@@ -1,8 +1,8 @@
 import { getApiToken } from './auth';
 
 (function () {
-  //const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/eligibility';
-  const ENDPOINT = 'http://localhost:8000/sac/eligibility';
+  const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/eligibility';
+  //const ENDPOINT = 'http://localhost:8000/sac/eligibility';
   const FORM = document.forms[0];
 
   function submitForm() {
