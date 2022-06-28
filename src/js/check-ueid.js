@@ -1,13 +1,30 @@
 import { checkValidity } from './validate';
 import { queryAPI } from './api';
 
+const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/auditee';
 const FORM = document.forms[0];
 
 function submitForm() {
-  // NOOP for now
-  // const formData = serializeFormData(new FormData(FORM));
+  const formData = serializeFormData(new FormData(FORM));
+  const headers = new Headers();
+
+  headers.append('Content-type', 'application/json');
   /* eslint-disable-next-line no-undef */
-  // queryAPI(ENDPOINT, formData, { authToken, method: 'POST' });
+  headers.append('Authorization', 'Basic ' + authToken); // authToken is set in a script tag right before this script loads
+
+  fetch(ENDPOINT, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(formData),
+  })
+    .then((resp) => resp.json())
+    .then((data) => {
+      console.log('FORM SUBMITTED.');
+      console.log(data);
+      const validUEID = data.validueid;
+      const nextUrl = '../step-3/'; //URL value for now
+      if (validUEID) window.location.href = nextUrl;
+    });
 }
 
 function handleUEIDResponse({ valid, response, errors }) {

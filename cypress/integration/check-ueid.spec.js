@@ -73,9 +73,32 @@ describe('Create New Audit', () => {
         cy.get('#confirm_auditee_ueid').type('ASDFASDF').blur();
         cy.get('#confirm_auditee_ueid-must-match').should('not.be.visible');
       });
+      it('should enable the "Continue" button when entities are fixed', () => {
+        cy.get('button').contains('Continue').should('not.be.disabled');
+      });
     });
 
     describe('UEI Validation via API', () => {
+      it('handles API errors', () => {
+        cy.intercept(
+          {
+            method: 'POST', // Route all GET requests
+            url: '/sac/ueivalidation', // that have a URL that matches '/users/*'
+          },
+          {
+            statusCode: 500,
+          }
+        ).as('apiError');
+
+        cy.get('button').contains('Validate UEI').click();
+
+        cy.wait('@apiError').then((interception) => {
+          assert.isNotNull(interception.response.body, '1st API call has data');
+        });
+
+        cy.get('#uei-error-message li').should('have.length', 1);
+      });
+
       it('shows UEI errors from the remote server', () => {
         cy.intercept(
           {
@@ -99,7 +122,7 @@ describe('Create New Audit', () => {
           assert.isNotNull(interception.response.body, '1st API call has data');
         });
 
-        cy.get('#uei-error-message li').should('have.length', 2);
+        cy.get('#uei-error-message li').should('have.length', 3);
       });
 
       it('shows entity name after valid UEI request', () => {
@@ -128,26 +151,6 @@ describe('Create New Audit', () => {
           'have.value',
           'INTERNATIONAL BUSINESS MACHINES CORPORATION'
         );
-      });
-
-      it('handles API errors', () => {
-        cy.intercept(
-          {
-            method: 'POST', // Route all GET requests
-            url: '/sac/ueivalidation', // that have a URL that matches '/users/*'
-          },
-          {
-            statusCode: 500,
-          }
-        ).as('apiError');
-
-        cy.get('button').contains('Validate UEI').click();
-
-        cy.wait('@apiError').then((interception) => {
-          assert.isNotNull(interception.response.body, '1st API call has data');
-        });
-
-        cy.get('#uei-error-message li').should('have.length', 1);
       });
     });
 
