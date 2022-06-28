@@ -1,13 +1,14 @@
 import { UserManager, WebStorageStateStore } from 'oidc-client-ts';
 import crypto from 'crypto-js';
 
+/* eslint-disable-next-line no-undef */
+const appBaseUrl = typeof baseUrl !== 'undefined' ? baseUrl : '/';
+
 const settings = {
   authority: 'https://idp.int.identitysandbox.gov',
   client_id: 'urn:gov:gsa:openidconnect.profiles:sp:sso:gsa:gsa-fac-pkce-01',
-  /* eslint-disable-next-line no-undef */
-  redirect_uri: baseUrl + 'auth/post-login', // baseUrl is set in a script tag right before this script loads
-  /* eslint-disable-next-line no-undef */
-  post_logout_redirect_uri: baseUrl,
+  redirect_uri: appBaseUrl + 'auth/post-login', // baseUrl is set in a script tag right before this script loads
+  post_logout_redirect_uri: appBaseUrl,
   response_type: 'code',
   scope: 'openid email roles',
 
