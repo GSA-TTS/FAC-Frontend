@@ -63,7 +63,7 @@ export const getApiToken = () => {
         })
           .then((resp) => resp.json())
           .then((data) => tokenStore.set('fac-api-token', data.token))
-          .then(() => (window.location = '/'));
+          .then(() => (window.location = appBaseUrl));
       });
     }
   }
