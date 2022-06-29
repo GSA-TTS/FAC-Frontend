@@ -62,5 +62,9 @@
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^25.0.0",
     "stylelint-config-standard-scss": "^3.0.0"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "oidc-client-ts": "^2.0.4"
   }
 }
