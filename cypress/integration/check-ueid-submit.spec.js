@@ -87,10 +87,12 @@ describe('Create New Audit', () => {
         );
         console.log('Response:' + interception.response.body.validueid);
       });
-
+      /*
       cy.get('.usa-step-indicator__segment--current').contains(
         'Audit submission access'
       );
+      */
+      cy.url().should('include', 'step-3');
     });
   });
 
