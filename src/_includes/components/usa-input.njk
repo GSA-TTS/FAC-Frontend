@@ -46,6 +46,5 @@
     {% for v in params.validations %}
       data-validate-{{v.operation}}="{{v.constraint}}"
     {% endfor %}
-    aria-describedby="{{ params.id }}-error-message"
   />
 </div>

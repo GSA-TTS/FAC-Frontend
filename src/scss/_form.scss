@@ -1,3 +1,5 @@
+@use 'uswds-core' as *;
+
 .usa-form {
   padding-bottom: 2rem;
 }
@@ -29,6 +31,14 @@ a.usa-button {
   text-decoration: none;
 }
 
+ul.usa-error-message {
+  display: none;
+}
+
+.usa-form-group--error ul.usa-error-message {
+  display: block;
+}
+
 .audit-submission-access {
   form {
     max-width: 100%;
@@ -38,13 +48,6 @@ a.usa-button {
     padding-left: 0;
   }
 
-  ul.usa-error-message {
-    display: none;
-  }
-
-  .usa-form-group--error ul.usa-error-message {
-    display: block;
-  }
 }
 
 .auditee-information {
@@ -121,3 +124,83 @@ a.usa-button {
   display: none;
 }
 /* stylelint-enable */
+
+@media (min-width: 64em) {
+  .sticky-nav {
+    align-self: flex-start;
+    position: sticky;
+    top: 0;
+
+    .usa-sidenav a:not([href]),
+    .usa-sidenav a:not([href]):hover, 
+    .usa-sidenav a:not([href]):active, 
+    .usa-sidenav a:not([href]):visited {
+      color: #72777a;
+      cursor: not-allowed;
+    }
+
+    a:not(.usa-button) {
+      display: flex;
+      width: 100%;
+
+      svg {
+        align-self: center;
+        fill: color('base');
+        margin-left: auto;
+      }
+    }
+
+    .usa-sidenav .usa-current { font-weight: bold;}
+  }
+}
+
+.audit-metadata {
+  margin-bottom: units(4);
+  margin-top: units(4);
+
+  dt {
+    font-weight: bold;
+
+    &::after {
+      content: ":";
+    }
+  }
+
+  dd {
+    margin-inline-start: 0;
+  }
+}
+
+.sf-sac {
+  fieldset:not(.radio) {
+    margin-bottom: units(4);
+
+    fieldset { 
+      margin-top: units(4);
+
+      legend {
+        font-size: size('sans', 'lg');
+      }
+
+      .usa-form-group {
+        margin-top: units(2);
+      }
+
+      fieldset {
+        &.radio {
+          legend {
+            font-size: size('sans', 'md');
+          }
+
+          & + .usa-form-group {
+            margin-top: units(4);
+          }
+        }
+
+        label:not(.usa-radio__label) {
+          color: color('gray-cool-50');
+        }
+      }
+    }
+  }
+}

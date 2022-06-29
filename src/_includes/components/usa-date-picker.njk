@@ -1,7 +1,10 @@
 <div class="usa-form-group">
-  <label class="usa-label" id="{{ params.id }}-label" for="{{ params.id }}"
-    >{{ params.label | safe }}</label
-  >
+  <label class="usa-label" id="{{ params.id }}-label" for="{{ params.id }}">
+    {{ params.label | safe }}
+    {%- if params.required -%}
+      <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+    {%- endif -%}
+  </label>
   <div class="usa-hint" id="{{ params.id }}-hint">mm/dd/yyyy</div>
   <div class="usa-date-picker">
     <input

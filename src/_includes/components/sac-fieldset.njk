@@ -1,0 +1,98 @@
+{% set f = params.fieldset %}
+
+<fieldset class="usa-fieldset" id="{{ f.group }}">
+  <legend class="usa-legend">
+    {{ f.legend }}
+    {%- if f.required -%}
+      <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+    {%- endif -%}
+  </legend>
+  {%- for i in f.inputs -%}
+    {% if i.field_type == "text" %}
+      {{
+        component('usa-input', {
+          label: i.label,
+          id: i.id,
+          required: i.required,
+          errorMessage: i.error_message,
+          validations: i.validations,
+          disabled: i.disabled
+        })
+      }}
+    {%- elif i.field_type == "radio" -%}
+      {%- if i.label -%}
+        <fieldset class="usa-fieldset radio">
+          <legend class="usa-legend">
+            {{i.label}}
+            {%- if i.required -%}
+              <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+            {%- endif -%}
+          </legend>  
+      {%- endif -%}
+      {% if i.validations %}
+        <ul class="usa-error-message"
+          id="{{ i.group }}-error-message"
+          role="alert"
+          >
+          {% for v in i.validations %}
+            <li
+              id="{{ i.group }}-{{ v.operation }}"
+              hidden
+              >
+              {{ v.error_message }}
+            </li>
+          {% endfor %}
+        </ul>
+      {%- endif -%}
+      {% for o in i.options %}
+        {{
+          component('usa-radio', {
+            label: o.label,
+            group: i.group,
+            id: o.id,
+            value: o.value,
+            errorMessage: o.error_message,
+            validations: i.validations
+          })
+        }}
+      {%- endfor -%}
+      {%- if i.label -%}
+        </fieldset>
+      {%- endif -%}
+    {%- elif i.field_type == "checkbox" -%}
+      {{
+        component('usa-checkbox', {
+          label: i.label,
+          name: f.group,
+          id: i.id,
+          value: i.value,
+          errorMessage: i.error_message,
+          validations: i.validations
+        })
+      }}
+    {%- elif i.field_type == "date" -%}
+      {{ component('usa-date-picker', {
+        label: i.label,
+        id: i.id,
+        required: i.required,
+        errorMessage: i.error_message
+      }) 
+    }}
+    {%- elif i.field_type == "select" -%}
+      {{ component('usa-select', {
+        label: i.label,
+        id: i.id,
+        options: i.options,
+        required: i.required,
+        errorMessage: i.error_message,
+        validations: i.validations
+      }) 
+    }}
+    {%- elif i.field_type == "fieldset" -%}
+      {{ component('sac-fieldset', {
+        fieldset: i
+      }) 
+    }}
+    {%- endif -%}
+  {%- endfor -%}
+</fieldset>
