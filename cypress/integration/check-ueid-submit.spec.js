@@ -69,7 +69,6 @@ describe('Create New Audit', () => {
         );
         console.log('Response:' + interception.response.body.validueid);
       });
-      //cy.get('#eligibility-error-message li').should('have.length', 2);
     });
 
     it('should return success response and move to the next page', () => {
@@ -87,11 +86,6 @@ describe('Create New Audit', () => {
         );
         console.log('Response:' + interception.response.body.validueid);
       });
-      /*
-      cy.get('.usa-step-indicator__segment--current').contains(
-        'Audit submission access'
-      );
-      */
       cy.url().should('include', 'step-3');
     });
   });
