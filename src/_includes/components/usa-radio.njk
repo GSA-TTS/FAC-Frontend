@@ -9,6 +9,9 @@
       aria-required="true"
       required
     {% endif %}
+    {% for v in params.validations %}
+      data-validate-{{v.operation}}="{{v.constraint}}"
+    {% endfor %}
   />
   <label class="usa-radio__label" for="{{ params.id }}">
     {{ params.label }}

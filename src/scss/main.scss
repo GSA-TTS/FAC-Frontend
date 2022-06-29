@@ -11,3 +11,7 @@
 @use '_form.scss';
 @use '_header.scss';
 @use '_footer.scss';
+
+:root {
+  scroll-behavior: smooth;
+}
