@@ -1,0 +1,320 @@
+---
+title: Submission Form
+
+sidenav:
+  links:
+    - text: General information
+      href: '#general-information'
+      current: true
+      links:
+        - text: Fiscal period dates
+          href: '#fiscal-period-dates'
+        - text: Type of uniform guidance audit
+          href: '#audit-type'
+        - text: Audit period covered        
+          href: '#audit-period'
+        - text: Auditee identification numbers
+          href: '#auditee-identification-numbers'
+        - text: Auditee information
+          href: '#auditee-information'
+        - text: Primary Auditor Information
+          href: '#primary-auditor-information'
+    - text: Federal awards
+      href: /
+    - text: Notes to SEFA
+      href: /
+    - text: Audit Information
+      href: /
+    - text: Findings text
+    - text: CAP text
+    - text: Additional EINs
+    - text: Additional UEIs
+    - text: Secondary auditors
+    - text: Finalize
+      href: /
+
+fieldsets:
+  - group: fiscal-period-dates
+    legend: Fiscal Period Dates
+    inputs:
+      - field_type: text
+        id: fy-start
+        label: Fiscal period start date
+        disabled: true
+      - field_type: text
+        id: fy-end
+        label: Fiscal period end date
+        disabled: true
+  - group: audit-type
+    legend: Type of uniform guidance audit
+    required: true
+    inputs:
+      - field_type: radio
+        group: audit-type
+        options:
+          - label: Single Audit
+            id: audit-type-single 
+            value: single
+          - label: Program-Specific Audit
+            id: audit-type-program-specific
+            value: single
+        validations:
+          - operation: not-null
+            error_message: This field is required
+  - group: audit-period
+    legend: Audit period covered
+    required: true
+    inputs:
+      - field_type: radio
+        group: audit-period
+        options:
+          - label: Annual
+            id: audit-period-annual
+            value: annual
+          - label: Biennial
+            id: audit-period-biennial
+            value: biennial
+          - label: Other
+            id: audit-period-other
+            value: other
+        validations:
+          - operation: not-null
+            error_message: This field is required
+  - group: auditee-identification-numbers
+    legend: Auditee identification numbers
+    inputs:
+      - field_type: text
+        label: Auditee Employer Identification Number (EIN)
+        required: true
+        id: auditee-ein
+        validations:
+          - operation: not-null
+            error_message: This field is required
+      - field_type: checkbox
+        label: By checking this box, I verify that the Auditee EIN is NOT a social security number.
+        id: ein-not-ssn
+        validations:
+          - operation: not-null
+            error_message: EIN may not be a social security number
+      - field_type: radio
+        label: Are multiple EINs covered in this report?
+        group: multiple-eins
+        required: true
+        options:
+          - label: Yes
+            id: multiple-eins-yes
+            value: multiple-eins-yes
+          - label: No
+            id: multiple-eins-no
+            value: multiple-eins-no
+        validations:
+          - operation: not-null
+            error_message: This field is required
+      - field_type: text
+        label: Auditee Unique Entity Identifier (UEI)
+        id: auditee-uei
+        disabled: true
+      - field_type: radio
+        label: Are multiple UEIs covered in this report?
+        group: multiple-ueis
+        required: true
+        options:
+          - label: Yes
+            id: multiple-ueis-yes
+            value: multiple-ueis-yes
+          - label: No
+            id: multiple-ueis-no
+            value: multiple-ueis-no
+        validations:
+          - operation: not-null
+            error_message: This field is required          
+  - group: auditee-information
+    legend: Auditee information
+    inputs:
+      - field_type: text
+        label: Auditee name
+        disabled: true
+        id: auditee-name
+      - field_type: fieldset
+        legend: Auditee address
+        required: true
+        inputs:
+          - field_type: text
+            label: Street
+            id: auditee-address-street
+            disabled: true
+          - field_type: text
+            label: City
+            id: auditee-address-city
+            disabled: true
+          - field_type: text
+            label: State
+            id: auditee-address-state
+            disabled: true
+          - field_type: text
+            label: ZIP code
+            id: auditee-address-zip
+            disabled: true
+      - field_type: fieldset
+        legend: Auditee contact
+        inputs:
+          - field_type: text
+            label: Name
+            id: auditee-contact-name
+            disabled: true
+          - field_type: text
+            label: Title
+            id: auditee-contact-title
+            disabled: true
+      - field_type: text
+        label: Auditee telephone
+        id: auditee-telephone
+        disabled: true
+      - field_type: select
+        label: Auditee e-mail
+        required: true
+        id: auditee-email
+        validations:
+          - operation: not-null
+            error_message: This field is required
+  - group: primary-auditor-information
+    legend: Primary Auditor Information
+    inputs:
+      - field_type: text
+        label: Audit firm/organization name
+        required: true
+        id: audit-firm-name
+        validations:
+          - operation: not-null
+            error_message: This field is required
+      - field_type: text
+        label: Audit firm/organization EIN
+        required: true
+        id: audit-firm-ein
+        validations:
+          - operation: not-null
+            error_message: This field is required
+      - field_type: checkbox
+        label: By checking this box, I verify that the Auditor EIN is NOT a social security number.
+        id: auditor-ein-not-ssn
+        validations:
+          - operation: not-null
+            error_message: EIN may not be a social security number
+      - field_type: fieldset
+        legend: Audit firm/organization address
+        required: true
+        inputs:
+          - field_type: text
+            label: Street
+            required: true
+            id: auditor-address-street
+            validations:
+              - operation: not-null
+                error_message: This field is required
+          - field_type: text
+            label: City
+            required: true
+            id: auditor-address-city
+            validations:
+              - operation: not-null
+                error_message: This field is required
+          - field_type: text
+            label: State
+            required: true
+            id: auditor-address-state
+            validations:
+              - operation: not-null
+                error_message: This field is required
+          - field_type: text
+            label: ZIP code
+            required: true
+            id: auditor-address-zip
+            validations:
+              - operation: not-null
+                error_message: This field is required
+          - field_type: fieldset
+            legend: Primary auditor contact
+            required: true
+            inputs:
+              - field_type: text
+                label: Name
+                required: true
+                id: auditor-contact-name
+                validations:
+                  - operation: not-null
+                    error_message: This field is required
+              - field_type: text
+                label: Title
+                required: true
+                id: auditor-contact-title
+                validations:
+                  - operation: not-null
+                    error_message: This field is required
+          - field_type: text
+            label: Primary auditor telephone
+            required: true
+            id: auditor-telephone
+            validations:
+              - operation: not-null
+                error_message: This field is required
+          - field_type: select
+            label: Primary auditor e-mail
+            required: true
+            id: auditor-email
+            options:
+              - value: test
+                label: Test Value
+submit: Save & continue to next section
+---
+{%- extends "form.njk" -%}
+{%- block form -%}
+<div class="grid-container">
+  <dl class="grid-row grid-gap audit-metadata">
+    <div class="tablet:grid-col">
+      <dt>Auditee entity name</dt>
+      <dd>Lorem Ipsum Ltd.</dd>
+    </div>
+    <div class="tablet:grid-col">
+      <dt>Report ID</dt>
+      <dd>923109</dd>
+    </div>
+    <div class="tablet:grid-col">
+      <dt>Version</dt>
+      <dd>1</dd>
+    </div>
+  </dl>
+  <div class="grid-row grid-gap">
+    <nav class="desktop:grid-col-3 sticky-nav" aria-label="Secondary navigation">
+      {{
+        component('usa-sidenav', {
+          links: sidenav.links,
+          baseUrl: config.baseUrl
+        }) 
+      }}
+    </nav>
+    <form class="desktop:grid-col-9 usa-form usa-form--large sf-sac" id="general-info">
+      <fieldset class="usa-fieldset">
+        <legend class="usa-legend usa-legend--large" id="general-information">General information</legend>
+        <p>
+          <abbr
+            title="required"
+            class="usa-hint usa-hint--required"
+            >*</abbr
+          >Indicates a required field.
+        </p>
+        {%- for f in fieldsets -%}
+          {{ 
+            component('sac-fieldset', {
+              fieldset: f
+            }) 
+          }}
+        {%- endfor -%}
+
+        <button class="usa-button" id="continue">
+          {{ submit }}
+        </button>
+      </fieldset>
+    </form>
+</div>
+<script src="{{ config.baseUrl }}assets/js/sf-sac.js"></script>
+{%- endblock -%}
