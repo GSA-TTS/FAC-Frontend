@@ -2,7 +2,9 @@
   "urls": [
     "http://localhost:8080",
     "http://localhost:8080/audit/new/step-1",
-    "http://localhost:8080/audit/new/step-2"
+    "http://localhost:8080/audit/new/step-2",
+    "http://localhost:8080/audit/new/step-3",
+    "http://localhost:8080/audit/submission"
   ],
   "defaults": {
     "standard": "WCAG2AA",
@@ -10,6 +12,6 @@
       "htmlcs",
       "axe"
     ],
-    "hideElements": ".sign-in-logo span, header button span, .usa-step-indicator__segment-label"
+    "hideElements": ".usa-select, .usa-step-indicator__segment-label"
   }
 }
