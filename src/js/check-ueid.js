@@ -1,30 +1,66 @@
 import { checkValidity } from './validate';
 import { queryAPI } from './api';
+import { getApiToken } from './auth';
 
 const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/auditee';
+//const ENDPOINT = '/sac/auditee';
 const FORM = document.forms[0];
 
+// Object to match up form IDs to expected IDs
+const translations = [
+  {
+    form_id: 'auditee_ueid',
+    expected_id: 'auditee_uei',
+  },
+  {
+    form_id: 'auditee_fy_start_date_start',
+    expected_id: 'auditee_fiscal_period_start',
+  },
+  {
+    form_id: 'auditee_fy_start_date_end',
+    expected_id: 'auditee_fiscal_period_end',
+  },
+];
+
 function submitForm() {
+  // Added following forEach to add hidden inputs with the matched expected IDs with form values
+  translations.forEach((pair) => {
+    let inputVal = document.getElementById(pair.form_id).value;
+    if (pair.expected_id != 'auditee_uei') {
+      inputVal = new Date(inputVal).toLocaleDateString('en-CA');
+    }
+    let input = document.createElement('input');
+    input.setAttribute('type', 'hidden');
+    input.setAttribute('name', pair.expected_id);
+    input.setAttribute('value', inputVal);
+    FORM.appendChild(input);
+  });
+
   const formData = serializeFormData(new FormData(FORM));
+
   const headers = new Headers();
 
   headers.append('Content-type', 'application/json');
-  /* eslint-disable-next-line no-undef */
-  headers.append('Authorization', 'Basic ' + authToken); // authToken is set in a script tag right before this script loads
 
-  fetch(ENDPOINT, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify(formData),
-  })
-    .then((resp) => resp.json())
-    .then((data) => {
-      console.log('FORM SUBMITTED.');
-      console.log(data);
-      const validUEID = data.validueid;
-      const nextUrl = '../step-3/'; //URL value for now
-      if (validUEID) window.location.href = nextUrl;
-    });
+  getApiToken().then((token) => {
+    headers.append('Authorization', 'Token ' + token);
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(formData),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+        handleAuditeeResponse(data);
+      });
+  });
+}
+
+function handleAuditeeResponse(data) {
+  const nextUrl = '../step-3/'; //URL value for now
+  if (data.next) window.location.href = nextUrl;
 }
 
 function handleUEIDResponse({ valid, response, errors }) {
@@ -104,15 +140,9 @@ function validateFyStartDate(fyInput) {
   setFormDisabled(!allResponsesValid());
 }
 
-/*
-We're not submitting this form yet,
-so this won't be called. Rather than delete code we know we need,
-just stope the linter from complaining about it for now. */
-/* eslint-disable no-unused-vars */
 function serializeFormData(formData) {
   return Object.fromEntries(formData);
 }
-/* eslint-enable */
 
 function setFormDisabled(shouldDisable) {
   const continueBtn = document.getElementById('continue');
