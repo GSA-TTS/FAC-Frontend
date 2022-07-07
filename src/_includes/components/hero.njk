@@ -3,7 +3,7 @@
       <h1 class="usa-hero__heading">{{ hero.callout.text }}</h1>
       <p>{{ hero.content | safe }}</p>
       <div class="usa-button-group">
-        <a class="usa-button sign-in-button" href="{{ hero.buttons.primary.href }}">
+        <a class="usa-button {{ hero.buttons.primary.class }}" href="{{ hero.buttons.primary.href }}">
           {{ hero.buttons.primary.text }}
         </a>
         <a class="usa-button usa-button--outline" href="{{ hero.buttons.secondary.href }}">

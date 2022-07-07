@@ -9,6 +9,7 @@ hero:
   buttons:
     primary:
       href: /#
+      class: sign-in-button
       text: Log in to submit an audit
     secondary:
       href: /callout/
