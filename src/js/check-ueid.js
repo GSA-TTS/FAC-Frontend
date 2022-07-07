@@ -6,40 +6,15 @@ const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/auditee';
 //const ENDPOINT = '/sac/auditee';
 const FORM = document.forms[0];
 
-// Object to match up form IDs to expected IDs
-const translations = [
-  {
-    form_id: 'auditee_ueid',
-    expected_id: 'auditee_uei',
-  },
-  {
-    form_id: 'auditee_fy_start_date_start',
-    expected_id: 'auditee_fiscal_period_start',
-  },
-  {
-    form_id: 'auditee_fy_start_date_end',
-    expected_id: 'auditee_fiscal_period_end',
-  },
-];
-
 function submitForm() {
-  // Added following forEach to add hidden inputs with the matched expected IDs with form values
-  translations.forEach((pair) => {
-    let inputVal = document.getElementById(pair.form_id).value;
-    if (pair.expected_id != 'auditee_uei') {
-      inputVal = new Date(inputVal).toLocaleDateString('en-CA');
-    }
-    let input = document.createElement('input');
-    input.setAttribute('type', 'hidden');
-    input.setAttribute('name', pair.expected_id);
-    input.setAttribute('value', inputVal);
-    FORM.appendChild(input);
-  });
+  // Format Dates
+  let start_input = document.getElementById('auditee_fiscal_period_start');
+  start_input.value = new Date(start_input.value).toLocaleDateString('en-CA');
+  let end_input = document.getElementById('auditee_fiscal_period_end');
+  end_input.value = new Date(end_input.value).toLocaleDateString('en-CA');
 
   const formData = serializeFormData(new FormData(FORM));
-
   const headers = new Headers();
-
   headers.append('Content-type', 'application/json');
 
   getApiToken().then((token) => {
@@ -52,7 +27,6 @@ function submitForm() {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
         handleAuditeeResponse(data);
       });
   });
@@ -102,7 +76,7 @@ function handleApiError() {
 }
 
 function validateUEID() {
-  const uei = document.getElementById('auditee_ueid').value;
+  const uei = document.getElementById('auditee_uei').value;
   queryAPI(
     '/sac/ueivalidation',
     { uei },
@@ -181,7 +155,7 @@ function attachEventHandlers() {
     });
   });
 
-  const fyInput = document.getElementById('auditee_fy_start_date_start');
+  const fyInput = document.getElementById('auditee_fiscal_period_start');
   fyInput.addEventListener('change', (e) => {
     validateFyStartDate(e.target);
   });

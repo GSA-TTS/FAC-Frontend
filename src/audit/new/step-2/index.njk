@@ -2,7 +2,7 @@
 title: Create new audit
 
 inputs:
-  - id: auditee_ueid
+  - id: auditee_uei
     label: Auditee Unique Entity Identifier (UEI)
     required: true
     field_type: text
@@ -13,7 +13,7 @@ inputs:
         constraint: '== 12'
         error_message: UEI is twelve characters long
 
-  - id: confirm_auditee_ueid
+  - id: confirm_auditee_uei
     label: Re-enter Auditee Unique Entity Identifier (UEI)
     required: true
     field_type: text
@@ -24,7 +24,7 @@ inputs:
         constraint: '== 12'
         error_message: UEI is twelve characters long
       - operation: must-match
-        constraint: auditee_ueid
+        constraint: auditee_uei
         error_message: This field should match the one before it
 
   - id: check_ueid
@@ -38,11 +38,11 @@ inputs:
     field_type: text
     error_message: Auditee Name cannot be blank
 
-  - id: auditee_fy_start_date_start
+  - id: auditee_fiscal_period_start
     label: Auditee fiscal period <strong>start</strong> date for this submission
     field_type: date
 
-  - id: auditee_fy_start_date_end
+  - id: auditee_fiscal_period_end
     label: Auditee fiscal period <strong>end</strong> date for this submission
     field_type: date
 
@@ -110,7 +110,7 @@ explanatory_text:
           </div>
           {% elif i.field_type == "date" %}
           <div class="usa-form-group validate-fy">
-            {% if i.id == "auditee_fy_start_date_start" %}
+            {% if i.id == "auditee_fiscal_period_start" %}
             <ul class="usa-error-message"
               id="fy-error-message"
               role="alert"

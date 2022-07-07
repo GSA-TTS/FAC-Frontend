@@ -10,8 +10,8 @@ describe('Create New Audit', () => {
 
     describe('ADD Auditee UEID', () => {
       it('should add auditee UEID and confirm auditee UEID', () => {
-        cy.get('#auditee_ueid').clear().type('ZQGGHJH74DW7').blur();
-        cy.get('#confirm_auditee_ueid').clear().type('ZQGGHJH74DW7').blur();
+        cy.get('#auditee_uei').clear().type('ZQGGHJH74DW7').blur();
+        cy.get('#confirm_auditee_uei').clear().type('ZQGGHJH74DW7').blur();
       });
     });
 
@@ -47,7 +47,7 @@ describe('Create New Audit', () => {
 
     describe('ADD Fiscal Year', () => {
       it('should not show an error if the user enters a date after 12/31/2019', () => {
-        cy.get('#auditee_fy_start_date_start').clear().type('12/31/2020');
+        cy.get('#auditee_fiscal_period_start').clear().type('12/31/2020');
         cy.get('#fy-error-message li').should('have.length', 0);
       });
     });
