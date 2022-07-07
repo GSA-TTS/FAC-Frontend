@@ -30,8 +30,8 @@ export const getApiToken = () => {
 
 (function () {
   function attachSignInButtonHandler() {
-    const signInButton = document.getElementById('sign-in');
-    if (signInButton) {
+    const signInButtons = document.getElementsByClassName('sign-in-button');
+    Array.prototype.forEach.call(signInButtons, (signInButton) => {
       signInButton.addEventListener('click', () => {
         const nonce = crypto.lib.WordArray.random(32).toString(
           crypto.enc.Base64
@@ -44,7 +44,7 @@ export const getApiToken = () => {
           nonce,
         });
       });
-    }
+    });
   }
 
   function attachEventHandlers() {
@@ -66,7 +66,7 @@ export const getApiToken = () => {
         })
           .then((resp) => resp.json())
           .then((data) => tokenStore.set('fac-api-token', data.token))
-          .then(() => (window.location = appBaseUrl));
+          .then(() => (window.location = appBaseUrl + 'audit/new/step-1'));
       });
     }
   }
