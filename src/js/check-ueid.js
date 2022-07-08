@@ -1,13 +1,40 @@
 import { checkValidity } from './validate';
 import { queryAPI } from './api';
+import { getApiToken } from './auth';
 
+const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/auditee';
+//const ENDPOINT = '/sac/auditee';
 const FORM = document.forms[0];
 
 function submitForm() {
-  // NOOP for now
-  // const formData = serializeFormData(new FormData(FORM));
-  /* eslint-disable-next-line no-undef */
-  // queryAPI(ENDPOINT, formData, { authToken, method: 'POST' });
+  // Format Dates
+  let start_input = document.getElementById('auditee_fiscal_period_start');
+  start_input.value = new Date(start_input.value).toLocaleDateString('en-CA');
+  let end_input = document.getElementById('auditee_fiscal_period_end');
+  end_input.value = new Date(end_input.value).toLocaleDateString('en-CA');
+
+  const formData = serializeFormData(new FormData(FORM));
+  const headers = new Headers();
+  headers.append('Content-type', 'application/json');
+
+  getApiToken().then((token) => {
+    headers.append('Authorization', 'Token ' + token);
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(formData),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        handleAuditeeResponse(data);
+      });
+  });
+}
+
+function handleAuditeeResponse(data) {
+  const nextUrl = '../step-3/'; //URL value for now
+  if (data.next) window.location.href = nextUrl;
 }
 
 function handleUEIDResponse({ valid, response, errors }) {
@@ -49,7 +76,7 @@ function handleApiError() {
 }
 
 function validateUEID() {
-  const uei = document.getElementById('auditee_ueid').value;
+  const uei = document.getElementById('auditee_uei').value;
   queryAPI(
     '/sac/ueivalidation',
     { uei },
@@ -87,15 +114,9 @@ function validateFyStartDate(fyInput) {
   setFormDisabled(!allResponsesValid());
 }
 
-/*
-We're not submitting this form yet,
-so this won't be called. Rather than delete code we know we need,
-just stope the linter from complaining about it for now. */
-/* eslint-disable no-unused-vars */
 function serializeFormData(formData) {
   return Object.fromEntries(formData);
 }
-/* eslint-enable */
 
 function setFormDisabled(shouldDisable) {
   const continueBtn = document.getElementById('continue');
@@ -134,7 +155,7 @@ function attachEventHandlers() {
     });
   });
 
-  const fyInput = document.getElementById('auditee_fy_start_date_start');
+  const fyInput = document.getElementById('auditee_fiscal_period_start');
   fyInput.addEventListener('change', (e) => {
     validateFyStartDate(e.target);
   });
