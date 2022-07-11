@@ -24,15 +24,15 @@ describe('Create New Audit', () => {
     });
 
     it('should mark errors when invalid properties are checked', () => {
-      cy.get('#auditee_ueid').click().blur();
-      cy.get('#confirm_auditee_ueid').click().blur();
+      cy.get('#auditee_uei').click().blur();
+      cy.get('#confirm_auditee_uei').click().blur();
       cy.get('[class*=usa-form-group--error]').should('have.length', 2);
     });
 
     describe('Auditee UEID', () => {
       it('should display an error message when left blank', () => {
-        cy.get('#auditee_ueid').click().blur();
-        cy.get('#auditee_ueid-not-null').should('be.visible');
+        cy.get('#auditee_uei').click().blur();
+        cy.get('#auditee_uei-not-null').should('be.visible');
       });
 
       it('should disable the submit button when fields are invalid', () => {
@@ -40,22 +40,22 @@ describe('Create New Audit', () => {
       });
 
       it('should remove the error message when input is supplied', () => {
-        cy.get('#auditee_ueid').type('ASDF').blur();
-        cy.get('#auditee_ueid-not-null').should('not.be.visible');
+        cy.get('#auditee_uei').type('ASDF').blur();
+        cy.get('#auditee_uei-not-null').should('not.be.visible');
       });
 
       it('should indicate when the supplied input is too short', () => {
-        cy.get('#auditee_ueid-length').should('be.visible');
+        cy.get('#auditee_uei-length').should('be.visible');
       });
 
       it('should indicate when the supplied input is too long', () => {
-        cy.get('#auditee_ueid').clear().type('ASDFASDFASDFA').blur();
-        cy.get('#auditee_ueid-length').should('be.visible');
+        cy.get('#auditee_uei').clear().type('ASDFASDFASDFA').blur();
+        cy.get('#auditee_uei-length').should('be.visible');
       });
 
       it('should remove the error message when the input is correct', () => {
-        cy.get('#auditee_ueid').clear().type('ASDFASDFASDF').blur();
-        cy.get('#auditee_ueid-length').should('not.be.visible');
+        cy.get('#auditee_uei').clear().type('ASDFASDFASDF').blur();
+        cy.get('#auditee_uei-length').should('not.be.visible');
       });
 
       it('should enable the "Continue" button when entities are fixed', () => {
@@ -65,17 +65,40 @@ describe('Create New Audit', () => {
 
     describe('Auditee UEID Confirmation', () => {
       it('should display an error message when input does not match UEID field', () => {
-        cy.get('#confirm_auditee_ueid').type('ASDF').blur();
-        cy.get('#confirm_auditee_ueid-must-match').should('be.visible');
+        cy.get('#confirm_auditee_uei').type('ASDF').blur();
+        cy.get('#confirm_auditee_uei-must-match').should('be.visible');
       });
 
       it('should remove the error message when input matches UEID field', () => {
-        cy.get('#confirm_auditee_ueid').type('ASDFASDF').blur();
-        cy.get('#confirm_auditee_ueid-must-match').should('not.be.visible');
+        cy.get('#confirm_auditee_uei').type('ASDFASDF').blur();
+        cy.get('#confirm_auditee_uei-must-match').should('not.be.visible');
+      });
+      it('should enable the "Continue" button when entities are fixed', () => {
+        cy.get('button').contains('Continue').should('not.be.disabled');
       });
     });
 
     describe('UEI Validation via API', () => {
+      it('handles API errors', () => {
+        cy.intercept(
+          {
+            method: 'POST', // Route all GET requests
+            url: '/sac/ueivalidation', // that have a URL that matches '/users/*'
+          },
+          {
+            statusCode: 500,
+          }
+        ).as('apiError');
+
+        cy.get('button').contains('Validate UEI').click();
+
+        cy.wait('@apiError').then((interception) => {
+          assert.isNotNull(interception.response.body, '1st API call has data');
+        });
+
+        cy.get('#uei-error-message li').should('have.length', 1);
+      });
+
       it('shows UEI errors from the remote server', () => {
         cy.intercept(
           {
@@ -99,7 +122,7 @@ describe('Create New Audit', () => {
           assert.isNotNull(interception.response.body, '1st API call has data');
         });
 
-        cy.get('#uei-error-message li').should('have.length', 2);
+        cy.get('#uei-error-message li').should('have.length', 3);
       });
 
       it('shows entity name after valid UEI request', () => {
@@ -129,36 +152,16 @@ describe('Create New Audit', () => {
           'INTERNATIONAL BUSINESS MACHINES CORPORATION'
         );
       });
-
-      it('handles API errors', () => {
-        cy.intercept(
-          {
-            method: 'POST', // Route all GET requests
-            url: '/sac/ueivalidation', // that have a URL that matches '/users/*'
-          },
-          {
-            statusCode: 500,
-          }
-        ).as('apiError');
-
-        cy.get('button').contains('Validate UEI').click();
-
-        cy.wait('@apiError').then((interception) => {
-          assert.isNotNull(interception.response.body, '1st API call has data');
-        });
-
-        cy.get('#uei-error-message li').should('have.length', 1);
-      });
     });
 
     describe('Fiscal Year Validation', () => {
       it('should show an error if the user enters a date before 1/1/2020', () => {
-        cy.get('#auditee_fy_start_date_start').type('12/31/2019');
+        cy.get('#auditee_fiscal_period_start').type('12/31/2019');
         cy.get('#fy-error-message li').should('have.length', 1);
       });
 
       it('should not show an error if the user enters a date after 12/31/2019', () => {
-        cy.get('#auditee_fy_start_date_start').clear().type('12/31/2020');
+        cy.get('#auditee_fiscal_period_start').clear().type('12/31/2020');
         cy.get('#fy-error-message li').should('have.length', 0);
       });
     });

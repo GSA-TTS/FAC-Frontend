@@ -16,11 +16,11 @@ inputs:
     field_type: text
     error_message: Auditee Name cannot be blank
 
-  - id: auditee_fy_start_date_start
+  - id: auditee_fiscal_period_start
     label: Auditee fiscal period <strong>start</strong> date for this submission
     field_type: date
 
-  - id: auditee_fy_start_date_end
+  - id: auditee_fiscal_period_end
     label: Auditee fiscal period <strong>end</strong> date for this submission
     field_type: date
 
@@ -83,7 +83,7 @@ explanatory_text:
             }}
           {% elif i.field_type == "date" %}
           <div class="usa-form-group validate-fy">
-            {% if i.id == "auditee_fy_start_date_start" %}
+            {% if i.id == "auditee_fiscal_period_start" %}
             <ul class="usa-error-message"
               id="fy-error-message"
               role="alert"
