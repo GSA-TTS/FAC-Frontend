@@ -113,7 +113,7 @@ function performValidations(field) {
 }
 
 function attachEventHandlers() {
-  const btnValidateUEI = document.getElementById('validate-UEI');
+  const btnValidateUEI = document.getElementById('auditee_ueid-btn');
   btnValidateUEI.addEventListener('click', (e) => {
     e.preventDefault();
     validateUEID();

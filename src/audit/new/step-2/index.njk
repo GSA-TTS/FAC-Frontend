@@ -1,37 +1,15 @@
 ---
 title: Create new audit
 
+uei-search:
+    validations:
+      - operation: not-null
+        error_message: Can't be null
+      - operation: length
+        constraint: '== 12'
+        error_message: UEI is twelve characters long
+
 inputs:
-  - id: auditee_ueid
-    label: Auditee Unique Entity Identifier (UEI)
-    required: true
-    field_type: text
-    validations:
-      - operation: not-null
-        error_message: Can't be null
-      - operation: length
-        constraint: '== 12'
-        error_message: UEI is twelve characters long
-
-  - id: confirm_auditee_ueid
-    label: Re-enter Auditee Unique Entity Identifier (UEI)
-    required: true
-    field_type: text
-    validations:
-      - operation: not-null
-        error_message: Can't be null
-      - operation: length
-        constraint: '== 12'
-        error_message: UEI is twelve characters long
-      - operation: must-match
-        constraint: auditee_ueid
-        error_message: This field should match the one before it
-
-  - id: check_ueid
-    label: Validate UEI
-    field_type: button
-    tooltip_text: Check SAM.gov for the UEI you entered. If UEI found, auditee name will autopopulate
-
   - id: auditee_name
     label: Auditee name
     disabled: true
@@ -79,6 +57,18 @@ explanatory_text:
             >*</abbr
           >Indicates a required field.
         </p>
+
+        <p>Search by Unique Entity Identifier (UEI) for your entity name in the SAM.gov database.</p>
+        {{
+          component('usa-search', {
+            id: 'auditee_ueid',
+            baseUrl: config.baseUrl,
+            validations: uei-search.validations
+          })
+        }}
+
+        <p>Don’t know your UEI? You can find your UEI or register for a new UEI by visiting SAM.gov.</p>
+
         {% for i in inputs %}
           {% if i.field_type == "text" %}
             {{
@@ -91,23 +81,6 @@ explanatory_text:
                 disabled: i.disabled
               })
             }}
-          {% elif i.field_type == "button" %}
-          <div class="usa-form-group validate-uei">
-            <ul class="usa-error-message"
-              id="uei-error-message"
-              role="alert"
-              >
-            </ul>
-            <button class="usa-button
-                           usa-button--secondary
-                           usa-button--unstyled
-                           usa-tooltip"
-                    data-position="right"
-                    title="{{ i.tooltip_text }}"
-                    id="validate-UEI">
-              {{ i.label }}
-            </button>
-          </div>
           {% elif i.field_type == "date" %}
           <div class="usa-form-group validate-fy">
             {% if i.id == "auditee_fy_start_date_start" %}
