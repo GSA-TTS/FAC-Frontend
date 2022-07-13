@@ -9,6 +9,32 @@ uei-search:
         constraint: '== 12'
         error_message: UEI is twelve characters long
 
+modals:
+  - id: modal-uei-success
+    heading: Search Result
+    buttons:
+      - primary: Continue
+      - secondary: Go back
+    description: >
+      <p>Click continue to create a new audit submission for this auditee.</p>
+      <p>Not the auditee you’re looking for? Go back, check the UEI you entered, and try again.</p>
+  - id: modal-uei-connection-error
+    heading: We can't connect to SAM.gov to confirm your UEI.
+    buttons:
+      - primary: Go back
+      - secondary: Continue without a confirmed UEI
+    description: >
+      <p>We’re sorry for the delay. You can continue, but we’ll need confirm your UEI before your audit submission can be certified.</p>
+      <p>You might also want to check the UEI you entered, go back, and try again.</p>
+  - id: modal-uei-not-found
+    heading: Your UEI is not recognized
+    buttons:
+      - primary: Try again
+      - secondary: Continue without a confirmed UEI
+    description: >
+      <p>You can try re-entering the UEI. If you don’t have the UEI, you may find it at SAM.gov.</p>
+      <p>You may also continue without the UEI, and you will be prompted to update the UEI before you can submit your audit.</p>
+
 inputs:
   - id: auditee_name
     label: Auditee name
@@ -61,9 +87,10 @@ explanatory_text:
         <p>Search by Unique Entity Identifier (UEI) for your entity name in the SAM.gov database.</p>
         {{
           component('usa-search', {
-            id: 'auditee_ueid',
+            id: 'auditee_uei',
             baseUrl: config.baseUrl,
-            validations: uei-search.validations
+            validations: uei-search.validations,
+            controlsModal: 'uei-search-result'
           })
         }}
 
@@ -128,5 +155,51 @@ explanatory_text:
   </div>
 <script>const authToken = "{{ config.temporaryAuthToken }}"</script>
 <script src="{{ config.baseUrl }}assets/js/check-ueid.js"></script>
+
+  <div
+    class="usa-modal usa-modal--lg uei-search-result loading"
+    id="uei-search-result"
+    aria-labelledby="uei-search-result-heading"
+    aria-describedby="uei-search-result-description"
+  >
+    <div class="usa-modal__content">
+      <div class="usa-modal__main">
+        <img src="{{ config.baseUrl }}assets/img/loader.svg" alt="loading">
+        <h2 class="usa-modal__heading" id="uei-search-result-heading">
+        </h2>
+        <div class="usa-prose">
+          <p id="uei-search-result-description">
+          </p>
+        </div>
+        <div class="usa-modal__footer">
+          <ul class="usa-button-group">
+            <li class="usa-button-group__item">
+              <button type="button" class="usa-button" data-close-modal>
+              </button>
+            </li>
+            <li class="usa-button-group__item">
+              <button
+                type="button"
+                class="usa-button usa-button--unstyled padding-105 text-center"
+                data-close-modal
+              >
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button
+        class="usa-button usa-modal__close"
+        aria-label="Close this window"
+        data-close-modal
+      >
+        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+          <use xlink:href="/assets/img/sprite.svg#close"></use>
+        </svg>
+      </button>
+    </div>
+  </div>
+
 </div>
+
 {%- endblock -%}

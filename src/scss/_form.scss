@@ -113,6 +113,23 @@ ul.usa-error-message {
   }
 }
 
+.uei-search-result {
+  img {
+    display: none;
+    margin: auto;
+  }
+
+  &.loading {
+    button {
+      display: none;
+    }
+
+    img {
+      display: block;
+    }
+  }
+}
+
 .delete-contact {
   margin: 0 !important;
   margin-top: auto !important;

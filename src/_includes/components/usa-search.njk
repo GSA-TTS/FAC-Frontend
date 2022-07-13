@@ -14,7 +14,15 @@
     {% endfor %}
   </ul>
   <input class="usa-input" id="{{ params.id }}" type="search" name="search" />
-  <button class="usa-button" id="{{ params.id }}-btn" type="submit">
+  <button
+    class="usa-button"
+    id="{{ params.id }}-btn"
+    type="submit"
+    {% if params.controlsModal %}
+      aria-controls={{ params.controlsModal }}
+      data-open-modal
+    {% endif %}
+    >
     <span class="usa-search__submit-text">
       <img
         src="{{ params.baseUrl }}assets/img/usa-icons-bg/search--white.svg"
