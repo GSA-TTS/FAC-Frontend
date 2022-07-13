@@ -1,7 +1,6 @@
 import { checkValidity } from './validate';
 import { queryAPI } from './api';
 import { getApiToken } from './auth';
-import modal from '@uswds/uswds/js/usa-modal';
 
 const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/auditee';
 //const ENDPOINT = '/sac/auditee';
@@ -71,21 +70,42 @@ function handleInvalidUei(errors) {
 }
 
 function handleApiError() {
-  const errorMsg = 'oops';
-  const id = 'modal-uei-connection-error';
-  attachModal(id);
-  const modalEl = document.getElementById(id);
-  console.log(modalEl);
-  console.log(modal);
-  modal.toggleModal.call(modalEl, true);
-  handleInvalidUei({ uei: [errorMsg] });
+  populateModal('connection-error');
 }
 
 // 'connection-error' | 'not-found' | 'success'
-function attachModal(formStatus) {
-  const modalTmpl = document.getElementById(`${formStatus}-tmpl`);
-  const modalEl = modalTmpl.content.cloneNode(true);
-  document.body.appendChild(modalEl);
+function populateModal(formStatus) {
+  const modalContainerEl = document.querySelector(
+    '#uei-search-result .usa-modal__main'
+  );
+  const modalHeadingEl = modalContainerEl.querySelector('h2');
+  const modalDescriptionEl = modalContainerEl.querySelector(
+    '#uei-search-result-description'
+  );
+  const modalButtonPrimaryEl = modalContainerEl.querySelector('button.primary');
+  const modalButtonSecondaryEl =
+    modalContainerEl.querySelector('button.secondary');
+
+  const modalContent = {
+    'connection-error': {
+      heading: `We can't connect to SAM.gov to confirm your UEI.`,
+      description: `<p>We’re sorry for the delay. You can continue, but we’ll need confirm your UEI before your audit submission can be certified.</p>
+                    <p>You might also want to check the UEI you entered, go back, and try again.</p>`,
+      buttons: {
+        primary: {
+          text: `Go back`,
+        },
+        secondary: { text: `Continue without a confirmed UEI` },
+      },
+    },
+  };
+
+  const contentForStatus = modalContent[formStatus];
+  modalHeadingEl.textContent = contentForStatus.heading;
+  modalDescriptionEl.innerHTML = contentForStatus.description;
+  modalButtonPrimaryEl.textContent = contentForStatus.buttons.primary.text;
+  modalButtonSecondaryEl.textContent = contentForStatus.buttons.secondary.text;
+  document.querySelector('.uei-search-result').classList.remove('loading');
 }
 
 function validateUEID() {
