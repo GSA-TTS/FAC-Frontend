@@ -1,5 +1,5 @@
-<div class="usa-search usa-form-group" role="search">
-  <label class="usa-sr-only" for="{{ params.id }}">Search</label>
+<div class="usa-form-group">
+
   <ul class="usa-error-message"
     id="{{ params.id }}-error-message"
     role="alert"
@@ -13,7 +13,17 @@
       </li>
     {% endfor %}
   </ul>
-  <input class="usa-input" id="{{ params.id }}" type="search" name="search" />
+<div class="usa-search" role="search">
+  <label class="usa-sr-only" for="{{ params.id }}">Search</label>
+  <input
+    class="usa-input"
+    id="{{ params.id }}"
+    type="search"
+    name="search"
+    {% for v in params.validations %}
+      data-validate-{{v.operation}}="{{v.constraint}}"
+    {% endfor %}
+    />
   <button
     class="usa-button"
     id="{{ params.id }}-btn"
@@ -32,4 +42,6 @@
       Search
     </span>
   </button>
+</div>
+
 </div>

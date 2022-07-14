@@ -1,7 +1,7 @@
 ---
 title: Create new audit
 
-uei-search:
+uei_search:
     validations:
       - operation: not-null
         error_message: Can't be null
@@ -89,7 +89,7 @@ explanatory_text:
             component('usa-search', {
               id: 'auditee_uei',
               baseUrl: config.baseUrl,
-              validations: uei-search.validations,
+              validations: uei_search.validations,
               controlsModal: 'uei-search-result'
             })
           }}
