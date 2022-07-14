@@ -84,17 +84,17 @@ explanatory_text:
           >Indicates a required field.
         </p>
 
-        <p>Search by Unique Entity Identifier (UEI) for your entity name in the SAM.gov database.</p>
-        {{
-          component('usa-search', {
-            id: 'auditee_uei',
-            baseUrl: config.baseUrl,
-            validations: uei-search.validations,
-            controlsModal: 'uei-search-result'
-          })
-        }}
+          <p>Search by Unique Entity Identifier (UEI) for your entity name in the SAM.gov database.</p>
+          {{
+            component('usa-search', {
+              id: 'auditee_uei',
+              baseUrl: config.baseUrl,
+              validations: uei-search.validations,
+              controlsModal: 'uei-search-result'
+            })
+          }}
 
-        <p>Don’t know your UEI? You can find your UEI or register for a new UEI by visiting SAM.gov.</p>
+          <p>Don’t know your UEI? You can find your UEI or register for a new UEI by visiting SAM.gov.</p>
 
         {% for i in inputs %}
           {% if i.field_type == "text" %}
