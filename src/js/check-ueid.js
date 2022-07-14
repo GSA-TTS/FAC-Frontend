@@ -3,7 +3,6 @@ import { queryAPI } from './api';
 import { getApiToken } from './auth';
 
 const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/auditee';
-//const ENDPOINT = '/sac/auditee';
 const FORM = document.forms[0];
 
 function submitForm() {
