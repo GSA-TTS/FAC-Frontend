@@ -97,6 +97,7 @@ export const validations = {
 
     switch (field.type) {
       case 'text':
+      case 'search':
         return !field.value ? { ...result, error: true } : result;
       case 'radio':
         return !field.checked ? { ...result, error: true } : result;
