@@ -211,7 +211,6 @@ function validateUEID() {
     '/sac/ueivalidation',
     { auditee_uei },
     {
-      /* eslint-disable-next-line no-undef */
       method: 'POST',
     },
     [handleUEIDResponse, handleApiError]
