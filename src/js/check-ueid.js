@@ -56,17 +56,9 @@ function handleValidUei({ auditee_name }) {
 }
 
 function handleInvalidUei(errors) {
-  const ueiFormGroup = document.querySelector('.usa-form-group.usa-search');
-  const errorContainer = document.getElementById('auditee_uei-error-message');
-  ueiFormGroup.classList.add('usa-form-group--error');
-
-  errors.uei.forEach((error) => {
-    const errorEl = document.createElement('li');
-    errorEl.innerText = error;
-    errorContainer.appendChild(errorEl);
-  });
-
-  errorContainer.hidden = false;
+  if (Object.keys(errors).includes('auditee_uei')) {
+    populateModal('not-found');
+  }
 }
 
 function handleApiError(e) {
