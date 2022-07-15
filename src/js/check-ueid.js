@@ -44,15 +44,8 @@ function handleUEIDResponse({ valid, response, errors }) {
 }
 
 function handleValidUei({ auditee_name }) {
-  const ueiFormGroup = document.querySelector('.usa-form-group.usa-search');
-  const errorContainer = document.getElementById('auditee_uei-error-message');
-
   document.getElementById('auditee_name').value = auditee_name;
   populateModal('success', auditee_name);
-
-  errorContainer.hidden = true;
-  errorContainer.innerHTML = '';
-  ueiFormGroup.classList.remove('usa-form-group--error');
 }
 
 function handleInvalidUei(errors) {
@@ -91,6 +84,31 @@ function hideUeiStuff() {
   [...ueiExplanations, ueiFormGroup].forEach((node) =>
     node.setAttribute('hidden', 'true')
   );
+}
+
+function showValidUeiInfo() {
+  const auditeeUei = document.getElementById('auditee_uei').value;
+  const auditeeName = document.getElementById('auditee_name').value;
+  const ueiInfoEl = document.createElement('div');
+
+  ueiInfoEl.innerHTML = `
+    <dl>
+      <dt>Unique Entity ID</dt>
+      <dd>${auditeeUei}</dd>
+      <dt>Auditee name</dt>
+      <dd>${auditeeName}</dd>
+    </dl>
+  `;
+
+  document
+    .getElementById('auditee_name')
+    .parentNode.setAttribute('hidden', 'true');
+  document.getElementById('no-uei-warning').replaceWith(ueiInfoEl);
+}
+
+function setupFormWithValidUei() {
+  hideUeiStuff();
+  showValidUeiInfo();
 }
 
 // 'connection-error' | 'not-found' | 'success'
@@ -170,6 +188,10 @@ function populateModal(formStatus, auditeeName) {
   modalDescriptionEl.innerHTML = contentForStatus.description;
   modalButtonPrimaryEl.textContent = contentForStatus.buttons.primary.text;
   modalButtonSecondaryEl.textContent = contentForStatus.buttons.secondary.text;
+
+  if (formStatus == 'success') {
+    modalButtonPrimaryEl.onclick = setupFormWithValidUei;
+  }
 
   if (formStatus == 'not-found') {
     modalButtonPrimaryEl.onclick = proceedWithoutUei;

@@ -113,6 +113,18 @@ ul.usa-error-message {
   }
 }
 
+.auditee-information dd,
+.uei-search-result dd {
+  font-weight: bold;
+  margin-left: 0;
+  margin-bottom: 1rem;
+}
+
+.auditee-information dl,
+.uei-search-result dl {
+  margin-bottom: 2rem;
+}
+
 .uei-search-result {
   img {
     display: none;
