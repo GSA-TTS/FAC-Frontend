@@ -11,34 +11,33 @@ confirm:
         error_message: You must check this box
 submit: Start a new submission
 ---
-
 {%- extends "form.njk" -%}
 {%- block form -%}
-<div class="grid-container">
-  <h2>{{heading}}</h2>
+  <div class="grid-container">
+    <h2>{{heading}}</h2>
 
-  <p>
-    {{instructions}}
-  </p>
+    <p>{{instructions}}</p>
 
-  <div class="grid-row grid-gap">
-    <form class="desktop:grid-col-9 usa-form usa-form--large sf-sac">
+    <form class="usa-form usa-form--large sf-sac" id="start-new-submission">
       {{ 
         component('usa-checkbox', {
-          id: confirm.id,
           label: confirm.label,
-          required: confirm.required,
+          id: confirm.id,
           value: confirm.value,
+          required: confirm.required,
           validations: confirm.validations,
           error_message: confirm.error_message
         }) 
       }}
 
-      <button class="usa-button">
-        {{ submit }}
-      </button>
+    <ul class="usa-button-group">
+      <li class="usa-button-group__item">
+        <button class="usa-button">
+          {{ submit }}
+        </button>
+      </li>
+    </ul>
     </form>
   </div>
-</div>
-<script src="{{ config.baseUrl }}assets/js/check-terms.js"></script>
+  <script src="{{ config.baseUrl }}assets/js/check-terms.js"></script>
 {%- endblock -%}

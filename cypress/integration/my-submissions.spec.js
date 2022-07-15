@@ -1,5 +1,5 @@
 describe('My submissions', () => {
-  const SUBMIT_BUTTON_TEXT = 'Start a new submission';
+  const START_BUTTON_TEXT = 'Start a new submission';
 
   before(() => {
     cy.visit('/audit/submissions');
@@ -16,40 +16,38 @@ describe('My submissions', () => {
         throw new Error('Form was submitted'); // The test will fail if this error is thrown
       });
 
-      cy.get('.usa-button').contains(SUBMIT_BUTTON_TEXT).click();
+      cy.get('.usa-button').contains(START_BUTTON_TEXT).click();
     });
   });
 
-  // describe('Validation', () => {
-  //   it('should display error messages for invalid entities', () => {
-  //     cy.get('.usa-error-message:visible').should('have.length', 1);
-  //   });
+  describe('Validation', () => {
+    it('should display error messages for invalid entities', () => {
+      cy.get('.usa-button').contains(START_BUTTON_TEXT).click();
 
-  //   it('should remove errors when valid properties are checked', () => {
-  //     // This needs to be a click on the label rather than a
-  //     // check on the input itself because of the CSS magic
-  //     // USWDS does to make the fancy radio buttons
+      cy.get('.usa-error-message:visible').should('have.length', 1);
+    });
 
-  //     // Click twice to trigger the blur event,
-  //     // or in the case of a checkbox, click the `next` element
+    it('should remove errors when valid properties are checked', () => {
+      // This needs to be a click on the label rather than a
+      // check on the input itself because of the CSS magic
+      // USWDS does to make the fancy radio buttons
 
-  //     cy.get('label[for=confirm-terms-checkbox]').click();
-  //     cy.get('label[for=confirm-terms-checkbox]').next().click();
+      // Click twice to trigger the blur event,
+      // or in the case of a checkbox, click the `next` element
 
-  //     cy.get('.radio.usa-form-group--error').should('have.length', 0);
-  //     cy.get('.usa-checkbox.usa-form-group--error').should('have.length', 0);
-  //   });
+      cy.get('label[for=confirm-terms-checkbox]').click();
+      cy.get('label[for=confirm-terms-checkbox]').next().click();
 
-  //   //   it('should enable the "Continue" button when entities are fixed', () => {
-  //   //     cy.get('button').contains(CONTINUE_BUTTON_TEXT).should('not.be.disabled');
-  //   //   });
-  // });
+      cy.get('.radio.usa-form-group--error').should('have.length', 0);
+      cy.get('.usa-checkbox.usa-form-group--error').should('have.length', 0);
+    });
+  });
 
-  // describe('Accessibility', () => {
-  //   it('should get a perfect Lighthouse score for accessibility', () => {
-  //     cy.lighthouse({
-  //       accessibility: 100,
-  //     });
-  //   });
-  // });
+  describe('Accessibility', () => {
+    it('should get a perfect Lighthouse score for accessibility', () => {
+      cy.lighthouse({
+        accessibility: 100,
+      });
+    });
+  });
 });

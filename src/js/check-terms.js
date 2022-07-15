@@ -1,5 +1,12 @@
 import { checkValidity } from './validate';
 
+const FORM = document.forms[0];
+
+function submitForm() {
+  const nextUrl = '../new/step-1/'; //Replace with final URL
+  window.location.href = nextUrl;
+}
+
 function allResponsesValid() {
   const inputsWithErrors = document.querySelectorAll('[class *="--error"]');
   return inputsWithErrors.length === 0;
@@ -11,20 +18,23 @@ function performValidations(field) {
 
 function attachEventHandlers() {
   const fieldsNeedingValidation = Array.from(
-    document.querySelectorAll('.sf-sac input[data-validate-not-null]')
+    document.querySelectorAll(
+      '#start-new-submission input[data-validate-not-null]'
+    )
   );
 
-  const FORM = document.forms[0];
   FORM.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    fieldsNeedingValidation.forEach((q) => {
-      performValidations(q);
-    });
+    fieldsNeedingValidation.forEach((field) => performValidations(field));
 
-    if (allResponsesValid()) {
-      // submitForm();
-    }
+    if (!allResponsesValid()) return;
+
+    submitForm();
+  });
+
+  fieldsNeedingValidation.forEach((field) => {
+    field.addEventListener('blur', (e) => performValidations(e.target));
   });
 }
 
