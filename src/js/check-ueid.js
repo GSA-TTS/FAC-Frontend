@@ -66,6 +66,33 @@ function handleApiError(e) {
   console.error(e);
 }
 
+function proceedWithoutUei() {
+  const nameInputEl = document.getElementById('auditee_name');
+  const requiredStar = document.createElement('abbr');
+
+  requiredStar.setAttribute('title', 'required');
+  requiredStar.setAttribute('class', 'usa-hint usa-hint--required');
+  requiredStar.textContent = '*';
+
+  nameInputEl.removeAttribute('disabled');
+  nameInputEl.setAttribute('required', 'true');
+  document.querySelector('[for=auditee_name]').appendChild(requiredStar);
+  document.getElementById('no-uei-warning').hidden = false;
+
+  hideUeiStuff();
+}
+
+function hideUeiStuff() {
+  const ueiFormGroup =
+    document.getElementById('auditee_uei').parentNode.parentNode;
+  const ueiExplanations = Array.from(
+    document.querySelectorAll('.uei-explanation')
+  );
+  [...ueiExplanations, ueiFormGroup].forEach((node) =>
+    node.setAttribute('hidden', 'true')
+  );
+}
+
 // 'connection-error' | 'not-found' | 'success'
 function populateModal(formStatus, auditeeName) {
   const auditeeUei = document.getElementById('auditee_uei').value;
@@ -95,7 +122,9 @@ function populateModal(formStatus, auditeeName) {
         primary: {
           text: `Go back`,
         },
-        secondary: { text: `Continue without a confirmed UEI` },
+        secondary: {
+          text: `Continue without a confirmed UEI`,
+        },
       },
     },
     success: {
@@ -141,6 +170,15 @@ function populateModal(formStatus, auditeeName) {
   modalDescriptionEl.innerHTML = contentForStatus.description;
   modalButtonPrimaryEl.textContent = contentForStatus.buttons.primary.text;
   modalButtonSecondaryEl.textContent = contentForStatus.buttons.secondary.text;
+
+  if (formStatus == 'not-found') {
+    modalButtonPrimaryEl.onclick = proceedWithoutUei;
+  }
+
+  if (formStatus == 'connection-error') {
+    modalButtonSecondaryEl.onclick = proceedWithoutUei;
+  }
+
   document.querySelector('.uei-search-result').classList.remove('loading');
 }
 

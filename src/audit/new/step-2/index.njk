@@ -40,7 +40,7 @@ inputs:
     label: Auditee name
     disabled: true
     field_type: text
-    error_message: Auditee Name cannot be blank
+    error_message: Auditee Name is required if proceeding without a valid UEI
 
   - id: auditee_fiscal_period_start
     label: Auditee fiscal period <strong>start</strong> date for this submission
@@ -84,7 +84,18 @@ explanatory_text:
           >Indicates a required field.
         </p>
 
-          <p>Search by Unique Entity Identifier (UEI) for your entity name in the SAM.gov database.</p>
+        <div id="no-uei-warning" hidden>
+          <h2>
+            <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+              <use xlink:href="{{config.baseUrl}}assets/img/sprite.svg#error_outline"></use>
+            </svg>
+            Your UEI was not confirmed
+          </h2>
+            <p>You  can continue, but you will have to confirm your UEI before you’re submission can be certified.
+  You will be able to update the UEI later on.</p>
+        </div>
+
+          <p class="uei-explanation">Search by Unique Entity Identifier (UEI) for your entity name in the SAM.gov database.</p>
           {{
             component('usa-search', {
               id: 'auditee_uei',
@@ -94,7 +105,7 @@ explanatory_text:
             })
           }}
 
-          <p>Don’t know your UEI? You can find your UEI or register for a new UEI by visiting SAM.gov.</p>
+          <p class="uei-explanation">Don’t know your UEI? You can find your UEI or register for a new UEI by visiting SAM.gov.</p>
 
         {% for i in inputs %}
           {% if i.field_type == "text" %}
