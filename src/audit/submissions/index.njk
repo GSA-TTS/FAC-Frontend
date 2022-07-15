@@ -1,0 +1,44 @@
+---
+title: My audit submissions
+heading: Start a new submission
+instructions: To get started do x, y, z.
+confirm:
+    required: true
+    id: confirm-terms-checkbox
+    label: I agree to the above terms and conditions.
+    validations:
+      - operation: not-null
+        error_message: You must check this box
+submit: Start a new submission
+---
+
+{%- extends "form.njk" -%}
+{%- block form -%}
+<div class="grid-container">
+  <h2>{{heading}}</h2>
+
+  <p>
+    {{instructions}}
+  </p>
+
+  <div class="grid-row grid-gap">
+    <form class="desktop:grid-col-9 usa-form usa-form--large sf-sac">
+      {{ 
+        component('usa-checkbox', {
+          id: confirm.id,
+          label: confirm.label,
+          required: confirm.required,
+          value: confirm.value,
+          validations: confirm.validations,
+          error_message: confirm.error_message
+        }) 
+      }}
+
+      <button class="usa-button">
+        {{ submit }}
+      </button>
+    </form>
+  </div>
+</div>
+<script src="{{ config.baseUrl }}assets/js/check-terms.js"></script>
+{%- endblock -%}

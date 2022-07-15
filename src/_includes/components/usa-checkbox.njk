@@ -14,6 +14,9 @@
     />
     <label class="usa-checkbox__label" for="{{ params.id }}">
       {{ params.label }}
+      {% if params.required %}
+        <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+      {% endif %}
     </label>
     {% if params.validations %}
     <ul class="usa-error-message"
