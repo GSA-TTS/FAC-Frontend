@@ -1,4 +1,19 @@
   <div class="usa-checkbox">
+    {% if params.validations %}
+      <span class="usa-error-message"
+        id="{{ params.id }}-error-message"
+        role="alert"
+        >
+        {% for v in params.validations %}
+          <span
+            id="{{ params.id }}-{{ v.operation }}"
+            hidden
+            >
+            {{ v.error_message }}
+          </span>
+        {% endfor %}
+      </span>
+    {%- endif -%}
     <input
       class="usa-checkbox__input"
       id="{{ params.id }}"
@@ -18,19 +33,4 @@
         <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
       {% endif %}
     </label>
-    {% if params.validations %}
-    <ul class="usa-error-message"
-      id="{{ params.id }}-error-message"
-      role="alert"
-      >
-      {% for v in params.validations %}
-        <li
-          id="{{ params.id }}-{{ v.operation }}"
-          hidden
-          >
-          {{ v.error_message }}
-        </li>
-      {% endfor %}
-    </ul>
-    {%- endif -%}
   </div>
