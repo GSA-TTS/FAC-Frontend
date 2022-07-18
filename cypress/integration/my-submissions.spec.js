@@ -1,6 +1,4 @@
 describe('My submissions', () => {
-  const START_BUTTON_TEXT = 'Start a new submission';
-
   before(() => {
     cy.visit('/audit/submissions');
   });
@@ -11,18 +9,15 @@ describe('My submissions', () => {
     });
 
     it('will not submit', () => {
-      cy.get('#start-new-submission').invoke('submit', (e) => {
-        e.preventDefault();
-        throw new Error('Form was submitted'); // The test will fail if this error is thrown
-      });
+      cy.get('[data-cy="submit"]').click();
 
-      cy.get('.usa-button').contains(START_BUTTON_TEXT).click();
+      cy.url().should('include', '/audit/submissions/');
     });
   });
 
   describe('Validation', () => {
     it('should display error messages for invalid entities', () => {
-      cy.get('.usa-button').contains(START_BUTTON_TEXT).click();
+      cy.get('[data-cy="submit"]').click();
 
       cy.get('.usa-error-message:visible').should('have.length', 1);
     });
