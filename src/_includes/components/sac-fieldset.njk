@@ -67,7 +67,8 @@
           id: i.id,
           value: i.value,
           errorMessage: i.error_message,
-          validations: i.validations
+          validations: i.validations,
+          cypress_selector: i.cypress_selector
         })
       }}
     {%- elif i.field_type == "date" -%}

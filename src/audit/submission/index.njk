@@ -93,6 +93,7 @@ fieldsets:
       - field_type: checkbox
         label: By checking this box, I verify that the Auditee EIN is NOT a social security number.
         id: ein-not-ssn
+        cypress_selector: auditee-ein-not-ssn-checkbox
         validations:
           - operation: not-null
             error_message: EIN may not be a social security number
@@ -197,6 +198,7 @@ fieldsets:
       - field_type: checkbox
         label: By checking this box, I verify that the Auditor EIN is NOT a social security number.
         id: auditor-ein-not-ssn
+        cypress_selector: auditor-ein-not-ssn-checkbox
         validations:
           - operation: not-null
             error_message: EIN may not be a social security number

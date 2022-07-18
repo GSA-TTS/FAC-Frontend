@@ -48,7 +48,7 @@ describe('Create New Audit', () => {
       cy.get('label[for=audit-period-annual]').click();
 
       cy.get('label[for=ein-not-ssn]').click();
-      cy.get('label[for=ein-not-ssn]').next().click();
+      cy.get('[data-cy="auditee-ein-not-ssn-checkbox"]').blur();
 
       cy.get('label[for=multiple-eins-yes]').click();
       cy.get('label[for=multiple-eins-yes]').click();
@@ -57,7 +57,7 @@ describe('Create New Audit', () => {
       cy.get('label[for=multiple-ueis-yes]').click();
 
       cy.get('label[for=auditor-ein-not-ssn]').click();
-      cy.get('label[for=auditor-ein-not-ssn]').next().click();
+      cy.get('[data-cy="auditor-ein-not-ssn-checkbox"]').blur();
 
       cy.get('.radio.usa-form-group--error').should('have.length', 0);
       cy.get('.usa-checkbox.usa-form-group--error').should('have.length', 0);
