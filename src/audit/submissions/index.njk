@@ -6,6 +6,7 @@ confirm:
     required: true
     id: confirm-terms-checkbox
     label: I agree to the above terms and conditions.
+    cypress_selector: confirm-terms-checkbox
     validations:
       - operation: not-null
         error_message: You must check this box
@@ -26,7 +27,8 @@ submit: Start a new submission
           value: confirm.value,
           required: confirm.required,
           validations: confirm.validations,
-          error_message: confirm.error_message
+          error_message: confirm.error_message,
+          cypress_selector: confirm.cypress_selector
         }) 
       }}
 

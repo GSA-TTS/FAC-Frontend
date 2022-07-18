@@ -31,9 +31,8 @@ describe('My submissions', () => {
       // or in the case of a checkbox, click the `next` element
 
       cy.get('label[for=confirm-terms-checkbox]').click();
-      cy.get('label[for=confirm-terms-checkbox]').next().click();
+      cy.get('[data-cy="confirm-terms-checkbox"').blur();
 
-      cy.get('.radio.usa-form-group--error').should('have.length', 0);
       cy.get('.usa-checkbox.usa-form-group--error').should('have.length', 0);
     });
   });
