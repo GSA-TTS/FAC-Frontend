@@ -27,9 +27,6 @@ describe('My submissions', () => {
       // check on the input itself because of the CSS magic
       // USWDS does to make the fancy radio buttons
 
-      // Click twice to trigger the blur event,
-      // or in the case of a checkbox, click the `next` element
-
       cy.get('label[for=confirm-terms-checkbox]').click();
       cy.get('[data-cy="confirm-terms-checkbox"').blur();
 
