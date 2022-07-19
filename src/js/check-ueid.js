@@ -171,7 +171,7 @@ function populateModal(formStatus, auditeeName) {
           <dt>UEI you entered</dt>
           <dd>${auditeeUei}</dd>
         </dl>
-        <p>You can try re-entering the UEI. If you don’t have the UEI, you may find it at SAM.gov.</p>
+        <p>You can try re-entering the UEI. If you don’t have the UEI, you may find it at <a href="https://sam.gov">SAM.gov</a>.</p>
         <p>You may also continue without the UEI, and you will be prompted to update the UEI before you can submit your audit.</p>
       `,
       buttons: {
