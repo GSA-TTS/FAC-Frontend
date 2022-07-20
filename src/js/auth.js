@@ -11,7 +11,7 @@ const settings = {
   redirect_uri: fullBaseUrl + 'auth/post-login', // baseUrl is set in a script tag right before this script loads
   post_logout_redirect_uri: fullBaseUrl,
   response_type: 'code',
-  scope: 'openid email roles',
+  scope: 'openid email roles all_emails',
 
   response_mode: 'query',
 
