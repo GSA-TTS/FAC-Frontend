@@ -72,7 +72,6 @@ describe('Create New Audit', () => {
     describe('UEI Validation via API', () => {
       beforeEach(() => {
         cy.get('#auditee_uei-btn').as('searchButton');
-        cy.get('.usa-modal__close').as('closeModalButton');
         cy.get('.usa-modal__footer button.primary').as('primaryButton');
         cy.get('.usa-modal__footer button.secondary').as('secondaryButton');
       });
