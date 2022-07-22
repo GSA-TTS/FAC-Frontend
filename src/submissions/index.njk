@@ -1,32 +1,6 @@
 ---
 title: My audit submissions
 tableName: My unpublished audit submission list
-rows:
-  - reportId: 2022MRU0024654156
-    status: Needs certification
-    auditeeUEI: NUDGYLBB4S99
-    auditeeName: NEW YORK, STATE OF
-    fiscalYearEndDate: 6/30/2021
-  - reportId: 2022SPN00246541312
-    status: Needs certification
-    auditeeUEI: NLCZMHXJ39H7
-    auditeeName: UNITEDHEALTH GROUP INCORPORATED
-    fiscalYearEndDate: 6/30/2021
-  - reportId: 2022AEB00125460479
-    status: In progress
-    auditeeUEI: G6JLG3FANUA9
-    auditeeName: DEPARTMENT OF PUBLIC SAFETY
-    fiscalYearEndDate: 3/31/2021
-  - reportId: 2022LZJ00102340508
-    status: In progress
-    auditeeUEI: GQ46SB5L2HK4
-    auditeeName: PUERTO RICO, COMMONWEALTH OF
-    fiscalYearEndDate: 3/31/2021
-  - reportId: 2022CWB00101268655
-    status: In progress
-    auditeeUEI: CVBGYLBB4S77
-    auditeeName: CHOCTAW NATION OF OKLAHOMA
-    fiscalYearEndDate: 6/30/2021
 ---
 
 {%- extends "layout.njk" -%}
@@ -35,7 +9,7 @@ rows:
   <div class="grid-container">
     <h1>{{ title }}</h1>
 
-    {% if rows | length %}
+    {% if submissions | length %}
       <div class="margin-top-4">
         <h2 class="text-base-darker ">{{ tableName }}</h2>
 
@@ -52,13 +26,13 @@ rows:
               </tr>
             </thead>
             <tbody>
-              {% for row in rows %}
+              {% for s in submissions %}
                 <tr>
-                  <td data-sort-value={{ row.reportId }}>{{ row.reportId }}</td>
-                  <td data-sort-value={{ row.status }}>{{ row.status }}</td>
-                  <td data-sort-value={{ row.auditeeUEI }}>{{ row.auditeeUEI }}</td>
-                  <td data-sort-value={{ row.auditeeName }}>{{ row.auditeeName }}</td>
-                  <td data-sort-value={{ row.fiscalYearEndDate }}>{{ row.fiscalYearEndDate }}</td>
+                  <td data-sort-value={{ s.reportId }}>{{ s.reportId }}</td>
+                  <td data-sort-value={{ s.status }}>{{ s.status }}</td>
+                  <td data-sort-value={{ s.auditeeUEI }}>{{ s.auditeeUEI }}</td>
+                  <td data-sort-value={{ s.auditeeName }}>{{ s.auditeeName }}</td>
+                  <td data-sort-value={{ s.fiscalYearEndDate }}>{{ s.fiscalYearEndDate }}</td>
                 </tr>
               {% endfor %}
             </tbody>
