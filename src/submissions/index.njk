@@ -1,5 +1,6 @@
 ---
 title: My audit submissions
+tableName: My unpublished audit submission list
 rows:
   - reportId: 2022MRU0024654156
     status: Needs certification
@@ -32,37 +33,39 @@ rows:
 
 {%- block content -%}
   <div class="grid-container">
-    <h1>My audit submissions</h1>
+    <h1>{{ title }}</h1>
 
-    <h2 class="text-base-darker">My unpublished audit submission list</h2>
+    {% if rows | length %}
+      <div class="margin-top-4">
+        <h2 class="text-base-darker ">{{ tableName }}</h2>
 
-    <div class="usa-table-container" tabindex="0">
-      <table class="usa-table">
-        <caption>
-        </caption>
-        <thead>
-          <tr>
-            <th data-sortable aria-sort="descending" scope="col" role="columnheader">Report ID</th>
-            <th data-sortable scope="col" role="columnheader">Status</th>
-            <th data-sortable scope="col" role="columnheader">Auditee UEI</th>
-            <th data-sortable scope="col" role="columnheader">Auditee name</th>
-            <th data-sortable scope="col" role="columnheader">Fiscal year end date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for row in rows %}
-            <tr>
-              <td data-sort-value={{ row.reportId }}>{{ row.reportId }}</td>
-              <td data-sort-value={{ row.status }}>{{ row.status }}</td>
-              <td data-sort-value={{ row.auditeeUEI }}>{{ row.auditeeUEI }}</td>
-              <td data-sort-value={{ row.auditeeName }}>{{ row.auditeeName }}</td>
-              <td data-sort-value={{ row.fiscalYearEndDate }}>{{ row.fiscalYearEndDate }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <div class="usa-sr-only usa-table__announcement-region" aria-live="polite">
+        <div class="usa-table-container">
+          <table class="usa-table">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th data-sortable aria-sort="descending" scope="col" role="columnheader">Report ID</th>
+                <th data-sortable scope="col" role="columnheader">Status</th>
+                <th data-sortable scope="col" role="columnheader">Auditee UEI</th>
+                <th data-sortable scope="col" role="columnheader">Auditee name</th>
+                <th data-sortable scope="col" role="columnheader">Fiscal year end date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in rows %}
+                <tr>
+                  <td data-sort-value={{ row.reportId }}>{{ row.reportId }}</td>
+                  <td data-sort-value={{ row.status }}>{{ row.status }}</td>
+                  <td data-sort-value={{ row.auditeeUEI }}>{{ row.auditeeUEI }}</td>
+                  <td data-sort-value={{ row.auditeeName }}>{{ row.auditeeName }}</td>
+                  <td data-sort-value={{ row.fiscalYearEndDate }}>{{ row.fiscalYearEndDate }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <div class="usa-sr-only usa-table__announcement-region" aria-live="polite"></div>
+        </div>
       </div>
-    </div>
+    {% endif %}
   </div>
 {%- endblock -%}
