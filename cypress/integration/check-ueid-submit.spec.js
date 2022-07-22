@@ -8,10 +8,9 @@ describe('Create New Audit', () => {
       cy.get('[class*=--error]').should('have.length', 0);
     });
 
-    describe('ADD Auditee UEID', () => {
-      it('should add auditee UEID and confirm auditee UEID', () => {
+    describe('Add Auditee UEID', () => {
+      it('should add auditee UEI', () => {
         cy.get('#auditee_uei').clear().type('ZQGGHJH74DW7').blur();
-        cy.get('#confirm_auditee_uei').clear().type('ZQGGHJH74DW7').blur();
       });
     });
 
@@ -31,11 +30,13 @@ describe('Create New Audit', () => {
           }
         ).as('validUeiRequest');
 
-        cy.get('button').contains('Validate UEI').click();
+        cy.get('#auditee_uei-btn').click();
 
         cy.wait('@validUeiRequest').then((interception) => {
           assert.isNotNull(interception.response.body, '1st API call has data');
         });
+
+        cy.get('.usa-modal__footer button.primary').as('primaryButton').click();
 
         cy.get('#uei-error-message li').should('have.length', 0);
         cy.get('#auditee_name').should(

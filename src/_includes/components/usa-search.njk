@@ -1,0 +1,48 @@
+<div class="usa-form-group">
+
+  <ul class="usa-error-message"
+    id="{{ params.id }}-error-message"
+    role="alert"
+    >
+    {% for v in params.validations %}
+      <li
+        id="{{ params.id }}-{{ v.operation }}"
+        hidden
+        >
+        {{ v.error_message }}
+      </li>
+    {% endfor %}
+  </ul>
+<div class="usa-search" role="search">
+  <label class="usa-sr-only" for="{{ params.id }}">Search</label>
+  <input
+    class="usa-input"
+    id="{{ params.id }}"
+    type="search"
+    name="search"
+    {{ 'required' if params.required }}
+    {% for v in params.validations %}
+      data-validate-{{v.operation}}="{{v.constraint}}"
+    {% endfor %}
+    />
+  <button
+    class="usa-button"
+    id="{{ params.id }}-btn"
+    type="submit"
+    {% if params.controlsModal %}
+      aria-controls={{ params.controlsModal }}
+      data-open-modal
+    {% endif %}
+    >
+    <span class="usa-search__submit-text">
+      <img
+        src="{{ params.baseUrl }}assets/img/usa-icons-bg/search--white.svg"
+        class="usa-search__submit-icon"
+        alt="Search"
+      />
+      Search
+    </span>
+  </button>
+</div>
+
+</div>

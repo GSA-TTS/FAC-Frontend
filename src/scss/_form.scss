@@ -47,7 +47,17 @@ ul.usa-error-message {
   .grid-container {
     padding-left: 0;
   }
+}
 
+#check-eligibility .usa-search__submit-text {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+
+  img {
+    display: block !important;
+  }
 }
 
 .auditee-information {
@@ -92,7 +102,7 @@ ul.usa-error-message {
   }
 
   #uei-success {
-    margin-top: .5em;
+    margin-top: 0.5em;
 
     & svg {
       fill: #538200;
@@ -102,10 +112,51 @@ ul.usa-error-message {
   }
 }
 
+.auditee-information dd,
+.uei-search-result dd {
+  font-weight: bold;
+  margin-left: 0;
+  margin-bottom: 1rem;
+}
+
+.auditee-information dl,
+.uei-search-result dl {
+  margin-bottom: 2rem;
+}
+
+.uei-search-result {
+  img {
+    display: none;
+    margin: auto;
+  }
+
+  &.loading {
+    button {
+      display: none;
+    }
+
+    img {
+      display: block;
+    }
+  }
+}
+
+#no-uei-warning {
+  color: color('secondary');
+
+  h2 {
+    font-size: size('body', 8);
+  }
+
+  .usa-icon {
+    top: 0.1em;
+  }
+}
+
 .delete-contact {
   margin: 0 !important;
   margin-top: auto !important;
-  margin-bottom: .5rem !important;
+  margin-bottom: 0.5rem !important;
   padding: 0 !important;
 
   .usa-icon {
@@ -116,7 +167,7 @@ ul.usa-error-message {
 }
 
 /* stylelint-disable */
-#auditee_name {
+#auditee_name[disabled] {
   cursor: not-allowed;
 }
 
@@ -132,8 +183,8 @@ ul.usa-error-message {
     top: 0;
 
     .usa-sidenav a:not([href]),
-    .usa-sidenav a:not([href]):hover, 
-    .usa-sidenav a:not([href]):active, 
+    .usa-sidenav a:not([href]):hover,
+    .usa-sidenav a:not([href]):active,
     .usa-sidenav a:not([href]):visited {
       color: #72777a;
       cursor: not-allowed;
@@ -150,7 +201,9 @@ ul.usa-error-message {
       }
     }
 
-    .usa-sidenav .usa-current { font-weight: bold;}
+    .usa-sidenav .usa-current {
+      font-weight: bold;
+    }
   }
 }
 
@@ -162,7 +215,7 @@ ul.usa-error-message {
     font-weight: bold;
 
     &::after {
-      content: ":";
+      content: ':';
     }
   }
 
@@ -175,7 +228,7 @@ ul.usa-error-message {
   fieldset:not(.radio) {
     margin-bottom: units(4);
 
-    fieldset { 
+    fieldset {
       margin-top: units(4);
 
       legend {

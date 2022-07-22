@@ -1,42 +1,46 @@
 ---
 title: Create new audit
 
+uei_search:
+    validations:
+      - operation: not-null
+        error_message: Can't be null
+      - operation: length
+        constraint: '== 12'
+        error_message: UEI is twelve characters long
+
+modals:
+  - id: modal-uei-success
+    heading: Search Result
+    buttons:
+      - primary: Continue
+      - secondary: Go back
+    description: >
+      <p>Click continue to create a new audit submission for this auditee.</p>
+      <p>Not the auditee you’re looking for? Go back, check the UEI you entered, and try again.</p>
+  - id: modal-uei-connection-error
+    heading: We can't connect to SAM.gov to confirm your UEI.
+    buttons:
+      - primary: Go back
+      - secondary: Continue without a confirmed UEI
+    description: >
+      <p>We’re sorry for the delay. You can continue, but we’ll need confirm your UEI before your audit submission can be certified.</p>
+      <p>You might also want to check the UEI you entered, go back, and try again.</p>
+  - id: modal-uei-not-found
+    heading: Your UEI is not recognized
+    buttons:
+      - primary: Try again
+      - secondary: Continue without a confirmed UEI
+    description: >
+      <p>You can try re-entering the UEI. If you don’t have the UEI, you may find it at SAM.gov.</p>
+      <p>You may also continue without the UEI, and you will be prompted to update the UEI before you can submit your audit.</p>
+
 inputs:
-  - id: auditee_uei
-    label: Auditee Unique Entity Identifier (UEI)
-    required: true
-    field_type: text
-    validations:
-      - operation: not-null
-        error_message: Can't be null
-      - operation: length
-        constraint: '== 12'
-        error_message: UEI is twelve characters long
-
-  - id: confirm_auditee_uei
-    label: Re-enter Auditee Unique Entity Identifier (UEI)
-    required: true
-    field_type: text
-    validations:
-      - operation: not-null
-        error_message: Can't be null
-      - operation: length
-        constraint: '== 12'
-        error_message: UEI is twelve characters long
-      - operation: must-match
-        constraint: auditee_uei
-        error_message: This field should match the one before it
-
-  - id: check_ueid
-    label: Validate UEI
-    field_type: button
-    tooltip_text: Check SAM.gov for the UEI you entered. If UEI found, auditee name will autopopulate
-
   - id: auditee_name
     label: Auditee name
     disabled: true
     field_type: text
-    error_message: Auditee Name cannot be blank
+    error_message: Auditee Name is required if proceeding without a valid UEI
 
   - id: auditee_fiscal_period_start
     label: Auditee fiscal period <strong>start</strong> date for this submission
@@ -79,6 +83,31 @@ explanatory_text:
             >*</abbr
           >Indicates a required field.
         </p>
+
+        <div id="no-uei-warning" hidden>
+          <h2>
+            <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+              <use xlink:href="{{config.baseUrl}}assets/img/sprite.svg#error_outline"></use>
+            </svg>
+            Your UEI was not confirmed
+          </h2>
+            <p>You  can continue, but you will have to confirm your UEI before you’re submission can be certified.
+  You will be able to update the UEI later on.</p>
+        </div>
+
+          <p class="uei-explanation">Search by Unique Entity Identifier (UEI) for your entity name in the SAM.gov database.</p>
+          {{
+            component('usa-search', {
+              id: 'auditee_uei',
+              baseUrl: config.baseUrl,
+              validations: uei_search.validations,
+              controlsModal: 'uei-search-result',
+              required: true
+            })
+          }}
+
+          <p class="uei-explanation">Don’t know your UEI? You can find your UEI or register for a new UEI by visiting <a href="https://sam.gov/">SAM.gov</a>.</p>
+
         {% for i in inputs %}
           {% if i.field_type == "text" %}
             {{
@@ -91,23 +120,6 @@ explanatory_text:
                 disabled: i.disabled
               })
             }}
-          {% elif i.field_type == "button" %}
-          <div class="usa-form-group validate-uei">
-            <ul class="usa-error-message"
-              id="uei-error-message"
-              role="alert"
-              >
-            </ul>
-            <button class="usa-button
-                           usa-button--secondary
-                           usa-button--unstyled
-                           usa-tooltip"
-                    data-position="right"
-                    title="{{ i.tooltip_text }}"
-                    id="validate-UEI">
-              {{ i.label }}
-            </button>
-          </div>
           {% elif i.field_type == "date" %}
           <div class="usa-form-group validate-fy">
             {% if i.id == "auditee_fiscal_period_start" %}
@@ -155,5 +167,49 @@ explanatory_text:
   </div>
 <script>const authToken = "{{ config.temporaryAuthToken }}"</script>
 <script src="{{ config.baseUrl }}assets/js/check-ueid.js"></script>
+
+  <div
+    class="usa-modal usa-modal--lg uei-search-result loading"
+    id="uei-search-result"
+    aria-labelledby="uei-search-result-heading"
+    aria-describedby="uei-search-result-description"
+  >
+    <div class="usa-modal__content">
+      <div class="usa-modal__main">
+        <img src="{{ config.baseUrl }}assets/img/loader.svg" alt="loading">
+        <h2 class="usa-modal__heading" id="uei-search-result-heading">
+        </h2>
+        <div class="usa-prose" id="uei-search-result-description">
+        </div>
+        <div class="usa-modal__footer">
+          <ul class="usa-button-group">
+            <li class="usa-button-group__item">
+              <button type="button" class="usa-button primary" data-close-modal>
+              </button>
+            </li>
+            <li class="usa-button-group__item">
+              <button
+                type="button"
+                class="usa-button usa-button--unstyled padding-105 text-center secondary"
+                data-close-modal
+              >
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button
+        class="usa-button usa-modal__close"
+        aria-label="Close this window"
+        data-close-modal
+      >
+        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+          <use xlink:href="/assets/img/sprite.svg#close"></use>
+        </svg>
+      </button>
+    </div>
+  </div>
+
 </div>
+
 {%- endblock -%}
