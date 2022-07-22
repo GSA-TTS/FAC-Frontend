@@ -1,5 +1,31 @@
 ---
 title: My audit submissions
+rows:
+  - reportId: 2022MRU0024654156
+    status: Needs certification
+    auditeeUEI: NUDGYLBB4S99
+    auditeeName: NEW YORK, STATE OF
+    fiscalYearEndDate: 6/30/2021
+  - reportId: 2022SPN00246541312
+    status: Needs certification
+    auditeeUEI: NLCZMHXJ39H7
+    auditeeName: UNITEDHEALTH GROUP INCORPORATED
+    fiscalYearEndDate: 6/30/2021
+  - reportId: 2022AEB00125460479
+    status: In progress
+    auditeeUEI: G6JLG3FANUA9
+    auditeeName: DEPARTMENT OF PUBLIC SAFETY
+    fiscalYearEndDate: 3/31/2021
+  - reportId: 2022LZJ00102340508
+    status: In progress
+    auditeeUEI: GQ46SB5L2HK4
+    auditeeName: PUERTO RICO, COMMONWEALTH OF
+    fiscalYearEndDate: 3/31/2021
+  - reportId: 2022CWB00101268655
+    status: In progress
+    auditeeUEI: CVBGYLBB4S77
+    auditeeName: CHOCTAW NATION OF OKLAHOMA
+    fiscalYearEndDate: 6/30/2021
 ---
 
 {%- extends "layout.njk" -%}
@@ -7,5 +33,36 @@ title: My audit submissions
 {%- block content -%}
   <div class="grid-container">
     <h1>My audit submissions</h1>
+
+    <h2 class="text-base-darker">My unpublished audit submission list</h2>
+
+    <div class="usa-table-container" tabindex="0">
+      <table class="usa-table">
+        <caption>
+        </caption>
+        <thead>
+          <tr>
+            <th data-sortable aria-sort="descending" scope="col" role="columnheader">Report ID</th>
+            <th data-sortable scope="col" role="columnheader">Status</th>
+            <th data-sortable scope="col" role="columnheader">Auditee UEI</th>
+            <th data-sortable scope="col" role="columnheader">Auditee name</th>
+            <th data-sortable scope="col" role="columnheader">Fiscal year end date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr>
+              <td data-sort-value={{ row.reportId }}>{{ row.reportId }}</td>
+              <td data-sort-value={{ row.status }}>{{ row.status }}</td>
+              <td data-sort-value={{ row.auditeeUEI }}>{{ row.auditeeUEI }}</td>
+              <td data-sort-value={{ row.auditeeName }}>{{ row.auditeeName }}</td>
+              <td data-sort-value={{ row.fiscalYearEndDate }}>{{ row.fiscalYearEndDate }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="usa-sr-only usa-table__announcement-region" aria-live="polite">
+      </div>
+    </div>
   </div>
 {%- endblock -%}
