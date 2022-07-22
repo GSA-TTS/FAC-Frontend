@@ -92,7 +92,7 @@ function showValidUeiInfo() {
   const ueiInfoEl = document.createElement('div');
 
   ueiInfoEl.innerHTML = `
-    <dl>
+    <dl data-testid="uei-info">
       <dt>Unique Entity ID</dt>
       <dd>${auditeeUei}</dd>
       <dt>Auditee name</dt>

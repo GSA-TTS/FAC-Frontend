@@ -20,6 +20,7 @@
     id="{{ params.id }}"
     type="search"
     name="search"
+    {{ 'required' if params.required }}
     {% for v in params.validations %}
       data-validate-{{v.operation}}="{{v.constraint}}"
     {% endfor %}
