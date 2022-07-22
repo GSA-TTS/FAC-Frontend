@@ -1,6 +1,50 @@
 import { checkValidity } from './validate';
+import { getApiToken } from './auth';
+
+//const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/access';
+const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/accessandsubmission';
 
 const FORM = document.forms[0];
+
+// Test form data - ONLY use to test API success
+const TEST_DATA = {
+  certifying_auditee_contact: 'a@a.com',
+  certifying_auditor_contact: 'b@b.com',
+  auditor_contacts: ['c@c.com', 'd@d.com'],
+  auditee_contacts: ['e@e.com', 'f@f.com'],
+};
+
+function submitForm() {
+  //const formData = serializeFormData(new FormData(FORM));
+  const headers = new Headers();
+  headers.append('Content-type', 'application/json');
+
+  getApiToken().then((token) => {
+    headers.append('Authorization', 'Token ' + token);
+
+    // Format form data
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(TEST_DATA),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        handleAuditeeResponse(data);
+      });
+  });
+}
+/*
+function serializeFormData(formData) {
+  return Object.fromEntries(formData);
+}
+*/
+function handleAuditeeResponse(data) {
+  console.log(data);
+  //const nextUrl = '../step-3/'; //URL value for now
+  //if (data.next) window.location.href = nextUrl;
+}
 
 function setFormDisabled(shouldDisable) {
   const continueBtn = document.getElementById('create');
@@ -48,7 +92,7 @@ function attachEventHandlers() {
   FORM.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!allResponsesValid()) return;
-    // submitForm();
+    submitForm();
   });
 
   const fieldsNeedingValidation = Array.from(
