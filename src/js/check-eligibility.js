@@ -9,6 +9,9 @@ import { getApiToken } from './auth';
     const formData = serializeFormData(new FormData(FORM));
     const headers = new Headers();
 
+    formData.met_spending_threshold = str2bool(formData.met_spending_threshold);
+    formData.is_usa_based = str2bool(formData.is_usa_based);
+
     headers.append('Content-type', 'application/json');
 
     getApiToken().then((token) => {
@@ -42,6 +45,14 @@ import { getApiToken } from './auth';
 
     return !INVALID_ENTITY_TYPES[name].includes(id);
   }
+
+  var str2bool = (value) => {
+    if (value && typeof value === 'string') {
+      if (value.toLowerCase() === 'true') return true;
+      if (value.toLowerCase() === 'false') return false;
+    }
+    return value;
+  };
 
   function setFormDisabled(shouldDisable) {
     const continueBtn = document.getElementById('continue');

@@ -19,7 +19,7 @@
     class="usa-input"
     id="{{ params.id }}"
     type="search"
-    name="search"
+    name="{{ params.id }}"
     {{ 'required' if params.required }}
     {% for v in params.validations %}
       data-validate-{{v.operation}}="{{v.constraint}}"
