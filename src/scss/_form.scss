@@ -47,7 +47,6 @@ ul.usa-error-message {
   .grid-container {
     padding-left: 0;
   }
-
 }
 
 #check-eligibility .usa-search__submit-text {
@@ -103,7 +102,7 @@ ul.usa-error-message {
   }
 
   #uei-success {
-    margin-top: .5em;
+    margin-top: 0.5em;
 
     & svg {
       fill: #538200;
@@ -147,18 +146,18 @@ ul.usa-error-message {
 
   h2 {
     font-size: size('body', 8);
-    line-height: .5rem;
+    line-height: 0.5rem;
   }
 
   .usa-icon {
-    top: .1em;
+    top: 0.1em;
   }
 }
 
 .delete-contact {
   margin: 0 !important;
   margin-top: auto !important;
-  margin-bottom: .5rem !important;
+  margin-bottom: 0.5rem !important;
   padding: 0 !important;
 
   .usa-icon {
@@ -169,7 +168,7 @@ ul.usa-error-message {
 }
 
 /* stylelint-disable */
-#auditee_name {
+#auditee_name[disabled] {
   cursor: not-allowed;
 }
 
@@ -185,8 +184,8 @@ ul.usa-error-message {
     top: 0;
 
     .usa-sidenav a:not([href]),
-    .usa-sidenav a:not([href]):hover, 
-    .usa-sidenav a:not([href]):active, 
+    .usa-sidenav a:not([href]):hover,
+    .usa-sidenav a:not([href]):active,
     .usa-sidenav a:not([href]):visited {
       color: #72777a;
       cursor: not-allowed;
@@ -203,7 +202,9 @@ ul.usa-error-message {
       }
     }
 
-    .usa-sidenav .usa-current { font-weight: bold;}
+    .usa-sidenav .usa-current {
+      font-weight: bold;
+    }
   }
 }
 
@@ -215,7 +216,7 @@ ul.usa-error-message {
     font-weight: bold;
 
     &::after {
-      content: ":";
+      content: ':';
     }
   }
 
@@ -228,7 +229,7 @@ ul.usa-error-message {
   fieldset:not(.radio) {
     margin-bottom: units(4);
 
-    fieldset { 
+    fieldset {
       margin-top: units(4);
 
       legend {
