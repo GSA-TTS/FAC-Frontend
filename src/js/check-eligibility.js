@@ -2,13 +2,13 @@ import { getApiToken } from './auth';
 
 (function () {
   const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/eligibility';
-  //const ENDPOINT = 'http://localhost:8000/sac/eligibility';
   const FORM = document.forms[0];
 
   function submitForm() {
     const formData = serializeFormData(new FormData(FORM));
     const headers = new Headers();
 
+    // Convert radio button value string to boolean
     formData.met_spending_threshold = str2bool(formData.met_spending_threshold);
     formData.is_usa_based = str2bool(formData.is_usa_based);
 
@@ -46,13 +46,13 @@ import { getApiToken } from './auth';
     return !INVALID_ENTITY_TYPES[name].includes(id);
   }
 
-  var str2bool = (value) => {
+  function str2bool(value) {
     if (value && typeof value === 'string') {
       if (value.toLowerCase() === 'true') return true;
       if (value.toLowerCase() === 'false') return false;
     }
     return value;
-  };
+  }
 
   function setFormDisabled(shouldDisable) {
     const continueBtn = document.getElementById('continue');

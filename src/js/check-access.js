@@ -1,33 +1,23 @@
 import { checkValidity } from './validate';
 import { getApiToken } from './auth';
 
-//const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/access';
 const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/accessandsubmission';
-
 const FORM = document.forms[0];
-
-// Test form data - ONLY use to test API success
-const TEST_DATA = {
-  certifying_auditee_contact: 'a@a.com',
-  certifying_auditor_contact: 'b@b.com',
-  auditor_contacts: ['c@c.com', 'd@d.com'],
-  auditee_contacts: ['e@e.com', 'f@f.com'],
-};
+let addedContactNum = 1; // Counter for added contacts
 
 function submitForm() {
-  //const formData = serializeFormData(new FormData(FORM));
+  const formData = serializeFormData(new FormData(FORM));
+  console.log(formData); // DELETE ME
   const headers = new Headers();
   headers.append('Content-type', 'application/json');
 
   getApiToken().then((token) => {
     headers.append('Authorization', 'Token ' + token);
 
-    // Format form data
-
     fetch(ENDPOINT, {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify(TEST_DATA),
+      body: JSON.stringify(formData),
     })
       .then((resp) => resp.json())
       .then((data) => {
@@ -35,11 +25,11 @@ function submitForm() {
       });
   });
 }
-/*
+
 function serializeFormData(formData) {
   return Object.fromEntries(formData);
 }
-*/
+
 function handleAuditeeResponse(data) {
   console.log(data);
   //const nextUrl = '../step-3/'; //URL value for now
@@ -65,6 +55,20 @@ function appendContactField(btnEl) {
   const inputContainer = btnEl.parentElement;
   const template = inputContainer.querySelector('template');
   const newRow = template.content.cloneNode(true);
+  // update Id and Name attributes
+  const newInputs = newRow.querySelectorAll('input');
+  newInputs.forEach(function (input) {
+    input.id = input.id + '-' + addedContactNum;
+    input.name = input.name + '-' + addedContactNum;
+  });
+  // Upddate LABEL.FOR attributes
+  const newLabels = newRow.querySelectorAll('label');
+  newLabels.forEach(function (label) {
+    label.htmlFor = label.htmlFor + '-' + addedContactNum;
+  });
+  // Increment added number of contacts
+  addedContactNum++;
+
   inputContainer.insertBefore(newRow, template);
   const deleteBtns = Array.from(document.querySelectorAll('.delete-contact'));
 
