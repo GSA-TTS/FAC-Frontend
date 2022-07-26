@@ -7,7 +7,21 @@ let addedContactNum = 1; // Counter for added contacts
 
 function submitForm() {
   const formData = serializeFormData(new FormData(FORM));
-  console.log(formData); // DELETE ME
+
+  let preparedData = {};
+  preparedData['certifying_auditee_contact'] =
+    formData.auditee_certifying_official_email;
+  preparedData['certifying_auditor_contact'] =
+    formData.auditor_certifying_official_email;
+  preparedData['auditee_contacts'] = contactsToArray(
+    formData,
+    'auditee_contacts_email'
+  );
+  preparedData['auditor_contacts'] = contactsToArray(
+    formData,
+    'auditor_contacts_email'
+  );
+
   const headers = new Headers();
   headers.append('Content-type', 'application/json');
 
@@ -17,7 +31,7 @@ function submitForm() {
     fetch(ENDPOINT, {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify(formData),
+      body: JSON.stringify(preparedData),
     })
       .then((resp) => resp.json())
       .then((data) => {
@@ -26,14 +40,26 @@ function submitForm() {
   });
 }
 
+function handleAuditeeResponse(data) {
+  const nextUrl = '../step-1/'; //data.next; //URL value for now
+  if (data.next === 'TBD') window.location.href = nextUrl;
+}
+
 function serializeFormData(formData) {
   return Object.fromEntries(formData);
 }
 
-function handleAuditeeResponse(data) {
-  console.log(data);
-  //const nextUrl = '../step-3/'; //URL value for now
-  //if (data.next) window.location.href = nextUrl;
+function contactsToArray(formData, keyContains) {
+  const regex = new RegExp(keyContains);
+  let outputArray = [];
+  for (var key in formData) {
+    if (Object.hasOwn(formData, key)) {
+      if (regex.test(key)) {
+        outputArray.push(formData[key]);
+      }
+    }
+  }
+  return outputArray;
 }
 
 function setFormDisabled(shouldDisable) {
@@ -55,18 +81,17 @@ function appendContactField(btnEl) {
   const inputContainer = btnEl.parentElement;
   const template = inputContainer.querySelector('template');
   const newRow = template.content.cloneNode(true);
-  // update Id and Name attributes
+
   const newInputs = newRow.querySelectorAll('input');
   newInputs.forEach(function (input) {
     input.id = input.id + '-' + addedContactNum;
     input.name = input.name + '-' + addedContactNum;
   });
-  // Upddate LABEL.FOR attributes
+
   const newLabels = newRow.querySelectorAll('label');
   newLabels.forEach(function (label) {
     label.htmlFor = label.htmlFor + '-' + addedContactNum;
   });
-  // Increment added number of contacts
   addedContactNum++;
 
   inputContainer.insertBefore(newRow, template);

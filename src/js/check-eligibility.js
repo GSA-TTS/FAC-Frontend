@@ -9,8 +9,10 @@ import { getApiToken } from './auth';
     const headers = new Headers();
 
     // Convert radio button value string to boolean
-    formData.met_spending_threshold = str2bool(formData.met_spending_threshold);
-    formData.is_usa_based = str2bool(formData.is_usa_based);
+    formData.met_spending_threshold = stringToBoolean(
+      formData.met_spending_threshold
+    );
+    formData.is_usa_based = stringToBoolean(formData.is_usa_based);
 
     headers.append('Content-type', 'application/json');
 
@@ -46,7 +48,7 @@ import { getApiToken } from './auth';
     return !INVALID_ENTITY_TYPES[name].includes(id);
   }
 
-  function str2bool(value) {
+  function stringToBoolean(value) {
     if (value && typeof value === 'string') {
       if (value.toLowerCase() === 'true') return true;
       if (value.toLowerCase() === 'false') return false;
