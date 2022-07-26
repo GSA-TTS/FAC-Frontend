@@ -41,7 +41,7 @@ function submitForm() {
 }
 
 function handleAuditeeResponse(data) {
-  const nextUrl = '../step-1/'; //data.next; //URL value for now
+  const nextUrl = '/audit/submission/'; //data.next; //URL value for now
   if (data.next === 'TBD') window.location.href = nextUrl;
 }
 
