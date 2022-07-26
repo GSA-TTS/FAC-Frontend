@@ -216,8 +216,36 @@ describe('Create New Audit', () => {
           cy.get('#auditee_contacts_email-email').should('not.be.visible');
         });
 
-        it('should enable the "Create" button when entities are fixed', () => {
-          cy.get('button').contains('Create').should('not.be.disabled');
+        it('should add another contact row', () => {
+          cy.get('.auditee_contacts').find('button').click();
+        });
+
+        it('should find two auditee contact blocks', () => {
+          cy.get('.auditee_contacts')
+            .find('.grid-row')
+            .should('have.length', 2);
+        });
+
+        it('should delete the newly added contact row', () => {
+          cy.get('#auditee_contacts_email-2')
+            .parent()
+            .parent()
+            .parent()
+            .find('.delete-contact')
+            .click();
+          cy.get('.auditee_contacts')
+            .find('.grid-row')
+            .should('have.length', 1);
+        });
+
+        it('should be able to add contact and contact info to new inputs', () => {
+          cy.get('.auditee_contacts').find('button').click();
+          cy.get('#auditee_contacts_email-3')
+            .clear()
+            .type('test.address-with+features@test.gsa.gov');
+          cy.get('#auditee_contacts_re_email-3')
+            .clear()
+            .type('test.address-with+features@test.gsa.gov');
         });
       });
 
@@ -293,6 +321,37 @@ describe('Create New Audit', () => {
             .type('test.address-with+features@test.gsa.gov')
             .blur();
           cy.get('#auditor_contacts_email-email').should('not.be.visible');
+        });
+
+        it('should add another contact row', () => {
+          cy.get('.auditor_contacts').find('button').click();
+        });
+
+        it('should find two auditee contact blocks', () => {
+          cy.get('.auditor_contacts')
+            .find('.grid-row')
+            .should('have.length', 2);
+        });
+        it('should delete the newly added contact row', () => {
+          cy.get('#auditor_contacts_email-5')
+            .parent()
+            .parent()
+            .parent()
+            .find('.delete-contact')
+            .click();
+          cy.get('.auditor_contacts')
+            .find('.grid-row')
+            .should('have.length', 1);
+        });
+
+        it('should be able to add contact and contact info to new inputs', () => {
+          cy.get('.auditor_contacts').find('button').click();
+          cy.get('#auditor_contacts_email-6')
+            .clear()
+            .type('test.address-with+features@test.gsa.gov');
+          cy.get('#auditor_contacts_re_email-6')
+            .clear()
+            .type('test.address-with+features@test.gsa.gov');
         });
 
         it('should enable the "Create" button when entities are fixed', () => {
