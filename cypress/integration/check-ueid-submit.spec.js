@@ -46,9 +46,13 @@ describe('Create New Audit', () => {
       });
     });
 
-    describe('ADD Fiscal Year', () => {
-      it('should not show an error if the user enters a date after 12/31/2019', () => {
-        cy.get('#auditee_fiscal_period_start').clear().type('12/31/2020');
+    describe('ADD Fiscal start/end dates', () => {
+      it('Enter expected start date', () => {
+        cy.get('#auditee_fiscal_period_start').clear().type('01/01/2021');
+        cy.get('#fy-error-message li').should('have.length', 0);
+      });
+      it('Enter expected end date', () => {
+        cy.get('#auditee_fiscal_period_end').clear().type('01/01/2022');
         cy.get('#fy-error-message li').should('have.length', 0);
       });
     });
@@ -75,7 +79,7 @@ describe('Create New Audit', () => {
     it('should return success response and move to the next page', () => {
       cy.intercept('POST', '/sac/auditee', {
         validueid: true,
-        next: 'sac/access',
+        next: '/sac/accessandsubmission',
       }).as('validResponse');
 
       cy.get('.usa-button').contains('Continue').click();
@@ -87,7 +91,7 @@ describe('Create New Audit', () => {
         );
         console.log('Response:' + interception.response.body.validueid);
       });
-      cy.url().should('include', 'step-3');
+      cy.url().should('include', '/audit/new/step-3/');
     });
   });
 
