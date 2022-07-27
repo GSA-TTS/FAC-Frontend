@@ -32,7 +32,6 @@ describe('Create New Audit', () => {
       cy.wait('@noteligible').then((interception) => {
         assert.isNotNull(interception.response.body, '1st API call has data');
       });
-      //cy.get('#eligibility-error-message li').should('have.length', 2);
     });
 
     it('should return success response and move to the next page', () => {
@@ -45,8 +44,6 @@ describe('Create New Audit', () => {
 
       cy.wait('@eligibleResponse').then((interception) => {
         assert.isNotNull(interception.response.body, '1st API call has data');
-        // Test eligible value for true
-        // Test URL
         cy.url().should('include', '/audit/new/step-2/');
       });
     });
