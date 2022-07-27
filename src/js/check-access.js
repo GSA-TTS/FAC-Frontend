@@ -33,8 +33,13 @@ function submitForm() {
 }
 
 function handleAccessResponse(data) {
-  const nextUrl = '/audit/submission/';
-  if (data.next === 'TBD') window.location.href = nextUrl;
+  console.log(data);
+  if (data.sac_id) {
+    const nextUrl = '/audit/submission/';
+    window.location.href = nextUrl;
+  } else {
+    console.log(data);
+  }
 }
 function handleErrorResponse() {
   console.log('ERROR: Form submission error.');
