@@ -18,7 +18,8 @@ headers:
         <h2 class="text-base-darker ">{{ tableName }}</h2>
         {{ 
           component('usa-sortable-table', {
-            headers: headers
+            headers: headers,
+            submissions: submissions
           }) 
         }}
       </div>

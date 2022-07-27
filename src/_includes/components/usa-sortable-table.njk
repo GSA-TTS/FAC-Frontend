@@ -21,7 +21,7 @@
           {%- endfor -%}
         </tr>
       {%- endfor -%} #}
-      {# {% for s in submissions %}
+      {% for s in params.submissions %}
         <tr>
           <td data-sort-value={{ s.reportId }}>{{ s.reportId }}</td>
           <td data-sort-value={{ s.status }}>{{ s.status }}</td>
@@ -29,14 +29,7 @@
           <td data-sort-value={{ s.auditeeName }}>{{ s.auditeeName }}</td>
           <td data-sort-value={{ s.fiscalYearEndDate }}>{{ s.fiscalYearEndDate }}</td>
         </tr>
-      {% endfor %} #}
-        <tr>
-          <td>22</td>
-          <td>89</td>
-          <td>32</td>
-          <td>13</td>
-          <td>34</td>
-        </tr>
+      {% endfor %}
     </tbody>
   </table>
   <div class="usa-sr-only usa-table__announcement-region" aria-live="polite"></div>
