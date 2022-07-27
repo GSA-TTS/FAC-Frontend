@@ -25,7 +25,7 @@ function submitForm() {
 
 function handleAuditeeResponse(data) {
   console.log(data);
-  if (data.next === '/sac/accessandsubmission') {
+  if (data.validueid === true) {
     const nextUrl = '../step-3/';
     window.location.href = nextUrl;
   } else {
