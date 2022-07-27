@@ -79,7 +79,7 @@ describe('Create New Audit', () => {
     it('should return success response and move to the next page', () => {
       cy.intercept('POST', '/sac/auditee', {
         validueid: true,
-        next: 'sac/access',
+        next: '/sac/accessandsubmission',
       }).as('validResponse');
 
       cy.get('.usa-button').contains('Continue').click();
