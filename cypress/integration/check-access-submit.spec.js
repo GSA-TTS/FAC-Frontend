@@ -89,37 +89,29 @@ describe('Create New Audit', () => {
   });
 
   describe('Test form submission', () => {
-    it('should return errors from the remote server', () => {
+    it('should return ERRORS from the remote server', () => {
       cy.intercept('POST', '/sac/accessandsubmission', {
-        next: '',
         errors: true,
       }).as('invalidResponse');
 
       cy.get('.usa-button').contains('Create').click();
 
       cy.wait('@invalidResponse').then((interception) => {
-        assert.isTrue(
-          interception.response.body.errors,
-          'Failure API Response'
-        );
+        expect(interception.response.body.errors).to.exist;
         console.log('Response:' + interception.response.body.errors);
       });
     });
 
-    it('should return success response and move to the next page', () => {
+    it('should return SUCCESS response and move to the next page', () => {
       cy.intercept('POST', '/sac/accessandsubmission', {
+        sac_id: 1,
         next: 'TBD',
-        errors: false,
       }).as('validResponse');
 
       cy.get('.usa-button').contains('Create').click();
 
       cy.wait('@validResponse').then((interception) => {
-        assert.isFalse(
-          interception.response.body.errors,
-          'Succcessful API Response'
-        );
-        console.log('Response:' + interception.response.body.next);
+        expect(interception.response.body.sac_id).to.exist;
       });
       cy.url().should('include', 'submission');
     });
