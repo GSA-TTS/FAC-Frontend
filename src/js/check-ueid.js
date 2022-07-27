@@ -1,38 +1,39 @@
 import { checkValidity } from './validate';
 import { queryAPI } from './api';
-import { getApiToken } from './auth';
 
-const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/auditee';
+const ENDPOINT = '/sac/auditee';
 const FORM = document.forms[0];
 
 function submitForm() {
-  // Format Dates
-  let start_input = document.getElementById('auditee_fiscal_period_start');
-  start_input.value = new Date(start_input.value).toLocaleDateString('en-CA');
-  let end_input = document.getElementById('auditee_fiscal_period_end');
-  end_input.value = new Date(end_input.value).toLocaleDateString('en-CA');
-
   const formData = serializeFormData(new FormData(FORM));
-  const headers = new Headers();
-  headers.append('Content-type', 'application/json');
+  formData.auditee_fiscal_period_start = new Date(
+    formData.auditee_fiscal_period_start
+  ).toLocaleDateString('en-CA');
+  formData.auditee_fiscal_period_end = new Date(
+    formData.auditee_fiscal_period_end
+  ).toLocaleDateString('en-CA');
 
-  getApiToken().then((token) => {
-    headers.append('Authorization', 'Token ' + token);
-    fetch(ENDPOINT, {
+  queryAPI(
+    ENDPOINT,
+    formData,
+    {
       method: 'POST',
-      headers: headers,
-      body: JSON.stringify(formData),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        handleAuditeeResponse(data);
-      });
-  });
+    },
+    [handleAuditeeResponse, handleErrorResponse]
+  );
 }
 
 function handleAuditeeResponse(data) {
-  const nextUrl = '../step-3/'; //URL value for now
-  if (data.next) window.location.href = nextUrl;
+  console.log(data);
+  if (data.next === '/sac/accessandsubmission') {
+    const nextUrl = '../step-3/';
+    window.location.href = nextUrl;
+  } else {
+    console.log(data.errors);
+  }
+}
+function handleErrorResponse() {
+  console.log('ERROR: Form submission error.');
 }
 
 function handleUEIDResponse({ valid, response, errors }) {

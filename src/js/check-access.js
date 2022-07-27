@@ -1,7 +1,7 @@
 import { checkValidity } from './validate';
-import { getApiToken } from './auth';
+import { queryAPI } from './api';
 
-const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/accessandsubmission';
+const ENDPOINT = '/sac/accessandsubmission';
 const FORM = document.forms[0];
 let addedContactNum = 1; // Counter for added contacts
 
@@ -22,27 +22,22 @@ function submitForm() {
     'auditor_contacts_email'
   );
 
-  const headers = new Headers();
-  headers.append('Content-type', 'application/json');
-
-  getApiToken().then((token) => {
-    headers.append('Authorization', 'Token ' + token);
-
-    fetch(ENDPOINT, {
+  queryAPI(
+    ENDPOINT,
+    preparedData,
+    {
       method: 'POST',
-      headers: headers,
-      body: JSON.stringify(preparedData),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        handleAuditeeResponse(data);
-      });
-  });
+    },
+    [handleAccessResponse, handleErrorResponse]
+  );
 }
 
-function handleAuditeeResponse(data) {
-  const nextUrl = '/audit/submission/'; //data.next; //URL value for now
+function handleAccessResponse(data) {
+  const nextUrl = '/audit/submission/';
   if (data.next === 'TBD') window.location.href = nextUrl;
+}
+function handleErrorResponse() {
+  console.log('ERROR: Form submission error.');
 }
 
 function serializeFormData(formData) {
