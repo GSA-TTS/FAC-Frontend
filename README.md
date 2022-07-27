@@ -22,6 +22,12 @@ Finally, if you need to create a production build locally (perhaps for troublesh
 npm run build
 ```
 
+## Running on Federalist
+
+The FAC frontend is automatically deployed to Federalist/Cloud.gov Pages.
+
+:eyes: [Stable preview of `main` as deployed to Federalist](https://federalist-9a617ff8-042d-4076-9581-bb999f9c6639.app.cloud.gov/site/gsa-tts/fac-frontend/).
+
 ## Testing
 
 To run the end-to-end test suite in a browser, run
