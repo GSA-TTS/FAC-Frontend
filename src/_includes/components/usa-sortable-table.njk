@@ -6,30 +6,16 @@
         {%- for h in params.headers -%}
           <th data-sortable scope="col" role="columnheader">{{ h.title }}</th>
         {%- endfor -%}
-        {# <th data-sortable aria-sort="descending" scope="col" role="columnheader">Report ID</th>
-        <th data-sortable scope="col" role="columnheader">Status</th>
-        <th data-sortable scope="col" role="columnheader">Auditee UEI</th>
-        <th data-sortable scope="col" role="columnheader">Auditee name</th>
-        <th data-sortable scope="col" role="columnheader">Fiscal year end date</th> #}
       </tr>
     </thead>
     <tbody>
-      {# {%- for row in params.rows -%}
+      {%- for row in params.data -%}
         <tr>
           {%- for key, item in row -%}
-            <td data-sort-value={{ s.item }}>{{ s.item }}</td>
+            <td data-sort-value={{ item }}>{{ item }}</td>
           {%- endfor -%}
         </tr>
-      {%- endfor -%} #}
-      {% for s in params.submissions %}
-        <tr>
-          <td data-sort-value={{ s.reportId }}>{{ s.reportId }}</td>
-          <td data-sort-value={{ s.status }}>{{ s.status }}</td>
-          <td data-sort-value={{ s.auditeeUEI }}>{{ s.auditeeUEI }}</td>
-          <td data-sort-value={{ s.auditeeName }}>{{ s.auditeeName }}</td>
-          <td data-sort-value={{ s.fiscalYearEndDate }}>{{ s.fiscalYearEndDate }}</td>
-        </tr>
-      {% endfor %}
+      {%- endfor -%}
     </tbody>
   </table>
   <div class="usa-sr-only usa-table__announcement-region" aria-live="polite"></div>
