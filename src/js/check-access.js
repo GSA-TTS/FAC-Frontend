@@ -35,7 +35,7 @@ function submitForm() {
 function handleAccessResponse(data) {
   console.log(data);
   if (data.sac_id) {
-    const nextUrl = '/submissions';
+    const nextUrl = '../../submission';
     window.location.href = nextUrl;
   } else {
     console.log(data);
