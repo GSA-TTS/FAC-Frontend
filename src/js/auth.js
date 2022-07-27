@@ -50,7 +50,7 @@ export const getApiToken = () => {
 
   function handleLogoutSuccess() {
     sessionStorage.clear();
-    localStorage.removeItem();
+    localStorage.removeItem('oidc.fac-api-token');
     window.location = settings.post_logout_redirect_uri;
   }
 
@@ -71,9 +71,11 @@ export const getApiToken = () => {
 
   function getUserInfo() {
     const userInfoCtr = document.getElementById('user-info');
-    userManager
-      .getUser()
-      .then(({ profile }) => (userInfoCtr.innerText = profile.email));
+    userManager.getUser().then((user) => {
+      if (user) {
+        userInfoCtr.innerText = user.profile.email;
+      }
+    });
   }
 
   function attachEventHandlers() {
