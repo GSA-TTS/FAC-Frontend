@@ -1,45 +1,27 @@
 ---
 title: My audit submissions
 tableName: My unpublished audit submission list
+headers:
+  - title: Report ID
+  - title: Status
+  - title: Auditee UEI
+  - title: Auditee name
+  - title: Fiscal year end date
 ---
-
 {%- extends "layout.njk" -%}
-
 {%- block content -%}
   <div class="grid-container">
     <h1>{{ title }}</h1>
 
-    {% if submissions | length %}
+    {%- if submissions | length -%}
       <div class="margin-top-4">
         <h2 class="text-base-darker ">{{ tableName }}</h2>
-
-        <div class="usa-table-container">
-          <table class="usa-table">
-            <caption></caption>
-            <thead>
-              <tr>
-                <th data-sortable aria-sort="descending" scope="col" role="columnheader">Report ID</th>
-                <th data-sortable scope="col" role="columnheader">Status</th>
-                <th data-sortable scope="col" role="columnheader">Auditee UEI</th>
-                <th data-sortable scope="col" role="columnheader">Auditee name</th>
-                <th data-sortable scope="col" role="columnheader">Fiscal year end date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for s in submissions %}
-                <tr>
-                  <td data-sort-value={{ s.reportId }}>{{ s.reportId }}</td>
-                  <td data-sort-value={{ s.status }}>{{ s.status }}</td>
-                  <td data-sort-value={{ s.auditeeUEI }}>{{ s.auditeeUEI }}</td>
-                  <td data-sort-value={{ s.auditeeName }}>{{ s.auditeeName }}</td>
-                  <td data-sort-value={{ s.fiscalYearEndDate }}>{{ s.fiscalYearEndDate }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          <div class="usa-sr-only usa-table__announcement-region" aria-live="polite"></div>
-        </div>
+        {{ 
+          component('usa-sortable-table', {
+            headers: headers
+          }) 
+        }}
       </div>
-    {% endif %}
+    {%- endif -%}
   </div>
 {%- endblock -%}
