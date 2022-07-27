@@ -66,7 +66,7 @@ export const getApiToken = () => {
         })
           .then((resp) => resp.json())
           .then((data) => tokenStore.set('fac-api-token', data.token))
-          .then(() => (window.location = appBaseUrl + 'audit/new/step-1'));
+          .then(() => (window.location = appBaseUrl + 'submissions'));
       });
     }
   }
