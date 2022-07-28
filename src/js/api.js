@@ -17,7 +17,7 @@ export const queryAPI = (
     fetch(apiUrl + endpoint, {
       method: config.method,
       headers: headers,
-      body: JSON.stringify(data),
+      body: data ? JSON.stringify(data) : undefined,
     })
       .then((resp) => resp.json())
       .then((data) => handleResponse(data))
