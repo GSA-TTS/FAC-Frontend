@@ -1,32 +1,37 @@
-import { getApiToken } from './auth';
+import { queryAPI } from './api';
 
 (function () {
-  const ENDPOINT = 'https://fac-dev.app.cloud.gov/sac/eligibility';
-  //const ENDPOINT = 'http://localhost:8000/sac/eligibility';
+  const ENDPOINT = '/sac/eligibility';
   const FORM = document.forms[0];
 
   function submitForm() {
     const formData = serializeFormData(new FormData(FORM));
-    const headers = new Headers();
+    formData.met_spending_threshold = stringToBoolean(
+      formData.met_spending_threshold
+    );
+    formData.is_usa_based = stringToBoolean(formData.is_usa_based);
 
-    headers.append('Content-type', 'application/json');
-
-    getApiToken().then((token) => {
-      headers.append('Authorization', 'Token ' + token);
-
-      fetch(ENDPOINT, {
+    queryAPI(
+      ENDPOINT,
+      formData,
+      {
         method: 'POST',
-        headers: headers,
-        body: JSON.stringify(formData),
-      })
-        .then((resp) => resp.json())
-        .then((data) => {
-          console.log(data);
-          const iseligible = data.eligible;
-          const nextUrl = '../step-2/'; //Replace with final URL
-          if (iseligible) window.location.href = nextUrl;
-        });
-    });
+      },
+      [handleEligibilityResponse, handleErrorResponse]
+    );
+  }
+
+  function handleEligibilityResponse(data) {
+    console.log(data);
+    if (data.eligible) {
+      const nextUrl = '../step-2/'; //Replace with final URL
+      window.location.href = nextUrl;
+    } else {
+      console.log(data.errors);
+    }
+  }
+  function handleErrorResponse() {
+    console.log('ERROR: Form submission error.');
   }
 
   function serializeFormData(formData) {
@@ -41,6 +46,14 @@ import { getApiToken } from './auth';
     };
 
     return !INVALID_ENTITY_TYPES[name].includes(id);
+  }
+
+  function stringToBoolean(value) {
+    if (value && typeof value === 'string') {
+      if (value.toLowerCase() === 'true') return true;
+      if (value.toLowerCase() === 'false') return false;
+    }
+    return value;
   }
 
   function setFormDisabled(shouldDisable) {
