@@ -1,30 +1,10 @@
 ---
 title: My audit submissions
-tableName: My unpublished audit submission list
-table:
-  headers:
-    - title: Report ID
-    - title: Status
-    - title: Auditee UEI
-    - title: Auditee name
-    - title: Fiscal year end date
 ---
 {%- extends "layout.njk" -%}
 {%- block content -%}
-  <div class="grid-container">
+  <div id="my-unpublished-audits-container" class="grid-container">
     <h1>{{ title }}</h1>
-
-    {%- if submissions | length -%}
-      <div class="margin-top-4">
-        <h2 class="text-base-darker ">{{ tableName }}</h2>
-        {{ 
-          component('usa-sortable-table', {
-            headers: table.headers,
-            data: submissions
-          }) 
-        }}
-      </div>
-    {%- endif -%}
   </div>
   <script src="{{ config.baseUrl }}assets/js/submissions.js"></script>
 {%- endblock -%}
