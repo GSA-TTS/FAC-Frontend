@@ -1,6 +1,12 @@
-<div class="usa-alert usa-alert--{{ params.type }}" role="alert">
+<div class="usa-alert usa-alert--{{ params.type }} {{ "usa-alert--slim" if params.slim }}" 
+  role="alert" 
+  {{ "hidden" if params.hidden}}
+  {{ "id=" + params.id if params.id }}
+>
   <div class="usa-alert__body">
-    <h4 class="usa-alert__heading">{{ params.heading }}</h4>
+    {% if not params.slim %}
+      <h4 class="usa-alert__heading">{{ params.heading }}</h4>
+    {% endif %}
     <p class="usa-alert__text">
       {{ params.text }}
     </p>

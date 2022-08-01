@@ -1,5 +1,23 @@
+{%- from "system/component.njk" import component -%}
   <section class="usa-hero" aria-label="Introduction">
     <div class="grid-container">
+      {{
+        component('usa-alert', {
+          type: 'success',
+          id: 'logout-success',
+          text: 'You have successfully logged out',
+          hidden: true,
+          slim: true
+        })
+      }}
+      <script>
+        (function(){
+          const params = new URLSearchParams(window.location.search);
+          if (params.has('logout')) {
+            document.getElementById('logout-success').hidden = false;
+          }
+        })()
+      </script>
       <h1 class="usa-hero__heading">{{ hero.callout.text }}</h1>
       <p>{{ hero.content | safe }}</p>
       <div class="usa-button-group">

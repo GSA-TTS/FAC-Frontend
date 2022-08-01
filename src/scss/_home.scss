@@ -40,3 +40,11 @@
     max-width: 45rem;
   }
 }
+
+.usa-alert {
+  &--slim {
+    p {
+      margin-bottom: 0;
+    }
+  }
+}

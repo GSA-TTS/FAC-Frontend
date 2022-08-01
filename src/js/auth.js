@@ -1,5 +1,6 @@
 import { UserManager, WebStorageStateStore } from 'oidc-client-ts';
 import crypto from 'crypto-js';
+import { queryAPI } from './api';
 
 /* eslint-disable-next-line no-undef */
 const appBaseUrl = typeof baseUrl !== 'undefined' ? baseUrl : '/';
@@ -9,10 +10,10 @@ const settings = {
   authority: 'https://idp.int.identitysandbox.gov',
   client_id: 'urn:gov:gsa:openidconnect.profiles:sp:sso:gsa:gsa-fac-pkce-01',
   redirect_uri: fullBaseUrl + 'auth/post-login', // baseUrl is set in a script tag right before this script loads
-  post_logout_redirect_uri: fullBaseUrl,
+  post_logout_redirect_uri: fullBaseUrl + '?logout=success',
   response_type: 'code',
   scope: 'openid email roles all_emails',
-
+  end_session_endpoint: 'http://fac-dev.app.cloud.gov/api/auth/token',
   response_mode: 'query',
 
   automaticSilentRenew: false,
@@ -47,6 +48,36 @@ export const getApiToken = () => {
     });
   }
 
+  function handleLogoutSuccess() {
+    sessionStorage.clear();
+    localStorage.removeItem('oidc.fac-api-token');
+    window.location = settings.post_logout_redirect_uri;
+  }
+
+  function handleLogoutError(e) {
+    console.error(e);
+  }
+
+  function logout() {
+    queryAPI(
+      '/api/auth/token',
+      {},
+      {
+        method: 'DELETE',
+      },
+      [handleLogoutSuccess, handleLogoutError]
+    );
+  }
+
+  function getUserInfo() {
+    const userInfoCtr = document.getElementById('user-info');
+    userManager.getUser().then((user) => {
+      if (user) {
+        userInfoCtr.innerText = user.profile.email;
+      }
+    });
+  }
+
   function attachEventHandlers() {
     attachSignInButtonHandler();
 
@@ -69,6 +100,16 @@ export const getApiToken = () => {
           .then(() => (window.location = appBaseUrl + 'audit/new/step-1'));
       });
     }
+
+    const signOutBtn = document.querySelector('.sign-out button');
+    if (signOutBtn) {
+      signOutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        logout();
+      });
+    }
+
+    window.addEventListener('load', getUserInfo);
   }
 
   function init() {
