@@ -7,6 +7,21 @@
   </label>
   <div class="usa-hint" id="{{ params.id }}-hint">mm/dd/yyyy</div>
   <div class="usa-date-picker">
+    {% if params.validations %}
+    <ul class="usa-error-message"
+      id="{{ params.id }}-error-message"
+      role="alert"
+      >
+      {% for v in params.validations %}
+        <li
+          id="{{ params.id }}-{{ v.operation }}"
+          hidden
+          >
+          {{ v.error_message }}
+        </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
     <input
       class="usa-input"
       id="{{ params.id }}"
@@ -17,6 +32,9 @@
         aria-required="true"
         required
       {% endif %}
+      {% for v in params.validations %}
+        data-validate-{{v.operation}}="{{v.constraint}}"
+      {% endfor %}
     />
   </div>
 </div>

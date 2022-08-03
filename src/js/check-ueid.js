@@ -293,5 +293,4 @@ function attachEventHandlers() {
 function init() {
   attachEventHandlers();
 }
-
-init();
+window.addEventListener('load', init, false);
