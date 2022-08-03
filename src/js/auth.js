@@ -109,10 +109,19 @@ export const getApiToken = () => {
       });
     }
 
-    window.addEventListener('load', getUserInfo);
+    window.addEventListener('load', () => {
+      getUserInfo();
+      checkLogin();
+    });
   }
 
   function checkLogin() {
+    // eslint-disable-next-line no-undef
+    if (runningInCi) {
+      document.body.classList.remove('no-js');
+      return;
+    }
+
     const path = window.location.pathname;
     if (path == appBaseUrl || path.match('auth')) return;
 
@@ -131,7 +140,6 @@ export const getApiToken = () => {
   }
 
   function init() {
-    checkLogin();
     attachEventHandlers();
   }
 
