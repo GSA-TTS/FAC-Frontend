@@ -112,7 +112,24 @@ export const getApiToken = () => {
     window.addEventListener('load', getUserInfo);
   }
 
+  function checkLogin() {
+    // eslint-disable-next-line no-undef
+    if (window.location.path == appBaseUrl) return;
+
+    userManager
+      .getUser()
+      .then((user) => {
+        if (user) {
+          document.body.classList.remove('no-js');
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
+
   function init() {
+    checkLogin();
     attachEventHandlers();
   }
 

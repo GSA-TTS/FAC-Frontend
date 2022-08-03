@@ -12,7 +12,7 @@
   <title>{{ title }}</title>
 </head>
 
-<body>
+<body {{ 'class=no-js' if page.url != "/" }}>
   {% include 'header.njk' %}
   <main id="main-content">
   {{ content | safe }}
