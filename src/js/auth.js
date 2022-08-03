@@ -113,14 +113,16 @@ export const getApiToken = () => {
   }
 
   function checkLogin() {
-    // eslint-disable-next-line no-undef
-    if (window.location.path == appBaseUrl) return;
+    const path = window.location.pathname;
+    if (path == appBaseUrl || path.match('auth')) return;
 
     userManager
       .getUser()
       .then((user) => {
         if (user) {
           document.body.classList.remove('no-js');
+        } else {
+          window.location = fullBaseUrl + `?authorized=false`;
         }
       })
       .catch((e) => {
