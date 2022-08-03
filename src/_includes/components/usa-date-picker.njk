@@ -13,6 +13,10 @@
       name="{{ params.id }}"
       aria-labelledby="{{ params.id }}-label"
       aria-describedby="{{ params.id }}-hint"
+      {% if params.required %}
+        aria-required="true"
+        required
+      {% endif %}
     />
   </div>
 </div>
