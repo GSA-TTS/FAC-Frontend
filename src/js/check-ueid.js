@@ -289,8 +289,20 @@ function attachEventHandlers() {
     validateFyStartDate(e.target);
   });
 }
+function attachDatePickerHandlers() {
+  const dateInputsNeedingValidation = Array.from(
+    document.querySelectorAll('.usa-date-picker__wrapper input[type=text]')
+  );
+  dateInputsNeedingValidation.forEach((q) => {
+    q.addEventListener('blur', (e) => {
+      performValidations(e.target);
+    });
+  });
+}
 
 function init() {
   attachEventHandlers();
+  window.addEventListener('load', attachDatePickerHandlers, false); // Need to wait for date-picker text input to render.
 }
-window.addEventListener('load', init, false);
+
+init();
