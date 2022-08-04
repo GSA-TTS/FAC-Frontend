@@ -5,7 +5,7 @@ describe('Create New Audit', () => {
 
   describe('A Blank Form', () => {
     it('marks empty responses as invalid', () => {
-      cy.get('.auditee-information input:invalid').should('have.length', 1);
+      cy.get('.auditee-information input:invalid').should('have.length', 3);
     });
 
     it('will not submit', () => {
