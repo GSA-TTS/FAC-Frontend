@@ -57,8 +57,25 @@ describe('Create New Audit', () => {
       });
     });
 
-    describe('Fiscal Year Validation', () => {
+    describe('Fiscal Year Start Validation', () => {
+      it('should display an error message when left blank', () => {
+        cy.get('#auditee_fiscal_period_start').click().blur();
+        cy.get('#auditee_fiscal_period_start-not-null').should('be.visible');
+      });
+
+      it('should disable the submit button when fields are invalid', () => {
+        cy.get('button').contains('Continue').should('be.disabled');
+      });
+
+      it('should remove the error message when input is supplied', () => {
+        cy.get('#auditee_fiscal_period_start').type('01/01/2022').blur();
+        cy.get('#auditee_fiscal_period_start-not-null').should(
+          'not.be.visible'
+        );
+      });
+
       it('should show an error if the user enters a date before 1/1/2020', () => {
+        cy.get('#auditee_fiscal_period_start').clear();
         cy.get('#auditee_fiscal_period_start').type('12/31/2019');
         cy.get('#fy-error-message li').should('have.length', 1);
       });
@@ -66,6 +83,21 @@ describe('Create New Audit', () => {
       it('should not show an error if the user enters a date after 12/31/2019', () => {
         cy.get('#auditee_fiscal_period_start').clear().type('12/31/2020');
         cy.get('#fy-error-message li').should('have.length', 0);
+      });
+    });
+    describe('Fiscal Year End Validation', () => {
+      it('should display an error message when left blank', () => {
+        cy.get('#auditee_fiscal_period_end').click().blur();
+        cy.get('#auditee_fiscal_period_end-not-null').should('be.visible');
+      });
+
+      it('should disable the submit button when fields are invalid', () => {
+        cy.get('button').contains('Continue').should('be.disabled');
+      });
+
+      it('should remove the error message when input is supplied', () => {
+        cy.get('#auditee_fiscal_period_end').type('01/31/2022').blur();
+        cy.get('#auditee_fiscal_period_end-not-null').should('not.be.visible');
       });
     });
 
