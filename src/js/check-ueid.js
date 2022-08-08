@@ -225,6 +225,7 @@ function validateFyStartDate(fyInput) {
   const fyErrorContainer = document.getElementById('fy-error-message');
   const userFy = {};
   [userFy.year, userFy.month, userFy.day] = fyInput.value.split('-');
+  fyErrorContainer.innerHTML = '';
 
   if (userFy.year < 2020) {
     const errorEl = document.createElement('li');
@@ -237,7 +238,6 @@ function validateFyStartDate(fyInput) {
     fyErrorContainer.focus();
   } else {
     fyFormGroup.classList.remove('usa-form-group--error');
-    fyErrorContainer.innerHTML = '';
   }
 
   setFormDisabled(!allResponsesValid());
