@@ -77,12 +77,4 @@ describe('Create New Audit', () => {
       cy.get('button').contains(CONTINUE_BUTTON_TEXT).should('not.be.disabled');
     });
   });
-
-  describe('Accessibility', () => {
-    it('should get a perfect Lighthouse score for accessibility', () => {
-      cy.lighthouse({
-        accessibility: 100,
-      });
-    });
-  });
 });

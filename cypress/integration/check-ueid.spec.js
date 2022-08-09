@@ -253,12 +253,4 @@ describe('Create New Audit', () => {
       });
     });
   });
-
-  describe('Accessibility', () => {
-    it('should get a perfect Lighthouse score for accessibility', () => {
-      cy.lighthouse({
-        accessibility: 100,
-      });
-    });
-  });
 });
