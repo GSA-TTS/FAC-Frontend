@@ -116,12 +116,4 @@ describe('Create New Audit', () => {
       cy.url().should('include', 'submission');
     });
   });
-
-  describe('Accessibility', () => {
-    it('should get a perfect Lighthouse score for accessibility', () => {
-      cy.lighthouse({
-        accessibility: 100,
-      });
-    });
-  });
 });

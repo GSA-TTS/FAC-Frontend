@@ -94,12 +94,4 @@ describe('Create New Audit', () => {
       cy.url().should('include', '/audit/new/step-3/');
     });
   });
-
-  describe('Accessibility', () => {
-    it('should get a perfect Lighthouse score for accessibility', () => {
-      cy.lighthouse({
-        accessibility: 100,
-      });
-    });
-  });
 });
