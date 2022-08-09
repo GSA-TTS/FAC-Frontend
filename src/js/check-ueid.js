@@ -225,6 +225,7 @@ function validateFyStartDate(fyInput) {
   const fyErrorContainer = document.getElementById('fy-error-message');
   const userFy = {};
   [userFy.year, userFy.month, userFy.day] = fyInput.value.split('-');
+  fyErrorContainer.innerHTML = '';
 
   if (userFy.year < 2020) {
     const errorEl = document.createElement('li');
@@ -237,7 +238,6 @@ function validateFyStartDate(fyInput) {
     fyErrorContainer.focus();
   } else {
     fyFormGroup.classList.remove('usa-form-group--error');
-    fyErrorContainer.innerHTML = '';
   }
 
   setFormDisabled(!allResponsesValid());
@@ -289,9 +289,20 @@ function attachEventHandlers() {
     validateFyStartDate(e.target);
   });
 }
+function attachDatePickerHandlers() {
+  const dateInputsNeedingValidation = Array.from(
+    document.querySelectorAll('.usa-date-picker__wrapper input[type=text]')
+  );
+  dateInputsNeedingValidation.forEach((q) => {
+    q.addEventListener('blur', (e) => {
+      performValidations(e.target);
+    });
+  });
+}
 
 function init() {
   attachEventHandlers();
+  window.addEventListener('load', attachDatePickerHandlers, false); // Need to wait for date-picker text input to render.
 }
 
 init();

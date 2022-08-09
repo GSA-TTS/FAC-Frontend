@@ -43,12 +43,20 @@ inputs:
     error_message: Auditee Name is required if proceeding without a valid UEI
 
   - id: auditee_fiscal_period_start
+    required: true
     label: Auditee fiscal period <strong>start</strong> date for this submission
     field_type: date
+    validations:
+      - operation: not-null
+        error_message: Can't be null
 
   - id: auditee_fiscal_period_end
+    required: true
     label: Auditee fiscal period <strong>end</strong> date for this submission
     field_type: date
+    validations:
+      - operation: not-null
+        error_message: Can't be null
 
 explanatory_text:
   heading: The unique entity identifier used by the FAC has changed.
@@ -135,7 +143,8 @@ explanatory_text:
                 label: i.label,
                 id: i.id,
                 required: i.required,
-                errorMessage: i.error_message
+                errorMessage: i.error_message,
+                validations: i.validations
               })
             }}
           </div>
