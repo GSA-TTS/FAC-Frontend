@@ -1,5 +1,6 @@
 @use 'uswds-core' as *;
 
+
 .usa-form {
   padding-bottom: 2rem;
 }
@@ -10,6 +11,11 @@
   .usa-legend {
     font-weight: 700;
   }
+}
+
+.usa-form abbr[title=required] {
+  position: absolute;
+  padding-left: .2rem;
 }
 
 .usa-radio .usa-error-message {
