@@ -218,6 +218,14 @@ ul.usa-error-message {
   legend + .grid-container {
     margin-top: 1.5em;
   }
+
+  .grid-row + .grid-row {
+    margin-top: 1em;
+  }
+}
+
+.audit-submission-access .tablet\:grid-col-fill {
+  max-width: 38ch;
 }
 
 /* stylelint-disable */
