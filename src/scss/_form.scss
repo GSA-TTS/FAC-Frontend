@@ -96,12 +96,13 @@ ul.usa-error-message {
 
   form {
     background-color: #fff;
-  }
-
-  form,
-  .ueid-explanation {
     margin: 2rem;
     padding: 2rem;
+  }
+
+  .ueid-explanation {
+    margin: 2rem;
+    padding: 2rem 0;
   }
 
   .ueid-explanation > h2 {
