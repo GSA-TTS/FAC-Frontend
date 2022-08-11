@@ -172,6 +172,54 @@ ul.usa-error-message {
   }
 }
 
+#grant-access {
+  .usa-legend--large {
+    max-width: 80ch;
+  }
+
+  .usa-summary-box {
+    margin: 2em 0;
+  }
+
+  .required-explanation {
+    margin-bottom: 3em;
+  }
+
+  .usa-fieldset .question:first-child {
+    margin-top: 3em;
+  }
+
+  .question {
+    border-bottom: 1px solid color('base-light');
+    margin-top: 2em;
+    padding-bottom: 3em;
+
+    .usa-legend {
+      font-size: size('body', 'lg');
+    }
+
+    .usa-form-group {
+      margin-top: 0;
+    }
+  }
+
+  .add-contact {
+    margin-top: .5em;
+  }
+
+  #email-notice {
+    margin: 3em 0 0;
+  }
+
+  .usa-button-group__item .usa-button {
+    margin-top: 1em;
+  }
+
+  legend + .grid-container {
+    margin-top: 1.5em;
+  }
+}
+
 /* stylelint-disable */
 #auditee_name[disabled] {
   cursor: not-allowed;
