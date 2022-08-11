@@ -192,6 +192,10 @@ ul.usa-error-message {
 
   .usa-summary-box {
     margin: 2em 0;
+
+    .usa-list li {
+      max-width: 100%;
+    }
   }
 
   .required-explanation {
