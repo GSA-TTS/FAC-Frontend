@@ -56,6 +56,11 @@ ul.usa-error-message {
 }
 
 #check-eligibility {
+  .uei-explanation + .usa-form-group,
+  .usa-form-group + .uei-explanation {
+    margin-top: 1.5rem;
+  }
+
   .usa-search {
     input, button {
       height: 2.5rem;
