@@ -8,7 +8,6 @@ import { getApiToken } from './auth';
 
   function getSubmissions() {
     const headers = new Headers();
-
     headers.append('Content-type', 'application/json');
 
     getApiToken().then((token) => {
@@ -22,16 +21,6 @@ import { getApiToken } from './auth';
         .then((data) => handleSubmissionsResponse(data))
         .catch((e) => handleErrorResponse(e));
     });
-/*
-    queryAPI(
-      ENDPOINT,
-      null,
-      {
-        method: 'HEAD',
-      },
-      [handleSubmissionsResponse, handleErrorResponse]
-    );
-*/
   }
 
   function handleSubmissionsResponse(data) {
