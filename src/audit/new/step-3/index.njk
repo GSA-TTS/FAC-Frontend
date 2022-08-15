@@ -24,7 +24,7 @@ inputs:
     field_type: text
     validations:
       - operation: not-null
-        error_message: Can't be null
+        error_message: Please enter a valid email address
       - operation: email
         error_message: An email address should have a username, an '@' symbol, and a domain name
   - id: _re_email
@@ -66,7 +66,7 @@ email_notice: The above contacts will receive an e-mail once this audit is creat
               items: summary.items
             })
           }}
-        <p>
+        <p class="required-explanation">
           <abbr
             title="required"
             class="usa-hint usa-hint--required"
@@ -154,7 +154,7 @@ email_notice: The above contacts will receive an e-mail once this audit is creat
           </div>
         </fieldset>
         {% endfor %}
-        <p id="email_notice">{{ email_notice }}</p>
+        <p id="email-notice">{{ email_notice }}</p>
         <ul class="usa-button-group">
           <li class="usa-button-group__item">
             <a href="javascript:void(0);" class="usa-button usa-button--outline">
@@ -162,7 +162,7 @@ email_notice: The above contacts will receive an e-mail once this audit is creat
             </a>
           </li>
           <li class="usa-button-group__item">
-            <button class="usa-button" id="create" aria-describedby="email_notice">Create</button>
+            <button class="usa-button" id="create">Create</button>
           </li>
         </ul>
       </form>
