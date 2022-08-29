@@ -9,7 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      IN_CI: true
     steps:
       - uses: actions/checkout@v3
       - name: Use Node

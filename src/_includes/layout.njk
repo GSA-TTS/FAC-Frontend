@@ -12,13 +12,14 @@
   <title>{{ title }}</title>
 </head>
 
-<body>
+<body {{ 'class=no-js' if page.url != "/" }}>
   {% include 'header.njk' %}
   <main id="main-content">
   {{ content | safe }}
   {% block content %}{% endblock %}
   </main>
   {% include 'footer.njk' %}
+  <script>const runningInCi = {{ config.IN_CI }}</script>
   <script>const baseUrl = "{{ config.baseUrl }}"</script>
   <script src="{{ config.baseUrl }}assets/js/app.js" type="text/javascript"></script>
   <script src="{{ config.baseUrl }}assets/js/auth.js" type="text/javascript"></script>  
