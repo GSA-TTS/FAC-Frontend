@@ -74,8 +74,24 @@ export const getApiToken = () => {
     userManager.getUser().then((user) => {
       if (user) {
         userInfoCtr.innerText = user.profile.email;
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('reportId')) {
+          checkAccessToAudit(params.get('reportId'));
+        }
       }
     });
+  }
+
+  function checkAccessToAudit(reportId) {
+    queryAPI('/access-list', undefined, { method: 'GET' }, [
+      function (audits) {
+        if (hasAccessToAudit(audits, reportId)) return;
+        window.location = fullBaseUrl + `?authorized=false`;
+      },
+      function (data) {
+        console.error(data);
+      },
+    ]);
   }
 
   function attachEventHandlers() {
@@ -115,7 +131,18 @@ export const getApiToken = () => {
     });
   }
 
+  function getUserAuditIds(audits) {
+    const auditIds = new Set(audits.map((a) => a.report_id));
+    return auditIds;
+  }
+
+  function hasAccessToAudit(audits, id) {
+    const auditIds = getUserAuditIds(audits);
+    return auditIds.has(id);
+  }
+
   function checkLogin() {
+    // `runningInCi` is an environment variable
     // eslint-disable-next-line no-undef
     if (runningInCi) {
       document.body.classList.remove('no-js');
