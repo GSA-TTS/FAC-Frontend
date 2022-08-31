@@ -112,6 +112,26 @@ function setupFormWithValidUei() {
   showValidUeiInfo();
 }
 
+function resetModal() {
+  const modalContainerEl = document.querySelector(
+    '#uei-search-result .usa-modal__main'
+  );
+  const modalHeadingEl = modalContainerEl.querySelector('h2');
+  const modalDescriptionEl = modalContainerEl.querySelector(
+    '#uei-search-result-description'
+  );
+  const modalButtonPrimaryEl = modalContainerEl.querySelector('button.primary');
+  const modalButtonSecondaryEl =
+    modalContainerEl.querySelector('button.secondary');
+
+  modalHeadingEl.textContent = '';
+  modalDescriptionEl.innerHTML = '';
+  modalButtonPrimaryEl.textContent = '';
+  modalButtonSecondaryEl.textContent = '';
+
+  document.querySelector('.uei-search-result').classList.add('loading');
+}
+
 // 'connection-error' | 'not-found' | 'success'
 function populateModal(formStatus, auditeeName) {
   const auditeeUei = document.getElementById('auditee_uei').value;
@@ -206,6 +226,8 @@ function populateModal(formStatus, auditeeName) {
 }
 
 function validateUEID() {
+  resetModal();
+
   const auditee_uei = document.getElementById('auditee_uei').value;
 
   queryAPI(
