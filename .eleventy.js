@@ -12,14 +12,14 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('assets/img');
   eleventyConfig.addPassthroughCopy('assets/js');
 
-  const jsPath = glob.sync(path.join('.','src','js','*.js'));
+  const jsPath = glob.sync(path.join('.', 'src', 'js', '**', '*.js'));
 
   eleventyConfig.on('afterBuild', () => {
     return esbuild.build({
       entryPoints: [...jsPath, 'src/scss/main.scss'],
       outdir: '_site/assets',
-      minify: process.env.ELEVENTY_ENV === "production",
-      sourcemap: process.env.ELEVENTY_ENV !== "production",
+      minify: process.env.ELEVENTY_ENV === 'production',
+      sourcemap: process.env.ELEVENTY_ENV !== 'production',
       target: ['chrome58', 'firefox57', 'safari11', 'edge18'],
       bundle: true,
       format: 'iife',
@@ -33,16 +33,16 @@ module.exports = function (eleventyConfig) {
       plugins: [
         sassPlugin({
           loadPaths: [
-            "./node_modules/@uswds",
-            "./node_modules/@uswds/uswds/packages",
+            './node_modules/@uswds',
+            './node_modules/@uswds/uswds/packages',
           ],
         }),
-      ]
+      ],
     });
   });
 
-  eleventyConfig.addWatchTarget("./src/js/")
-  eleventyConfig.addWatchTarget("./src/scss/")
+  eleventyConfig.addWatchTarget('./src/js/');
+  eleventyConfig.addWatchTarget('./src/scss/');
 
   return {
     dir: {

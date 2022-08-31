@@ -1,5 +1,17 @@
 --- 
 layout: layout.njk 
 --- 
-
 {% include 'components/hero.njk' %} 
+
+<is-land on:visible>
+  <script type="module/island">
+  console.log("Hydrating!");
+  </script>
+</is-land>
+
+<is-land on:visible>
+  <script type="module/island">
+  import "{{ config.baseUrl }}assets/js/components/lit-component-test.js"
+  </script>
+  <lit-component name="Post-JS">Pre-JS Content</lit-web-component>
+</is-land>
