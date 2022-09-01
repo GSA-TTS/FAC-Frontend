@@ -114,6 +114,7 @@ fieldsets:
         label: Auditee Unique Entity Identifier (UEI)
         id: auditee-uei
         disabled: true
+        data_attribute: 'report.auditee_uei'
       - field_type: radio
         label: Are multiple UEIs covered in this report?
         group: multiple-ueis
@@ -268,53 +269,56 @@ submit: Save & continue to next section
 ---
 {%- extends "form.njk" -%}
 {%- block form -%}
-<div class="grid-container">
-  <dl class="grid-row grid-gap audit-metadata">
-    <div class="tablet:grid-col">
-      <dt>Auditee entity name</dt>
-      <dd>Lorem Ipsum Ltd.</dd>
-    </div>
-    <div class="tablet:grid-col">
-      <dt>Report ID</dt>
-      <dd>923109</dd>
-    </div>
-    <div class="tablet:grid-col">
-      <dt>Version</dt>
-      <dd>1</dd>
-    </div>
-  </dl>
-  <div class="grid-row grid-gap">
-    <nav class="desktop:grid-col-3 sticky-nav" aria-label="Secondary navigation">
-      {{
-        component('usa-sidenav', {
-          links: sidenav.links,
-          baseUrl: config.baseUrl
-        }) 
-      }}
-    </nav>
-    <form class="desktop:grid-col-9 usa-form usa-form--large sf-sac" id="general-info">
-      <fieldset class="usa-fieldset">
-        <legend class="usa-legend usa-legend--large" id="general-information">General information</legend>
-        <p>
-          <abbr
-            title="required"
-            class="usa-hint usa-hint--required"
-            >*</abbr
-          >Indicates a required field.
-        </p>
-        {%- for f in fieldsets -%}
-          {{ 
-            component('sac-fieldset', {
-              fieldset: f
-            }) 
-          }}
-        {%- endfor -%}
+<is-land on:visible>
+  <div class="grid-container" x-data="$store">
+    <dl class="grid-row grid-gap audit-metadata">
+      <div class="tablet:grid-col">
+        <dt>Auditee entity name</dt>
+        <dd>Lorem Ipsum Ltd.</dd>
+      </div>
+      <div class="tablet:grid-col">
+        <dt>Report ID</dt>
+        <dd x-text="report.report_id"></dd>
+      </div>
+      <div class="tablet:grid-col">
+        <dt>Version</dt>
+        <dd>1</dd>
+      </div>
+    </dl>
+    <div class="grid-row grid-gap">
+      <nav class="desktop:grid-col-3 sticky-nav" aria-label="Secondary navigation">
+        {{
+          component('usa-sidenav', {
+            links: sidenav.links,
+            baseUrl: config.baseUrl
+          }) 
+        }}
+      </nav>
+      <form class="desktop:grid-col-9 usa-form usa-form--large sf-sac" id="general-info">
+        <fieldset class="usa-fieldset">
+          <legend class="usa-legend usa-legend--large" id="general-information">General information</legend>
+          <p>
+            <abbr
+              title="required"
+              class="usa-hint usa-hint--required"
+              >*</abbr
+            >Indicates a required field.
+          </p>
+          {%- for f in fieldsets -%}
+            {{ 
+              component('sac-fieldset', {
+                fieldset: f
+              }) 
+            }}
+          {%- endfor -%}
 
-        <button class="usa-button" id="continue">
-          {{ submit }}
-        </button>
-      </fieldset>
-    </form>
-</div>
-<script src="{{ config.baseUrl }}assets/js/sf-sac.js"></script>
+          <button class="usa-button" id="continue">
+            {{ submit }}
+          </button>
+        </fieldset>
+      </form>
+  </div>
+
+  <script src="{{ config.baseUrl }}assets/js/sf-sac.js"></script>
+</is-land>
 {%- endblock -%}

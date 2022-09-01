@@ -46,5 +46,8 @@
     {% for v in params.validations %}
       data-validate-{{v.operation}}="{{v.constraint}}"
     {% endfor %}
+    {% if params.data_attribute %}
+      x-bind:value={{ params.data_attribute }}
+    {% endif %}
   />
 </div>
