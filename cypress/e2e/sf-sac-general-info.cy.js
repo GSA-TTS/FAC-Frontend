@@ -1,8 +1,15 @@
 describe('Create New Audit', () => {
   const CONTINUE_BUTTON_TEXT = 'Save & continue to next section';
 
+  beforeEach(() => {
+    cy.fixture('sac-report').as('sacReport');
+    cy.get('@sacReport').then((report) => {
+      cy.intercept('GET', '/sac/edit/*', report).as('setSacInfo');
+    });
+  });
+
   before(() => {
-    cy.visit('/audit/submission');
+    cy.visit('/audit/submission?reportId=2022ZEL0001000006');
   });
 
   describe('A Blank Form', () => {
@@ -75,6 +82,26 @@ describe('Create New Audit', () => {
 
     it('should enable the "Continue" button when entities are fixed', () => {
       cy.get('button').contains(CONTINUE_BUTTON_TEXT).should('not.be.disabled');
+    });
+  });
+
+  describe('Populating the form with existing data', () => {
+    it('should populate the report ID', () => {
+      cy.visit('/audit/submission?reportId=2022ZEL0001000006');
+      cy.wait('@setSacInfo').then(() => {
+        cy.get('@sacReport').then((report) => {
+          cy.get('[data-test-id="auditeeName"]').should(
+            'have.text',
+            report.auditee_name
+          );
+          cy.get('[data-test-id="reportId"]').should(
+            'have.text',
+            report.report_id
+          );
+          cy.get('#auditee-name').should('have.value', report.auditee_name);
+          cy.get('#auditee-uei').should('have.value', report.auditee_uei);
+        });
+      });
     });
   });
 });
