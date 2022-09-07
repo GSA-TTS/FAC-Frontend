@@ -6,6 +6,7 @@ import { getApiToken } from './auth';
   const apiUrl = 'https://fac-dev.app.cloud.gov';
 
   const TEST_ROWS = 29; // TEST switch (Set to 0 to exit test mode)
+  const ITEMS_PER_PAGE = 3;
   let itemObjArray = [];
   let currentPage;
   let paginationID;
@@ -50,12 +51,11 @@ import { getApiToken } from './auth';
     // Set VARs
     paginationID = 'subPagination';
     const TotalItems = itemObjArray.length;
-    const ITEMS_PER_PAGE = 3;
     totalPages = Math.ceil(TotalItems / ITEMS_PER_PAGE);
     console.log('Total number of pages: ' + totalPages);
 
     if (totalPages > 0) {
-      buildTable('audit-submissions', itemObjArray);
+      buildTable('audit-submissions', itemObjArray.slice(0, ITEMS_PER_PAGE));
       initPagination(paginationID, totalPages);
     } else {
       // Show 'No Results' message
@@ -97,12 +97,7 @@ import { getApiToken } from './auth';
   }
 
   function updatePagination(paginationID, TP, CP) {
-    console.log('updatePagination called.');
-    console.log(paginationID);
-    console.log(TP);
-    console.log(CP);
     const Pagination_Block = document.getElementById(paginationID);
-    console.log(Pagination_Block);
     // Check TP
     if (TP > 1 && CP <= TP) {
       let button_pattern = createPattern(TP, CP);
@@ -121,7 +116,6 @@ import { getApiToken } from './auth';
 
       // Loop through buttons abd match the pattern
       for (const [key, value] of Object.entries(button_pattern)) {
-        console.log('button_pattern[key][value]:' + key, value);
         // GET button
         let pButton = pButtons[key];
         console.log(pButton);
@@ -131,7 +125,7 @@ import { getApiToken } from './auth';
 
         if (value == '...') {
           // Add ellipsis
-          pButton.innerHTML = '<span>…</span>';
+          pButton.innerHTML = '<span>...</span>';
           // Update LI classes
           pButton.classList.replace(
             'usa-pagination__page-no',
@@ -279,8 +273,12 @@ import { getApiToken } from './auth';
   function pageClick() {
     let pageClicked = this.innerHTML;
     console.log(pageClicked);
+    let sliceStart = ITEMS_PER_PAGE * (pageClicked - 1);
+    let sliceEnd = ITEMS_PER_PAGE * pageClicked;
+    let pageData = itemObjArray.slice(sliceStart, sliceEnd);
     currentPage = pageClicked;
     updatePagination(paginationID, totalPages, currentPage);
+    buildTable('audit-submissions', pageData);
   }
 
   function init() {
