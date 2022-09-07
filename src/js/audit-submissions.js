@@ -91,10 +91,7 @@ import { getApiToken } from './auth';
   // INIT Pagination
   function initPagination(paginationID, TP) {
     currentPage = 1;
-    // if TotalPages > 1
     updatePagination(paginationID, TP, currentPage);
-    // else DEFAULT
-    // Hide
   }
 
   function updatePagination(paginationID, TP, CP) {
@@ -119,35 +116,43 @@ import { getApiToken } from './auth';
 
       // Loop through buttons abd match the pattern
       for (const [key, value] of Object.entries(button_pattern)) {
-        console.log(key, value);
+        console.log('button_pattern[key][value]:' + key, value);
+        // GET button
         let pButton = pButtons[key];
         console.log(pButton);
-
+        pButton.innerHTML = '';
         pButton.removeAttribute('role');
         pButton.removeAttribute('aria-label');
 
         if (value == '...') {
+          // Add ellipsis
           pButton.innerHTML = '<span>…</span>';
+          // Update LI classes
           pButton.classList.replace(
             'usa-pagination__page-no',
             'usa-pagination__overflow'
           );
           pButton.setAttribute('role', 'presentation');
-        } else if (value == TP) {
-          pButton.innerHTML = TP;
-          pButton.classList.replace(
-            'usa-pagination__overflow',
-            'usa-pagination__page-no'
-          );
-          pButton.setAttribute('aria-label', 'Page ' + TP);
         } else {
-          // Update Attributes
-          pButton.innerHTML = value;
+          let pageNum = value;
+          // Create link element
+          const pButtonLink = document.createElement('a');
+          // Update link
+          pButtonLink.innerHTML = pageNum;
+          pButtonLink.classList.add('usa-pagination__button');
+          pButtonLink.setAttribute('aria-label', 'Page ' + pageNum);
+          pButtonLink.setAttribute('href', 'javascript:void(0);');
+
+          if (pageNum == CP) {
+            pButtonLink.classList.add('usa-current');
+          }
+          // Attach link
+          pButton.appendChild(pButtonLink);
+          // Update LI classes
           pButton.classList.replace(
             'usa-pagination__overflow',
             'usa-pagination__page-no'
           );
-          pButton.setAttribute('aria-label', 'Page ' + value);
         }
       }
 
