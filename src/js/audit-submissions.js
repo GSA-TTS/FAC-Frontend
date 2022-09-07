@@ -8,6 +8,8 @@ import { getApiToken } from './auth';
   const TEST_ROWS = 29; // TEST switch (Set to 0 to exit test mode)
   let itemObjArray = [];
   let currentPage;
+  let paginationID;
+  let totalPages;
 
   function getSubmissions() {
     const headers = new Headers();
@@ -46,15 +48,15 @@ import { getApiToken } from './auth';
     }
 
     // Set VARs
-    const paginationID = 'subPagination';
+    paginationID = 'subPagination';
     const TotalItems = itemObjArray.length;
     const ITEMS_PER_PAGE = 3;
-    const TotalPages = Math.ceil(TotalItems / ITEMS_PER_PAGE);
-    console.log('Total number of pages: ' + TotalPages);
+    totalPages = Math.ceil(TotalItems / ITEMS_PER_PAGE);
+    console.log('Total number of pages: ' + totalPages);
 
-    if (TotalPages > 0) {
+    if (totalPages > 0) {
       buildTable('audit-submissions', itemObjArray);
-      initPagination(paginationID, TotalPages);
+      initPagination(paginationID, totalPages);
     } else {
       // Show 'No Results' message
     }
@@ -96,6 +98,9 @@ import { getApiToken } from './auth';
 
   function updatePagination(paginationID, TP, CP) {
     console.log('updatePagination called.');
+    console.log(paginationID);
+    console.log(TP);
+    console.log(CP);
     const Pagination_Block = document.getElementById(paginationID);
     console.log(Pagination_Block);
     // Check TP
@@ -146,6 +151,8 @@ import { getApiToken } from './auth';
           if (pageNum == CP) {
             pButtonLink.classList.add('usa-current');
           }
+          pButtonLink.addEventListener('click', pageClick, false);
+
           // Attach link
           pButton.appendChild(pButtonLink);
           // Update LI classes
@@ -231,40 +238,49 @@ import { getApiToken } from './auth';
     }
   }
 
-  function createPattern(TotalPages, currentPage) {
+  function createPattern(totalPages, currentPage) {
+    let TP = Number(totalPages);
+    let CP = Number(currentPage);
     let array_buttons = [];
-    if (TotalPages > 7) {
+    if (TP > 7) {
       // currentPage determines pattern
-      if (currentPage < 5) {
-        // (1)(2)(3)(4)5...TotalPages
+      if (CP < 5) {
+        // (1)(2)(3)(4)5...totalPages
         for (let i = 0; i < 5; i++) {
           array_buttons.push(i + 1);
         }
         array_buttons.push('...');
-        array_buttons.push(TotalPages);
-      } else if (currentPage > TotalPages - 4) {
-        // 1...TotalPages-4(TotalPages-3)(TotalPages-2)(TotalPages-1)(TotalPages)
+        array_buttons.push(TP);
+      } else if (CP > TP - 4) {
+        // 1...totalPages-4(totalPages-3)(totalPages-2)(totalPages-1)(totalPages)
         array_buttons.push(1);
         array_buttons.push('...');
-        for (let i = TotalPages - 5; i < TotalPages; i++) {
+        for (let i = TP - 5; i < TP; i++) {
           array_buttons.push(i + 1);
         }
       } else {
-        // 1...currentPage-1(currentPage)currentPage+1...TotalPages
+        // 1...currentPage-1(currentPage)currentPage+1...totalPages
         array_buttons.push(1);
         array_buttons.push('...');
-        for (let i = currentPage - 1; i < currentPage + 2; i++) {
+        for (let i = CP - 1; i < 2 + CP; i++) {
           array_buttons.push(i);
         }
         array_buttons.push('...');
-        array_buttons.push(TotalPages);
+        array_buttons.push(TP);
       }
     } else {
-      for (let i = 0; i < TotalPages; i++) {
+      for (let i = 0; i < TP; i++) {
         array_buttons.push(i + 1);
       }
     }
     return array_buttons;
+  }
+
+  function pageClick() {
+    let pageClicked = this.innerHTML;
+    console.log(pageClicked);
+    currentPage = pageClicked;
+    updatePagination(paginationID, totalPages, currentPage);
   }
 
   function init() {
