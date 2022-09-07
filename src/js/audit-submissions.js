@@ -5,8 +5,9 @@ import { getApiToken } from './auth';
   const ENDPOINT = '/submissions';
   const apiUrl = 'https://fac-dev.app.cloud.gov';
 
+  const TEST_ROWS = 29; // TEST switch (Set to 0 to exit test mode)
   let itemObjArray = [];
-  let currentPage = 1;
+  let currentPage;
 
   function getSubmissions() {
     const headers = new Headers();
@@ -26,6 +27,10 @@ import { getApiToken } from './auth';
   }
 
   function handleSubmissionsResponse(data) {
+    console.log(data);
+
+    // TESTING
+    // Check if logged in (For testing)
     if (
       data['detail'] == 'Invalid token.' ||
       data['detail'] == 'Token expired!'
@@ -33,13 +38,26 @@ import { getApiToken } from './auth';
       handleErrorResponse(data);
       return;
     }
-    console.log(data);
-    itemObjArray = createTestData(numRows);
-    createTable('audit-submissions', itemObjArray);
-    const numberOfItems = itemObjArray.length;
-    const numberPerPage = 3;
-    const TotalPages = Math.ceil(numberOfItems / numberPerPage);
-    console.log('numberOfPages: ' + TotalPages);
+
+    // TESTING
+    // Test mode switch
+    if (TEST_ROWS > 0) {
+      itemObjArray = createTestData(TEST_ROWS);
+    }
+
+    // Set VARs
+    const paginationID = 'subPagination';
+    const TotalItems = itemObjArray.length;
+    const ITEMS_PER_PAGE = 3;
+    const TotalPages = Math.ceil(TotalItems / ITEMS_PER_PAGE);
+    console.log('Total number of pages: ' + TotalPages);
+
+    if (TotalPages > 0) {
+      buildTable('audit-submissions', itemObjArray);
+      initPagination(paginationID, TotalPages);
+    } else {
+      // Show 'No Results' message
+    }
   }
 
   function handleErrorResponse(data) {
@@ -47,7 +65,115 @@ import { getApiToken } from './auth';
     console.log(data);
   }
 
-  function createTable(tableId, data) {
+  // TEST DATA
+  function createTestData(numRows) {
+    let objArray = [];
+    for (let i = 0; i < numRows; i++) {
+      let j = i + 1;
+      let report_id_data = String(j).padStart(17, '0');
+      let submission_status_data = 'in_progress';
+      let auditee_uei_data = String(j * 15).padStart(12, '0');
+      let auditee_fiscal_period_end_data =
+        '2022-01-' + String(j).padStart(2, '0');
+      let auditee_name_data = 'Entity Num ' + j;
+      let itemObj = {
+        report_id: report_id_data,
+        submission_status: submission_status_data,
+        auditee_uei: auditee_uei_data,
+        auditee_fiscal_period_end: auditee_fiscal_period_end_data,
+        auditee_name: auditee_name_data,
+      };
+      objArray.push(itemObj);
+    }
+    return objArray;
+  }
+
+  // INIT Pagination
+  function initPagination(paginationID, TP) {
+    currentPage = 1;
+    // if TotalPages > 1
+    updatePagination(paginationID, TP, currentPage);
+    // else DEFAULT
+    // Hide
+  }
+
+  function updatePagination(paginationID, TP, CP) {
+    console.log('updatePagination called.');
+    const Pagination_Block = document.getElementById(paginationID);
+    console.log(Pagination_Block);
+    // Check TP
+    if (TP > 1 && CP <= TP) {
+      let button_pattern = createPattern(TP, CP);
+      console.log(button_pattern);
+      // GET LIs
+      let pButtons = Array.from(Pagination_Block.getElementsByTagName('li'));
+      pButtons.shift();
+      pButtons.pop();
+      console.log(pButtons);
+
+      // HIDE pagination NAV
+      if (Pagination_Block.offsetParent != null) {
+        Pagination_Block.classList.add('display-none');
+        Pagination_Block.setAttribute('aria-hidden', true);
+      }
+
+      // Loop through buttons abd match the pattern
+      for (const [key, value] of Object.entries(button_pattern)) {
+        console.log(key, value);
+        let pButton = pButtons[key];
+        console.log(pButton);
+
+        pButton.removeAttribute('role');
+        pButton.removeAttribute('aria-label');
+
+        if (value == '...') {
+          pButton.innerHTML = '<span>…</span>';
+          pButton.classList.replace(
+            'usa-pagination__page-no',
+            'usa-pagination__overflow'
+          );
+          pButton.setAttribute('role', 'presentation');
+        } else if (value == TP) {
+          pButton.innerHTML = TP;
+          pButton.classList.replace(
+            'usa-pagination__overflow',
+            'usa-pagination__page-no'
+          );
+          pButton.setAttribute('aria-label', 'Page ' + TP);
+        } else {
+          // Update Attributes
+          pButton.innerHTML = value;
+          pButton.classList.replace(
+            'usa-pagination__overflow',
+            'usa-pagination__page-no'
+          );
+          pButton.setAttribute('aria-label', 'Page ' + value);
+        }
+      }
+
+      // Enable/disable Previous and Next buttons
+      if (CP == 1) {
+        // Disable Previous
+        let button_previous = Pagination_Block.getElementsByClassName(
+          'usa-pagination__arrow'
+        )[0];
+        button_previous.classList.add('display-none');
+        button_previous.setAttribute('aria-hidden', true);
+      } else if (CP == TP) {
+        // Disable Next
+        let button_next = Pagination_Block.getElementsByClassName(
+          'usa-pagination__arrow'
+        )[1];
+        button_next.classList.add('display-none');
+        button_next.setAttribute('aria-hidden', true);
+      }
+      // SHOW pagination NAV (targetContainer)
+      Pagination_Block.classList.remove('display-none');
+      Pagination_Block.removeAttribute('aria-hidden');
+    }
+  }
+
+  function buildTable(tableId, data) {
     const subTable = document.getElementById(tableId);
     const tBody = subTable.getElementsByTagName('tbody')[0];
     tBody.innerHTML = '';
@@ -100,31 +226,6 @@ import { getApiToken } from './auth';
     }
   }
 
-  // Pagination
-  // TEST DATA
-  let numRows = 29;
-  function createTestData(numRows) {
-    let objArray = [];
-    for (let i = 0; i < numRows; i++) {
-      let j = i + 1;
-      let report_id_data = String(j).padStart(17, '0');
-      let submission_status_data = 'in_progress';
-      let auditee_uei_data = String(j * 15).padStart(12, '0');
-      let auditee_fiscal_period_end_data =
-        '2022-01-' + String(j).padStart(2, '0');
-      let auditee_name_data = 'Entity Num ' + j;
-      let itemObj = {
-        report_id: report_id_data,
-        submission_status: submission_status_data,
-        auditee_uei: auditee_uei_data,
-        auditee_fiscal_period_end: auditee_fiscal_period_end_data,
-        auditee_name: auditee_name_data,
-      };
-      objArray.push(itemObj);
-    }
-    return objArray;
-  }
-
   function createPattern(TotalPages, currentPage) {
     let array_buttons = [];
     if (TotalPages > 7) {
@@ -160,9 +261,6 @@ import { getApiToken } from './auth';
     }
     return array_buttons;
   }
-
-  let button_pattern = createPattern(TotalPages, currentPage);
-  console.log(button_pattern);
 
   function init() {
     getSubmissions();
