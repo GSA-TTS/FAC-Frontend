@@ -1,4 +1,5 @@
 import { checkValidity } from './validate';
+import { queryAPI } from './api';
 
 const FORM = document.forms[0];
 
@@ -41,6 +42,31 @@ function highlightActiveNavSection() {
   });
 }
 
+function submitSacForm() {
+  const sacForm = document.getElementById('general-info');
+  const sacData = new FormData(sacForm);
+  let sacObj = Object.fromEntries(sacData.entries());
+  sacObj = {
+    items: sacObj,
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const reportId = params.get('reportId');
+  if (!reportId) return;
+
+  queryAPI(`/sac/edit/${reportId}`, sacObj, { method: 'PUT' }, [
+    function (data) {
+      /*
+       * Do whatever has to be done after submitting
+       **/
+      console.log(data);
+    },
+    function (error) {
+      console.error(error);
+    },
+  ]);
+}
+
 function attachEventHandlers() {
   const fieldsNeedingValidation = Array.from(
     document.querySelectorAll('.sf-sac input[data-validate-not-null]')
@@ -48,15 +74,16 @@ function attachEventHandlers() {
 
   FORM.addEventListener('submit', (e) => {
     e.preventDefault();
-    console.log(fieldsNeedingValidation);
 
-    performValidations(e.target);
+    fieldsNeedingValidation.forEach((q) => {
+      performValidations(q);
+    });
     if (!allResponsesValid()) return;
-    // submitForm();
+    submitSacForm();
   });
 
   fieldsNeedingValidation.forEach((q) => {
-    q.addEventListener('blur', (e) => {
+    q.addEventListener('change', (e) => {
       performValidations(e.target);
     });
   });

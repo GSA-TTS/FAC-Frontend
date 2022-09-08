@@ -38,12 +38,12 @@ fieldsets:
     legend: Fiscal Period Dates
     inputs:
       - field_type: text
-        id: fy-start
+        id: auditee_fiscal_period_start
         label: Fiscal period start date
         disabled: true
         data_attribute: 'report.auditee_fiscal_period_start'
       - field_type: text
-        id: fy-end
+        id: auditee_fiscal_period_end
         label: Fiscal period end date
         disabled: true
         data_attribute: 'report.auditee_fiscal_period_end'
@@ -52,13 +52,13 @@ fieldsets:
     required: true
     inputs:
       - field_type: radio
-        group: audit-type
+        group: audit_type
         options:
           - label: Single Audit
-            id: audit-type-single
+            id: single-audit
             value: single
           - label: Program-Specific Audit
-            id: audit-type-program-specific
+            id: program-specific-audit
             value: single
         validations:
           - operation: not-null
@@ -68,7 +68,7 @@ fieldsets:
     required: true
     inputs:
       - field_type: radio
-        group: audit-period
+        group: audit_period_covered
         options:
           - label: Annual
             id: audit-period-annual
@@ -88,46 +88,46 @@ fieldsets:
       - field_type: text
         label: Auditee Employer Identification Number (EIN)
         required: true
-        id: auditee-ein
+        id: auditee_ein
         validations:
           - operation: not-null
             error_message: This field is required
       - field_type: checkbox
         label: By checking this box, I verify that the Auditee EIN is NOT a social security number.
-        id: ein-not-ssn
+        id: ein_not_an_ssn_attestation
         validations:
           - operation: not-null
             error_message: EIN may not be a social security number
       - field_type: radio
         label: Are multiple EINs covered in this report?
-        group: multiple-eins
+        group: multiple_eins_covered
         required: true
         options:
           - label: Yes
             id: multiple-eins-yes
-            value: multiple-eins-yes
+            value: yes
           - label: No
             id: multiple-eins-no
-            value: multiple-eins-no
+            value: no
         validations:
           - operation: not-null
             error_message: This field is required
       - field_type: text
         label: Auditee Unique Entity Identifier (UEI)
-        id: auditee-uei
+        id: auditee_uei
         disabled: true
         data_attribute: 'report.auditee_uei'
       - field_type: radio
         label: Are multiple UEIs covered in this report?
-        group: multiple-ueis
+        group: multiple_ueis_covered
         required: true
         options:
           - label: Yes
             id: multiple-ueis-yes
-            value: multiple-ueis-yes
+            value: yes
           - label: No
             id: multiple-ueis-no
-            value: multiple-ueis-no
+            value: no
         validations:
           - operation: not-null
             error_message: This field is required
@@ -137,7 +137,7 @@ fieldsets:
       - field_type: text
         label: Auditee name
         disabled: true
-        id: auditee-name
+        id: auditee_name
         data_attribute: 'report.auditee_name'
       - field_type: fieldset
         legend: Auditee address
@@ -145,22 +145,22 @@ fieldsets:
         inputs:
           - field_type: text
             label: Street
-            id: auditee-address-street
+            id: auditee_address_line_1
             disabled: true
             data_attribute: 'report.auditee_address_line_1'
           - field_type: text
             label: City
-            id: auditee-address-city
+            id: auditee_city
             disabled: true
             data_attribute: 'report.auditee_city'
           - field_type: text
             label: State
-            id: auditee-address-state
+            id: auditee_state
             disabled: true
             data_attribute: 'report.auditee_state'
           - field_type: text
             label: ZIP code
-            id: auditee-address-zip
+            id: auditee_zip
             disabled: true
             data_attribute: 'report.auditee_zip'
       - field_type: fieldset
@@ -168,23 +168,23 @@ fieldsets:
         inputs:
           - field_type: text
             label: Name
-            id: auditee-contact-name
+            id: auditee_contact_name
             disabled: true
             data_attribute: 'report.auditee_contact_name'
           - field_type: text
             label: Title
-            id: auditee-contact-title
+            id: auditee_contact_title
             disabled: true
             data_attribute: 'report.auditee_contact_title'
       - field_type: text
         label: Auditee telephone
-        id: auditee-telephone
+        id: auditee_phone
         disabled: true
         data_attribute: 'report.auditee_phone'
       - field_type: select
         label: Auditee e-mail
         required: true
-        id: auditee-email
+        id: auditee_email
         validations:
           - operation: not-null
             error_message: This field is required
@@ -194,20 +194,20 @@ fieldsets:
       - field_type: text
         label: Audit firm/organization name
         required: true
-        id: audit-firm-name
+        id: auditor_firm_name
         validations:
           - operation: not-null
             error_message: This field is required
       - field_type: text
         label: Audit firm/organization EIN
         required: true
-        id: audit-firm-ein
+        id: auditor_ein
         validations:
           - operation: not-null
             error_message: This field is required
       - field_type: checkbox
         label: By checking this box, I verify that the Auditor EIN is NOT a social security number.
-        id: auditor-ein-not-ssn
+        id: auditor_ein_not_an_ssn_attestation
         validations:
           - operation: not-null
             error_message: EIN may not be a social security number
@@ -218,28 +218,28 @@ fieldsets:
           - field_type: text
             label: Street
             required: true
-            id: auditor-address-street
+            id: auditor_address_line_1
             validations:
               - operation: not-null
                 error_message: This field is required
           - field_type: text
             label: City
             required: true
-            id: auditor-address-city
+            id: auditor_city
             validations:
               - operation: not-null
                 error_message: This field is required
           - field_type: text
             label: State
             required: true
-            id: auditor-address-state
+            id: auditor_state
             validations:
               - operation: not-null
                 error_message: This field is required
           - field_type: text
             label: ZIP code
             required: true
-            id: auditor-address-zip
+            id: auditor_zip
             validations:
               - operation: not-null
                 error_message: This field is required
@@ -250,28 +250,28 @@ fieldsets:
               - field_type: text
                 label: Name
                 required: true
-                id: auditor-contact-name
+                id: auditor_contact_name
                 validations:
                   - operation: not-null
                     error_message: This field is required
               - field_type: text
                 label: Title
                 required: true
-                id: auditor-contact-title
+                id: auditor_contact_title
                 validations:
                   - operation: not-null
                     error_message: This field is required
           - field_type: text
             label: Primary auditor telephone
             required: true
-            id: auditor-telephone
+            id: auditor_phone
             validations:
               - operation: not-null
                 error_message: This field is required
           - field_type: select
             label: Primary auditor e-mail
             required: true
-            id: auditor-email
+            id: auditor_email
             options:
               - value: test
                 label: Test Value

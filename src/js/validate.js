@@ -70,6 +70,11 @@ export const parseChecks = (field) => {
   return validations;
 };
 
+const radioChecked = (name) => {
+  const checked = document.querySelector(`[name="${name}"]:checked`);
+  return !!checked;
+};
+
 export const validations = {
   validateEmail: (field) => {
     const result = {
@@ -100,7 +105,7 @@ export const validations = {
       case 'search':
         return !field.value ? { ...result, error: true } : result;
       case 'radio':
-        return !field.checked ? { ...result, error: true } : result;
+        return !radioChecked(field.name) ? { ...result, error: true } : result;
       case 'checkbox':
         return !field.checked ? { ...result, error: true } : result;
     }
