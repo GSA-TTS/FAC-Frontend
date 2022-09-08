@@ -30,29 +30,16 @@ import { getApiToken } from './auth';
   }
 
   function handleSubmissionsResponse(data) {
-    console.log(data);
-
-    // TESTING
-    // Check if logged in (For testing)
-    if (
-      data['detail'] == 'Invalid token.' ||
-      data['detail'] == 'Token expired!'
-    ) {
-      handleErrorResponse(data);
-      return;
-    }
-
+    itemObjArray = Array.from(data);
     // TESTING
     // Test mode switch
     if (TEST_ROWS > 0) {
       itemObjArray = createTestData(TEST_ROWS);
     }
 
-    // Set VARs
     paginationID = 'subPagination';
     const TotalItems = itemObjArray.length;
     totalPages = Math.ceil(TotalItems / ITEMS_PER_PAGE);
-    console.log('Total number of pages: ' + totalPages);
 
     if (totalPages > 0) {
       buildTable('audit-submissions', itemObjArray.slice(0, ITEMS_PER_PAGE));
@@ -90,90 +77,84 @@ import { getApiToken } from './auth';
     return objArray;
   }
 
-  // INIT Pagination
   function initPagination(paginationID, TP) {
     currentPage = 1;
     updatePagination(paginationID, TP, currentPage);
+    const buttons_PrevNext = Array.from(
+      document.getElementsByClassName('usa-pagination__link')
+    );
+    buttons_PrevNext.forEach(function (item) {
+      item.addEventListener('click', pageClick, false);
+    });
   }
 
-  function updatePagination(paginationID, TP, CP) {
-    const Pagination_Block = document.getElementById(paginationID);
-    // Check TP
-    if (TP > 1 && CP <= TP) {
-      let button_pattern = createPattern(TP, CP);
-      console.log(button_pattern);
-      // GET LIs
-      let pButtons = Array.from(Pagination_Block.getElementsByTagName('li'));
-      pButtons.shift();
-      pButtons.pop();
-      console.log(pButtons);
+  function updatePagination(pagination_id, total_pages, current_page) {
+    const pid = pagination_id;
+    const tp = total_pages;
+    const cp = current_page;
+    const Pagination_Block = document.getElementById(pid);
+    const button_previous = Pagination_Block.getElementsByClassName(
+      'usa-pagination__arrow'
+    )[0];
+    const button_next = Pagination_Block.getElementsByClassName(
+      'usa-pagination__arrow'
+    )[1];
 
-      // HIDE pagination NAV
-      if (Pagination_Block.offsetParent != null) {
-        Pagination_Block.classList.add('display-none');
-        Pagination_Block.setAttribute('aria-hidden', true);
-      }
+    if (Pagination_Block.offsetParent != null) {
+      Pagination_Block.classList.add('display-none');
+      Pagination_Block.setAttribute('aria-hidden', true);
+    }
 
-      // Loop through buttons abd match the pattern
+    button_previous.classList.remove('display-none');
+    button_previous.removeAttribute('aria-hidden', true);
+    button_next.classList.remove('display-none');
+    button_next.removeAttribute('aria-hidden', true);
+
+    if (tp > 1 && cp <= tp) {
+      const button_pattern = createPattern(tp, cp);
+      let buttonsArr = Array.from(Pagination_Block.getElementsByTagName('li'));
+      buttonsArr.shift();
+      buttonsArr.pop();
+
       for (const [key, value] of Object.entries(button_pattern)) {
-        // GET button
-        let pButton = pButtons[key];
-        console.log(pButton);
-        pButton.innerHTML = '';
-        pButton.removeAttribute('role');
-        pButton.removeAttribute('aria-label');
+        const pButtonLi = buttonsArr[key];
+        pButtonLi.innerHTML = '';
+        pButtonLi.classList.remove('usa-pagination__overflow');
+        pButtonLi.classList.remove('usa-pagination__page-no');
+        pButtonLi.removeAttribute('role');
+        pButtonLi.removeAttribute('aria-label');
 
         if (value == '...') {
-          // Add ellipsis
-          pButton.innerHTML = '<span>...</span>';
-          // Update LI classes
-          pButton.classList.replace(
-            'usa-pagination__page-no',
-            'usa-pagination__overflow'
-          );
-          pButton.setAttribute('role', 'presentation');
+          pButtonLi.innerHTML = '<span>...</span>';
+          pButtonLi.classList.add('usa-pagination__overflow');
+          pButtonLi.setAttribute('role', 'presentation');
         } else {
-          let pageNum = value;
-          // Create link element
+          const pageNum = value;
           const pButtonLink = document.createElement('a');
-          // Update link
           pButtonLink.innerHTML = pageNum;
           pButtonLink.classList.add('usa-pagination__button');
           pButtonLink.setAttribute('aria-label', 'Page ' + pageNum);
           pButtonLink.setAttribute('href', 'javascript:void(0);');
 
-          if (pageNum == CP) {
+          if (pageNum == cp) {
             pButtonLink.classList.add('usa-current');
           }
+
           pButtonLink.addEventListener('click', pageClick, false);
 
-          // Attach link
-          pButton.appendChild(pButtonLink);
-          // Update LI classes
-          pButton.classList.replace(
-            'usa-pagination__overflow',
-            'usa-pagination__page-no'
-          );
+          pButtonLi.appendChild(pButtonLink);
+          pButtonLi.classList.add('usa-pagination__page-no');
         }
       }
 
-      // Enable/disable Previous and Next buttons
-      if (CP == 1) {
-        // Disable Previous
-        let button_previous = Pagination_Block.getElementsByClassName(
-          'usa-pagination__arrow'
-        )[0];
+      if (cp == 1) {
         button_previous.classList.add('display-none');
         button_previous.setAttribute('aria-hidden', true);
-      } else if (CP == TP) {
-        // Disable Next
-        let button_next = Pagination_Block.getElementsByClassName(
-          'usa-pagination__arrow'
-        )[1];
+      } else if (cp == tp) {
         button_next.classList.add('display-none');
         button_next.setAttribute('aria-hidden', true);
       }
-      // SHOW pagination NAV (targetContainer)
+
       Pagination_Block.classList.remove('display-none');
       Pagination_Block.removeAttribute('aria-hidden');
     }
@@ -191,7 +172,6 @@ import { getApiToken } from './auth';
           unsortedData,
           [
             'report_id',
-            //'version',
             'submission_status',
             'auditee_uei',
             'auditee_name',
@@ -271,11 +251,17 @@ import { getApiToken } from './auth';
   }
 
   function pageClick() {
-    let pageClicked = this.innerHTML;
-    console.log(pageClicked);
-    let sliceStart = ITEMS_PER_PAGE * (pageClicked - 1);
-    let sliceEnd = ITEMS_PER_PAGE * pageClicked;
-    let pageData = itemObjArray.slice(sliceStart, sliceEnd);
+    let pageClicked;
+    if (this.classList.contains('usa-pagination__previous-page')) {
+      pageClicked = Number(currentPage) - 1;
+    } else if (this.classList.contains('usa-pagination__next-page')) {
+      pageClicked = Number(currentPage) + 1;
+    } else {
+      pageClicked = Number(this.innerHTML);
+    }
+    const sliceStart = ITEMS_PER_PAGE * (pageClicked - 1);
+    const sliceEnd = ITEMS_PER_PAGE * pageClicked;
+    const pageData = itemObjArray.slice(sliceStart, sliceEnd);
     currentPage = pageClicked;
     updatePagination(paginationID, totalPages, currentPage);
     buildTable('audit-submissions', pageData);
