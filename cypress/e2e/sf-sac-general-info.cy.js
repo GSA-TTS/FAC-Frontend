@@ -48,14 +48,13 @@ describe('Create New Audit', () => {
       // Click twice to trigger the blur event,
       // or in the case of a checkbox, click the `next` element
 
-      cy.get('label[for=audit-type-single]').click();
-      cy.get('label[for=audit-type-single]').click();
+      cy.get('label[for=single-audit]').click();
+      cy.get('label[for=single-audit]').click();
 
       cy.get('label[for=audit-period-annual]').click();
       cy.get('label[for=audit-period-annual]').click();
 
-      cy.get('label[for=ein-not-ssn]').click();
-      cy.get('label[for=ein-not-ssn]').next().click();
+      cy.get('label[for=ein_not_an_ssn_attestation]').click();
 
       cy.get('label[for=multiple-eins-yes]').click();
       cy.get('label[for=multiple-eins-yes]').click();
@@ -63,8 +62,7 @@ describe('Create New Audit', () => {
       cy.get('label[for=multiple-ueis-yes]').click();
       cy.get('label[for=multiple-ueis-yes]').click();
 
-      cy.get('label[for=auditor-ein-not-ssn]').click();
-      cy.get('label[for=auditor-ein-not-ssn]').next().click();
+      cy.get('label[for=auditor_ein_not_an_ssn_attestation]').click();
 
       cy.get('.radio.usa-form-group--error').should('have.length', 0);
       cy.get('.usa-checkbox.usa-form-group--error').should('have.length', 0);
@@ -76,7 +74,7 @@ describe('Create New Audit', () => {
           cy.get(i).type('asdf');
         }
       );
-      cy.get('label[for=auditor-telephone]').click();
+      cy.get('label[for=auditor_phone]').click();
       cy.get('.usa-checkbox.usa-form-group--error').should('have.length', 0);
     });
 
