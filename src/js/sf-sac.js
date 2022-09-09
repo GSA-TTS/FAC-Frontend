@@ -45,13 +45,10 @@ function highlightActiveNavSection() {
 function submitSacForm() {
   const sacForm = document.getElementById('general-info');
   const sacData = new FormData(sacForm);
-  let sacObj = Object.fromEntries(sacData.entries());
-  sacObj = {
-    items: sacObj,
-  };
-
+  const sacObj = Object.fromEntries(sacData.entries());
   const params = new URLSearchParams(window.location.search);
   const reportId = params.get('reportId');
+
   if (!reportId) return;
 
   queryAPI(`/sac/edit/${reportId}`, sacObj, { method: 'PUT' }, [

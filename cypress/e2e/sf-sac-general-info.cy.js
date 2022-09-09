@@ -84,7 +84,7 @@ describe('Create New Audit', () => {
   });
 
   describe('Populating the form with existing data', () => {
-    it('should populate the report ID', () => {
+    it.only('should populate the report ID', () => {
       cy.visit('/audit/submission?reportId=2022ZEL0001000006');
       cy.wait('@setSacInfo').then(() => {
         cy.get('@sacReport').then((report) => {
@@ -96,8 +96,8 @@ describe('Create New Audit', () => {
             'have.text',
             report.report_id
           );
-          cy.get('#auditee-name').should('have.value', report.auditee_name);
-          cy.get('#auditee-uei').should('have.value', report.auditee_uei);
+          cy.get('#auditee_name').should('have.value', report.auditee_name);
+          cy.get('#auditee_uei').should('have.value', report.auditee_uei);
         });
       });
     });

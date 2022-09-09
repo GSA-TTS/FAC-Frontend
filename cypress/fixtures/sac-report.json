@@ -16,6 +16,7 @@
   "auditee_contact_title": "Lord of Doors",
   "auditee_phone": "5558675309",
   "auditee_email": "auditee.mcaudited@leftfield.com",
+  "auditee_contacts": ["a@a.com", "b@b.com"],
   "user_provided_organization_type": "local",
   "auditor_firm_name": "Dollar Audit Store",
   "auditor_country": "USA",
@@ -26,5 +27,6 @@
   "auditor_contact_name": "Qualified Human Accountant",
   "auditor_contact_title": "Just an ordinary person",
   "auditor_phone": "0008675309",
-  "auditor_email": "qualified.human.accountant@dollarauditstore.com"
+  "auditor_email": "qualified.human.accountant@dollarauditstore.com",
+  "auditor_contacts": ["c@c.com", "d@d.com"]
 }

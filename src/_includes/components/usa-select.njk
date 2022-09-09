@@ -4,9 +4,22 @@
       <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
     {%- endif -%}
   </label>
-  <select class="usa-select" name="options" id="{{ params.id }}">
+  <select
+    class="usa-select"
+    name="options"
+    id="{{ params.id }}"
+    {%- if params.data_attribute -%}
+      x-data="{{ params.data_attribute }}"
+    {%- endif -%}
+    >
     <option value>- Select -</option>
-    {%- for o in params.options -%}
-      <option value="{{ o.value }}">{{ o.label }}</option>
-    {%- endfor -%}
+    {%- if params.data_attribute -%}
+      <template x-for="contact in contacts">
+        <option :value="contact" x-text="contact"></option>
+      </template>
+    {% else %}
+      {%- for o in params.options -%}
+        <option value="{{ o.value }}">{{ o.label }}</option>
+      {%- endfor -%}
+    {%- endif -%}
   </select>
