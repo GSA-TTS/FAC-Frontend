@@ -84,7 +84,7 @@ describe('Create New Audit', () => {
   });
 
   describe('Populating the form with existing data', () => {
-    it.only('should populate the report ID', () => {
+    it('should populate the report ID', () => {
       cy.visit('/audit/submission?reportId=2022ZEL0001000006');
       cy.wait('@setSacInfo').then(() => {
         cy.get('@sacReport').then((report) => {

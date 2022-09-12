@@ -46,6 +46,10 @@ function submitSacForm() {
   const sacForm = document.getElementById('general-info');
   const sacData = new FormData(sacForm);
   const sacObj = Object.fromEntries(sacData.entries());
+  sacObj.multiple_ueis_covered =
+    sacObj.multiple_ueis_covered == 'true' ? true : false;
+  sacObj.multiple_eins_covered =
+    sacObj.multiple_eins_covered == 'true' ? true : false;
   const params = new URLSearchParams(window.location.search);
   const reportId = params.get('reportId');
 

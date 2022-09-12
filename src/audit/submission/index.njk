@@ -56,10 +56,10 @@ fieldsets:
         options:
           - label: Single Audit
             id: single-audit
-            value: single
+            value: single-audit
           - label: Program-Specific Audit
             id: program-specific-audit
-            value: single
+            value: program-specific-audit
         validations:
           - operation: not-null
             error_message: This field is required
@@ -105,10 +105,10 @@ fieldsets:
         options:
           - label: Yes
             id: multiple-eins-yes
-            value: yes
+            value: True
           - label: No
             id: multiple-eins-no
-            value: no
+            value: False
         validations:
           - operation: not-null
             error_message: This field is required
@@ -124,10 +124,10 @@ fieldsets:
         options:
           - label: Yes
             id: multiple-ueis-yes
-            value: yes
+            value: True
           - label: No
             id: multiple-ueis-no
-            value: no
+            value: False
         validations:
           - operation: not-null
             error_message: This field is required
