@@ -196,6 +196,7 @@ fieldsets:
         label: Audit firm/organization name
         required: true
         id: auditor_firm_name
+        data_attribute: 'report.auditor_firm_name'
         validations:
           - operation: not-null
             error_message: This field is required
@@ -203,6 +204,7 @@ fieldsets:
         label: Audit firm/organization EIN
         required: true
         id: auditor_ein
+        data_attribute: 'report.auditor_ein'
         validations:
           - operation: not-null
             error_message: This field is required
@@ -220,6 +222,7 @@ fieldsets:
             label: Street
             required: true
             id: auditor_address_line_1
+            data_attribute: 'report.auditor_address_line_1'
             validations:
               - operation: not-null
                 error_message: This field is required
@@ -227,6 +230,7 @@ fieldsets:
             label: City
             required: true
             id: auditor_city
+            data_attribute: 'report.auditor_city'
             validations:
               - operation: not-null
                 error_message: This field is required
@@ -234,6 +238,7 @@ fieldsets:
             label: State
             required: true
             id: auditor_state
+            data_attribute: 'report.auditor_state'
             validations:
               - operation: not-null
                 error_message: This field is required
@@ -241,6 +246,7 @@ fieldsets:
             label: ZIP code
             required: true
             id: auditor_zip
+            data_attribute: 'report.auditor_zip'
             validations:
               - operation: not-null
                 error_message: This field is required
@@ -252,6 +258,7 @@ fieldsets:
                 label: Name
                 required: true
                 id: auditor_contact_name
+                data_attribute: 'report.auditor_contact_name'
                 validations:
                   - operation: not-null
                     error_message: This field is required
@@ -259,6 +266,7 @@ fieldsets:
                 label: Title
                 required: true
                 id: auditor_contact_title
+                data_attribute: 'report.auditor_contact_title'
                 validations:
                   - operation: not-null
                     error_message: This field is required
@@ -266,6 +274,7 @@ fieldsets:
             label: Primary auditor telephone
             required: true
             id: auditor_phone
+            data_attribute: 'report.auditor_phone'
             validations:
               - operation: not-null
                 error_message: This field is required
