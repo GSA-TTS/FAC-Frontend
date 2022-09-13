@@ -23,7 +23,6 @@ function fetchReport() {
   queryAPI(`/sac/edit/${reportId}`, undefined, {}, [
     function (data) {
       const report = prepareData(data);
-      console.log(report);
       Alpine.store('report', { ...report });
     },
     function (error) {
