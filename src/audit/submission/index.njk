@@ -53,6 +53,7 @@ fieldsets:
     inputs:
       - field_type: radio
         group: audit_type
+        bind: 'report.audit_type'
         options:
           - label: Single Audit
             id: single-audit
@@ -69,6 +70,7 @@ fieldsets:
     inputs:
       - field_type: radio
         group: audit_period_covered
+        bind: 'report.audit_period_covered'
         options:
           - label: Annual
             id: audit-period-annual
@@ -89,12 +91,14 @@ fieldsets:
         label: Auditee Employer Identification Number (EIN)
         required: true
         id: auditee_ein
+        data_attribute: 'report.auditee_ein'
         validations:
           - operation: not-null
             error_message: This field is required
       - field_type: checkbox
         label: By checking this box, I verify that the Auditee EIN is NOT a social security number.
         id: ein_not_an_ssn_attestation
+        bind: 'report.ein_not_an_ssn_attestation'
         validations:
           - operation: not-null
             error_message: EIN may not be a social security number
@@ -102,13 +106,14 @@ fieldsets:
         label: Are multiple EINs covered in this report?
         group: multiple_eins_covered
         required: true
+        bind: 'report.multiple_eins_covered'
         options:
           - label: Yes
             id: multiple-eins-yes
-            value: True
+            value: true
           - label: No
             id: multiple-eins-no
-            value: False
+            value: false
         validations:
           - operation: not-null
             error_message: This field is required
@@ -121,6 +126,7 @@ fieldsets:
         label: Are multiple UEIs covered in this report?
         group: multiple_ueis_covered
         required: true
+        bind: 'report.multiple_ueis_covered'
         options:
           - label: Yes
             id: multiple-ueis-yes
@@ -211,6 +217,7 @@ fieldsets:
       - field_type: checkbox
         label: By checking this box, I verify that the Auditor EIN is NOT a social security number.
         id: auditor_ein_not_an_ssn_attestation
+        bind: 'report.auditor_ein_not_an_ssn_attestation'
         validations:
           - operation: not-null
             error_message: EIN may not be a social security number

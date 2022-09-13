@@ -42,20 +42,31 @@ function highlightActiveNavSection() {
   });
 }
 
+function processSacFormData(formData) {
+  formData.multiple_ueis_covered =
+    formData.multiple_ueis_covered == 'true' ? true : false;
+  formData.multiple_eins_covered =
+    formData.multiple_eins_covered == 'true' ? true : false;
+  formData.ein_not_an_ssn_attestation =
+    formData.ein_not_an_ssn_attestation == '' ? true : false;
+  formData.auditor_ein_not_an_ssn_attestation =
+    formData.auditor_ein_not_an_ssn_attestation == '' ? true : false;
+
+  return formData;
+}
+
 function submitSacForm() {
   const sacForm = document.getElementById('general-info');
   const sacData = new FormData(sacForm);
   const sacObj = Object.fromEntries(sacData.entries());
-  sacObj.multiple_ueis_covered =
-    sacObj.multiple_ueis_covered == 'true' ? true : false;
-  sacObj.multiple_eins_covered =
-    sacObj.multiple_eins_covered == 'true' ? true : false;
+  const preparedSacObj = processSacFormData(sacObj);
+
   const params = new URLSearchParams(window.location.search);
   const reportId = params.get('reportId');
 
   if (!reportId) return;
 
-  queryAPI(`/sac/edit/${reportId}`, sacObj, { method: 'PUT' }, [
+  queryAPI(`/sac/edit/${reportId}`, preparedSacObj, { method: 'PUT' }, [
     function (data) {
       /*
        * Do whatever has to be done after submitting
