@@ -14,8 +14,8 @@ function allResponsesValid() {
 }
 
 function performValidations(field) {
-  const errors = checkValidity(field);
-  setFormDisabled(errors.length > 0);
+  checkValidity(field);
+  setFormDisabled(!allResponsesValid());
 }
 
 function highlightActiveNavSection() {

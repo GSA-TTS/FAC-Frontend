@@ -37,7 +37,7 @@ describe('Create New Audit', () => {
 
   describe('Validation', () => {
     it('should display error messages for invalid entities', () => {
-      cy.get('.usa-error-message:visible').should('have.length', 16);
+      cy.get('.usa-error-message:visible').should('have.length', 18);
     });
 
     it('should remove errors when valid properties are checked', () => {
@@ -77,10 +77,6 @@ describe('Create New Audit', () => {
       cy.get('label[for=auditor_phone]').click();
       cy.get('.usa-checkbox.usa-form-group--error').should('have.length', 0);
     });
-
-    it('should enable the "Continue" button when entities are fixed', () => {
-      cy.get('button').contains(CONTINUE_BUTTON_TEXT).should('not.be.disabled');
-    });
   });
 
   describe('Populating the form with existing data', () => {
@@ -98,8 +94,19 @@ describe('Create New Audit', () => {
           );
           cy.get('#auditee_name').should('have.value', report.auditee_name);
           cy.get('#auditee_uei').should('have.value', report.auditee_uei);
+          cy.get('#auditee_email').children('option').should('have.length', 3);
         });
       });
+    });
+
+    it('should remove errors when select fields have values', () => {
+      cy.get('#auditee_email').select('a@a.com');
+      cy.get('#auditor_email').select('c@c.com');
+      cy.get('.usa-form-group--error').should('have.length', 0);
+    });
+
+    it('should enable the "Continue" button when entities are fixed', () => {
+      cy.get('button').contains(CONTINUE_BUTTON_TEXT).should('not.be.disabled');
     });
   });
 });
