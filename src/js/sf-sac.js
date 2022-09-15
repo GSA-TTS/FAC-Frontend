@@ -81,7 +81,7 @@ function submitSacForm() {
 
 function attachEventHandlers() {
   const fieldsNeedingValidation = Array.from(
-    document.querySelectorAll('.sf-sac input[data-validate-not-null]')
+    document.querySelectorAll('.sf-sac [data-validate-not-null]')
   );
 
   FORM.addEventListener('submit', (e) => {

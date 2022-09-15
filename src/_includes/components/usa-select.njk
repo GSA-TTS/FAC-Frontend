@@ -1,22 +1,51 @@
-  <label class="usa-label" for="{{ params.id }}">
-    {{ params.label }}
-    {%- if params.required -%}
-      <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-    {%- endif -%}
-  </label>
-  <select
-    class="usa-select"
-    name="options"
-    id="{{ params.id }}"
-    >
-    <option value>- Select -</option>
-    {%- if params.data_attribute -%}
-      <template x-for="contact in {{ params.data_attribute }}">
-        <option :value="contact" x-text="contact"></option>
-      </template>
-    {% else %}
-      {%- for o in params.options -%}
-        <option value="{{ o.value }}">{{ o.label }}</option>
-      {%- endfor -%}
-    {%- endif -%}
-  </select>
+  <div class="usa-form-group">
+    <label class="usa-label" for="{{ params.id }}">
+      {{ params.label }}
+      {%- if params.required -%}
+        <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+      {%- endif -%}
+    </label>
+    {% if params.errorMessage %}
+    <span
+      class="usa-error-message"
+      id="{{ params.id }}-error-message"
+      role="alert"
+      >
+      {{params.errorMessage}}
+    </span>
+    {% endif %}
+    {% if params.validations %}
+    <ul class="usa-error-message"
+      id="{{ params.id }}-error-message"
+      role="alert"
+      >
+      {% for v in params.validations %}
+        <li
+          id="{{ params.id }}-{{ v.operation }}"
+          hidden
+          >
+          {{ v.error_message }}
+        </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <select
+      class="usa-select"
+      name="options"
+      id="{{ params.id }}"
+      {% for v in params.validations %}
+        data-validate-{{v.operation}}="{{v.constraint}}"
+      {% endfor %}
+      >
+      <option value>- Select -</option>
+      {%- if params.data_attribute -%}
+        <template x-for="contact in {{ params.data_attribute }}">
+          <option :value="contact" x-text="contact"></option>
+        </template>
+      {% else %}
+        {%- for o in params.options -%}
+          <option value="{{ o.value }}">{{ o.label }}</option>
+        {%- endfor -%}
+      {%- endif -%}
+    </select>
+  </div>

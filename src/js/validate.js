@@ -108,6 +108,8 @@ export const validations = {
         return !radioChecked(field.name) ? { ...result, error: true } : result;
       case 'checkbox':
         return !field.checked ? { ...result, error: true } : result;
+      case 'select-one':
+        return !field.value != '' ? { ...result, error: true } : result;
     }
 
     return !field.value || !field.checked ? { ...result, error: true } : result;

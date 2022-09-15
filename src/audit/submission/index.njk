@@ -90,8 +90,8 @@ fieldsets:
       - field_type: text
         label: Auditee Employer Identification Number (EIN)
         required: true
-        id: auditee_ein
-        data_attribute: 'report.auditee_ein'
+        id: ein
+        data_attribute: 'report.ein'
         validations:
           - operation: not-null
             error_message: This field is required
@@ -290,6 +290,9 @@ fieldsets:
             required: true
             id: auditor_email
             data_attribute: 'report.auditor_contacts'
+            validations:
+              - operation: not-null
+                error_message: This field is required
 submit: Save & continue to next section
 ---
 {%- extends "form.njk" -%}
