@@ -191,7 +191,7 @@ fieldsets:
         label: Auditee e-mail
         required: true
         id: auditee_email
-        data_attribute: '{contacts: report.auditee_contacts}'
+        data_attribute: 'report.auditee_contacts'
         validations:
           - operation: not-null
             error_message: This field is required
@@ -289,7 +289,7 @@ fieldsets:
             label: Primary auditor e-mail
             required: true
             id: auditor_email
-            data_attribute: '{contacts: report.auditor_contacts}'
+            data_attribute: 'report.auditor_contacts'
 submit: Save & continue to next section
 ---
 {%- extends "form.njk" -%}

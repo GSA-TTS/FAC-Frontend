@@ -10,8 +10,14 @@ Alpine.store('report', {
 Alpine.start();
 
 function prepareData(data) {
-  data.multiple_eins_covered = data.multiple_eins_covered.toString();
-  data.multiple_ueis_covered = data.multiple_ueis_covered.toString();
+  data.multiple_eins_covered =
+    data.multiple_eins_covered != null
+      ? data.multiple_ueis_covered.toString()
+      : '';
+  data.multiple_ueis_covered =
+    data.multiple_ueis_covered != null
+      ? data.multiple_ueis_covered.toString()
+      : '';
   return data;
 }
 

@@ -8,13 +8,10 @@
     class="usa-select"
     name="options"
     id="{{ params.id }}"
-    {%- if params.data_attribute -%}
-      x-data="{{ params.data_attribute }}"
-    {%- endif -%}
     >
     <option value>- Select -</option>
     {%- if params.data_attribute -%}
-      <template x-for="contact in contacts">
+      <template x-for="contact in {{ params.data_attribute }}">
         <option :value="contact" x-text="contact"></option>
       </template>
     {% else %}
