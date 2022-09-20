@@ -5,7 +5,7 @@ import { getApiToken } from './auth';
   const ENDPOINT = '/submissions';
   const apiUrl = 'https://fac-dev.app.cloud.gov';
 
-  const TEST_ROWS = 29; // TEST switch (Set to 0 to exit test mode)
+  const TEST_ROWS = 8; // TEST switch (Set to 0 to exit test mode)
   const ITEMS_PER_PAGE = 3;
   let itemObjArray = [];
   let currentPage;
@@ -60,7 +60,7 @@ import { getApiToken } from './auth';
     for (let i = 0; i < numRows; i++) {
       let j = i + 1;
       let report_id_data = String(j).padStart(17, '0');
-      let submission_status_data = 'in_progress';
+      let submission_status_data = 'In progress';
       let auditee_uei_data = String(j * 15).padStart(12, '0');
       let auditee_fiscal_period_end_data =
         '2022-01-' + String(j).padStart(2, '0');
@@ -79,6 +79,17 @@ import { getApiToken } from './auth';
 
   function initPagination(paginationID, TP) {
     currentPage = 1;
+    // remove buttons if TP less than 7
+    if (TP < 7) {
+      const Pagination_Block = document.getElementById(paginationID);
+      const toRemove = 7 - TP;
+      let buttonsArr = Array.from(Pagination_Block.getElementsByTagName('li'));
+      buttonsArr.shift();
+      buttonsArr.pop();
+      for (let i = 0; i < toRemove; i++) {
+        buttonsArr[i].parentNode.removeChild(buttonsArr[i]);
+      }
+    }
     updatePagination(paginationID, TP, currentPage);
     const buttons_PrevNext = Array.from(
       document.getElementsByClassName('usa-pagination__link')
@@ -247,6 +258,7 @@ import { getApiToken } from './auth';
         array_buttons.push(i + 1);
       }
     }
+    console.log(array_buttons);
     return array_buttons;
   }
 
@@ -267,6 +279,13 @@ import { getApiToken } from './auth';
     buildTable('audit-submissions', pageData);
   }
 
+  function attachEventHandlers() {
+    const UEIdescription = document.getElementById('');
+    UEIdescription.addEventListener('click', (e) => {
+      e.preventDefault();
+      // STUFF
+    });
+  }
   function init() {
     getSubmissions();
   }
