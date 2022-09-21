@@ -16,7 +16,8 @@
           required: i.required,
           errorMessage: i.error_message,
           validations: i.validations,
-          disabled: i.disabled
+          disabled: i.disabled,
+          data_attribute: i.data_attribute
         })
       }}
     {%- elif i.field_type == "radio" -%}
@@ -51,6 +52,7 @@
             group: i.group,
             id: o.id,
             value: o.value,
+            bind: i.bind,
             errorMessage: o.error_message,
             validations: i.validations
           })
@@ -63,9 +65,10 @@
       {{
         component('usa-checkbox', {
           label: i.label,
-          name: f.group,
+          name: i.id,
           id: i.id,
           value: i.value,
+          bind: i.bind,
           errorMessage: i.error_message,
           validations: i.validations
         })
@@ -85,7 +88,8 @@
         options: i.options,
         required: i.required,
         errorMessage: i.error_message,
-        validations: i.validations
+        validations: i.validations,
+        data_attribute: i.data_attribute
       }) 
     }}
     {%- elif i.field_type == "fieldset" -%}

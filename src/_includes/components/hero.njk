@@ -10,11 +10,22 @@
           slim: true
         })
       }}
+      {{
+        component('usa-alert', {
+          type: 'error',
+          id: 'unauthorized',
+          text: 'You do not have access to that page',
+          hidden: true,
+          slim: true
+        })
+      }}
       <script>
         (function(){
           const params = new URLSearchParams(window.location.search);
           if (params.has('logout')) {
             document.getElementById('logout-success').hidden = false;
+          } else if (params.has('authorized')) {
+            document.getElementById('unauthorized').hidden = false;
           }
         })()
       </script>

@@ -5,6 +5,9 @@
     name="{{ params.group }}"
     value="{{ params.value }}"
     type="radio"
+    {%- if params.bind -%}
+      x-model="{{ params.bind }}"
+    {%- endif -%}
     {% if params.required %}
       aria-required="true"
       required
