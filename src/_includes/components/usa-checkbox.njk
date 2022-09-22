@@ -5,6 +5,10 @@
       type="checkbox"
       name="{{ params.name }}"
       value="{{ params.value }}"
+      {%- if params.bind -%}
+        x-model="{{ params.bind }}"
+        {# x-bind:checked="{{ params.bind }}" #}
+      {%- endif -%}
       {%- if params.checked -%}
         checked="{{ params.checked }}"
       {%- endif -%}

@@ -1,8 +1,15 @@
 describe('Create New Audit', () => {
   const CONTINUE_BUTTON_TEXT = 'Save & continue to next section';
 
+  beforeEach(() => {
+    cy.fixture('sac-report').as('sacReport');
+    cy.get('@sacReport').then((report) => {
+      cy.intercept('GET', '/sac/edit/*', report).as('setSacInfo');
+    });
+  });
+
   before(() => {
-    cy.visit('/audit/submission');
+    cy.visit('/audit/submission?reportId=2022ZEL0001000006');
   });
 
   describe('A Blank Form', () => {
@@ -30,7 +37,7 @@ describe('Create New Audit', () => {
 
   describe('Validation', () => {
     it('should display error messages for invalid entities', () => {
-      cy.get('.usa-error-message:visible').should('have.length', 16);
+      cy.get('.usa-error-message:visible').should('have.length', 18);
     });
 
     it('should remove errors when valid properties are checked', () => {
@@ -41,14 +48,13 @@ describe('Create New Audit', () => {
       // Click twice to trigger the blur event,
       // or in the case of a checkbox, click the `next` element
 
-      cy.get('label[for=audit-type-single]').click();
-      cy.get('label[for=audit-type-single]').click();
+      cy.get('label[for=single-audit]').click();
+      cy.get('label[for=single-audit]').click();
 
       cy.get('label[for=audit-period-annual]').click();
       cy.get('label[for=audit-period-annual]').click();
 
-      cy.get('label[for=ein-not-ssn]').click();
-      cy.get('label[for=ein-not-ssn]').next().click();
+      cy.get('label[for=ein_not_an_ssn_attestation]').click();
 
       cy.get('label[for=multiple-eins-yes]').click();
       cy.get('label[for=multiple-eins-yes]').click();
@@ -56,8 +62,7 @@ describe('Create New Audit', () => {
       cy.get('label[for=multiple-ueis-yes]').click();
       cy.get('label[for=multiple-ueis-yes]').click();
 
-      cy.get('label[for=auditor-ein-not-ssn]').click();
-      cy.get('label[for=auditor-ein-not-ssn]').next().click();
+      cy.get('label[for=auditor_ein_not_an_ssn_attestation]').click();
 
       cy.get('.radio.usa-form-group--error').should('have.length', 0);
       cy.get('.usa-checkbox.usa-form-group--error').should('have.length', 0);
@@ -69,8 +74,35 @@ describe('Create New Audit', () => {
           cy.get(i).type('asdf');
         }
       );
-      cy.get('label[for=auditor-telephone]').click();
+      cy.get('label[for=auditor_phone]').click();
       cy.get('.usa-checkbox.usa-form-group--error').should('have.length', 0);
+    });
+  });
+
+  describe('Populating the form with existing data', () => {
+    it('should populate the report ID', () => {
+      cy.visit('/audit/submission?reportId=2022ZEL0001000006');
+      cy.wait('@setSacInfo').then(() => {
+        cy.get('@sacReport').then((report) => {
+          cy.get('[data-test-id="auditeeName"]').should(
+            'have.text',
+            report.auditee_name
+          );
+          cy.get('[data-test-id="reportId"]').should(
+            'have.text',
+            report.report_id
+          );
+          cy.get('#auditee_name').should('have.value', report.auditee_name);
+          cy.get('#auditee_uei').should('have.value', report.auditee_uei);
+          cy.get('#auditee_email').children('option').should('have.length', 3);
+        });
+      });
+    });
+
+    it('should remove errors when select fields have values', () => {
+      cy.get('#auditee_email').select('a@a.com');
+      cy.get('#auditor_email').select('c@c.com');
+      cy.get('.usa-form-group--error').should('have.length', 0);
     });
 
     it('should enable the "Continue" button when entities are fixed', () => {

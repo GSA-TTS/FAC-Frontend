@@ -1,4 +1,5 @@
 import { checkValidity } from './validate';
+import { queryAPI } from './api';
 
 const FORM = document.forms[0];
 
@@ -13,8 +14,8 @@ function allResponsesValid() {
 }
 
 function performValidations(field) {
-  const errors = checkValidity(field);
-  setFormDisabled(errors.length > 0);
+  checkValidity(field);
+  setFormDisabled(!allResponsesValid());
 }
 
 function highlightActiveNavSection() {
@@ -41,22 +42,60 @@ function highlightActiveNavSection() {
   });
 }
 
+function processSacFormData(formData) {
+  formData.multiple_ueis_covered =
+    formData.multiple_ueis_covered == 'true' ? true : false;
+  formData.multiple_eins_covered =
+    formData.multiple_eins_covered == 'true' ? true : false;
+  formData.ein_not_an_ssn_attestation =
+    formData.ein_not_an_ssn_attestation == '' ? true : false;
+  formData.auditor_ein_not_an_ssn_attestation =
+    formData.auditor_ein_not_an_ssn_attestation == '' ? true : false;
+
+  return formData;
+}
+
+function submitSacForm() {
+  const sacForm = document.getElementById('general-info');
+  const sacData = new FormData(sacForm);
+  const sacObj = Object.fromEntries(sacData.entries());
+  const preparedSacObj = processSacFormData(sacObj);
+
+  const params = new URLSearchParams(window.location.search);
+  const reportId = params.get('reportId');
+
+  if (!reportId) return;
+
+  queryAPI(`/sac/edit/${reportId}`, preparedSacObj, { method: 'PUT' }, [
+    function (data) {
+      /*
+       * Do whatever has to be done after submitting
+       **/
+      console.log(data);
+    },
+    function (error) {
+      console.error(error);
+    },
+  ]);
+}
+
 function attachEventHandlers() {
   const fieldsNeedingValidation = Array.from(
-    document.querySelectorAll('.sf-sac input[data-validate-not-null]')
+    document.querySelectorAll('.sf-sac [data-validate-not-null]')
   );
 
   FORM.addEventListener('submit', (e) => {
     e.preventDefault();
-    console.log(fieldsNeedingValidation);
 
-    performValidations(e.target);
+    fieldsNeedingValidation.forEach((q) => {
+      performValidations(q);
+    });
     if (!allResponsesValid()) return;
-    // submitForm();
+    submitSacForm();
   });
 
   fieldsNeedingValidation.forEach((q) => {
-    q.addEventListener('blur', (e) => {
+    q.addEventListener('change', (e) => {
       performValidations(e.target);
     });
   });
