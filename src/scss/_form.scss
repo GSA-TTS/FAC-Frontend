@@ -84,6 +84,41 @@ ul.usa-error-message {
   }
 }
 
+.ueid-explanation {
+  h2 {
+    font-size: size('sans', 8);
+  }
+
+  h2, p, ul {
+    margin-bottom: 2rem;
+  }
+}
+
+.gloss {
+  $icon-size: 50px;
+
+  border-bottom: 1px solid color('base-lighter');
+  list-style-type: none;
+  padding-left: 0 !important;
+
+  li {
+    display: flex;
+    margin-bottom: 1.5em !important;
+  }
+
+  .gloss__icon {
+    align-items: center;
+    background-image: url($theme-image-path + '/circle-gray-20.svg');
+    background-size: $icon-size;
+    display: inline-flex;
+    justify-content: center;
+    font-size: 1.3em;
+    height: $icon-size;
+    margin-right: 1em;
+    min-width: $icon-size;
+  }
+}
+
 .auditee-information {
   background-color: #f0f0f0;
   max-width: 100%;
