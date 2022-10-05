@@ -1,7 +1,12 @@
 import Alpine from 'alpinejs';
 import { queryAPI } from './api';
+import { getApiToken } from './auth';
+import submissionsTable from './page-table.js';
+import submissionsPagination from './submissions-pagination.js';
 
 window.Alpine = Alpine;
+Alpine.data('submissionsTable', submissionsTable);
+Alpine.data('submissionsPagination', submissionsPagination);
 Alpine.store('report', {
   init() {
     fetchReport();

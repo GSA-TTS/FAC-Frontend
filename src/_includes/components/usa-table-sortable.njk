@@ -1,4 +1,4 @@
-<div class="usa-table-container--scrollable" tabindex="0">
+<div class="usa-table-container--scrollable {{ params.class }}" tabindex="0" x-data="submissionsTable">
   <table id="{{ params.id }}" class="usa-table">
     <caption>
       My unpublished audit submission list
@@ -7,30 +7,59 @@
       <tr>
         <th 
           data-sortable
+          id="report_id"
           scope="col"
           role="columnheader"
           aria-sort="descending"
+        >Report ID</th>
+        <th
+            data-sortable
+            id="submission_status"
+            scope="col" 
+            role="columnheader" 
+  
         >
-          Report ID
-        </th>
-        <th data-sortable scope="col" role="columnheader">
           Status
         </th>
-        <th data-sortable scope="col" role="columnheader">
+        <th 
+            data-sortable scope="col" 
+            id="auditee_uei"
+            role="columnheader"
+  
+        >
           Auditee <a class="usa-link" href="javascript:void(0);" data-open-modal>UEI</a>
         </th>
-        <th data-sortable scope="col" role="columnheader">
+        <th
+            data-sortable scope="col" 
+            id="auditee_name"
+            role="columnheader"
+  
+        >
           Auditee name
         </th>
-        <th data-sortable scope="col" role="columnheader">
+        <th
+            data-sortable scope="col"
+            id="auditee_fiscal_period_end"
+            role="columnheader"
+  
+        >
           Fiscal year end date
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th class="text-center" scope="row" role="rowheader" colspan="5">Retrieving data.</th>
-      </tr>
+      <template x-if="!submissions">
+        <tr><td colspan="5"><i>Loading...</i></td></tr>
+      </template>
+      <template x-for="submission in pagedSubmissions" :key="submission.id">
+        <tr>
+          <td x-text="submission.report_id"></td>   
+          <td x-text="submission.submission_status"></td>   
+          <td x-text="submission.auditee_uei"></td>   
+          <td x-text="submission.auditee_name"></td>
+          <td x-text="submission.auditee_fiscal_period_end"></td>
+        </tr>
+      </template>
     </tbody>
   </table>
   <div

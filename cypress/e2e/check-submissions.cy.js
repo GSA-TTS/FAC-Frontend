@@ -1,348 +1,87 @@
-describe('Create New Audit', () => {
+describe('Display my audit submissions', () => {
   before(() => {
-    cy.visit('/audit/new/step-2');
+    cy.visit('/submissions');
   });
 
-  describe('A Blank Form', () => {
-    it('marks empty responses as invalid', () => {
-      cy.get('.auditee-information input:invalid').should('have.length', 3);
-    });
-
-    it('will not submit', () => {
-      cy.get('.usa-form--large').invoke('submit', (e) => {
-        e.preventDefault();
-        throw new Error('Form was submitted'); // The test will fail if this error is thrown
-      });
-
-      cy.get('.usa-button').contains('Continue').click();
-    });
-  });
-
-  describe('Validation', () => {
-    it('does not show any errors initially', () => {
-      cy.get('[class*=--error]').should('have.length', 0);
-    });
-
-    describe('Auditee UEID', () => {
-      it('should display an error message when left blank', () => {
-        cy.get('#auditee_uei').click().blur();
-        cy.get('#auditee_uei-not-null').should('be.visible');
-      });
-
-      it('should disable the submit button when fields are invalid', () => {
-        cy.get('button').contains('Continue').should('be.disabled');
-      });
-
-      it('should remove the error message when input is supplied', () => {
-        cy.get('#auditee_uei').type('ASDF').blur();
-        cy.get('#auditee_uei-not-null').should('not.be.visible');
-      });
-
-      it('should indicate when the supplied input is too short', () => {
-        cy.get('#auditee_uei-length').should('be.visible');
-      });
-
-      it('should indicate when the supplied input is too long', () => {
-        cy.get('#auditee_uei').clear().type('ASDFASDFASDFA').blur();
-        cy.get('#auditee_uei-length').should('be.visible');
-      });
-
-      it('should remove the error message when the input is correct', () => {
-        cy.get('#auditee_uei').clear().type('ASDFASDFASDF').blur();
-        cy.get('#auditee_uei-length').should('not.be.visible');
-      });
-
-      it('should enable the "Continue" button when entities are fixed', () => {
-        cy.get('button').contains('Continue').should('not.be.disabled');
-      });
-    });
-
-    describe('Fiscal Year Start Validation', () => {
-      it('should display an error message when left blank', () => {
-        cy.get('#auditee_fiscal_period_start').click().blur();
-        cy.get('#auditee_fiscal_period_start-not-null').should('be.visible');
-      });
-
-      it('should disable the submit button when fields are invalid', () => {
-        cy.get('button').contains('Continue').should('be.disabled');
-      });
-
-      it('should remove the error message when input is supplied', () => {
-        cy.get('#auditee_fiscal_period_start').type('01/01/2022').blur();
-        cy.get('#auditee_fiscal_period_start-not-null').should(
-          'not.be.visible'
-        );
-      });
-
-      it('should show an error if the user enters a date before 1/1/2020', () => {
-        cy.get('#auditee_fiscal_period_start').clear();
-        cy.get('#auditee_fiscal_period_start').type('12/31/2019');
-        cy.get('#fy-error-message li').should('have.length', 1);
-      });
-
-      it('should not show an error if the user enters a date after 12/31/2019', () => {
-        cy.get('#auditee_fiscal_period_start').clear().type('12/31/2020');
-        cy.get('#fy-error-message li').should('have.length', 0);
-      });
-    });
-    describe('Fiscal Year End Validation', () => {
-      it('should display an error message when left blank', () => {
-        cy.get('#auditee_fiscal_period_end').click().blur();
-        cy.get('#auditee_fiscal_period_end-not-null').should('be.visible');
-      });
-
-      it('should disable the submit button when fields are invalid', () => {
-        cy.get('button').contains('Continue').should('be.disabled');
-      });
-
-      it('should remove the error message when input is supplied', () => {
-        cy.get('#auditee_fiscal_period_end').type('01/31/2022').blur();
-        cy.get('#auditee_fiscal_period_end-not-null').should('not.be.visible');
-      });
-    });
-
-    describe('UEI Validation via API', () => {
-      beforeEach(() => {
-        cy.get('#auditee_uei-btn').as('searchButton');
-        cy.get('.usa-modal__footer button.primary').as('primaryButton');
-        cy.get('.usa-modal__footer button.secondary').as('secondaryButton');
-      });
-
-      afterEach(() => {
-        cy.reload();
-      });
-
-      describe('Connection Errors', () => {
-        beforeEach(() => {
-          cy.intercept(
+  describe('Do not display if user has no submissions', () => {
+    it('does not display the submissions table', () => {
+      cy.intercept(
+        {
+          method: 'GET', // Route all GET requests
+          url: 'https://fac-dev.app.cloud.gov/submissions', // that have a URL that matches '/users/*'
+        },
+        {
+          response: [
             {
-              method: 'POST', // Route all GET requests
-              url: '/sac/ueivalidation', // that have a URL that matches '/users/*'
+              report_id: '2021FQF0001000003',
+              submission_status: 'in_progress',
+              auditee_uei: 'ZQGGHJH74DW7',
+              auditee_fiscal_period_end: '2022-01-01',
+              auditee_name: 'ibm',
             },
             {
-              statusCode: 500,
-            }
-          ).as('apiError');
-        });
-
-        it('handles API errors', () => {
-          cy.get('@searchButton').click();
-
-          cy.wait('@apiError').then((interception) => {
-            assert.isNotNull(
-              interception.response.body,
-              '1st API call has data'
-            );
-          });
-
-          cy.contains(`We can't connect to SAM.gov to confirm your UEI.`);
-        });
-
-        it('lets the user proceed without a UEI', () => {
-          cy.get('@searchButton').click();
-
-          cy.wait('@apiError').then((interception) => {
-            assert.isNotNull(
-              interception.response.body,
-              '1st API call has data'
-            );
-          });
-
-          cy.get('@secondaryButton').click();
-          cy.get('#no-uei-warning').should('be.visible');
-          cy.get('#auditee_uei').should('not.be.visible');
-        });
-      });
-
-      describe('An invalid UEI', () => {
-        beforeEach(() => {
-          cy.intercept(
-            {
-              method: 'POST',
-              url: '/sac/ueivalidation',
+              report_id: '20215L30001000005',
+              submission_status: 'in_progress',
+              auditee_uei: 'ZQGGHJH74DW7',
+              auditee_fiscal_period_end: '2022-01-01',
+              auditee_name: 'SubTest1',
             },
             {
-              valid: false,
-              errors: {
-                auditee_uei: [
-                  'The letters “O” and “I” are not used to avoid confusion with zero and one.',
-                  'Ensure this field has at least 12 characters.',
-                ],
-              },
-            }
-          ).as('invalidUeiRequest');
-        });
-
-        it('Lets users know when their UEI is not recognized', () => {
-          cy.get('@searchButton').click();
-
-          cy.wait('@invalidUeiRequest').then((interception) => {
-            assert.isNotNull(
-              interception.response.body,
-              '1st API call has data'
-            );
-          });
-
-          cy.contains('Your UEI is not recognized');
-        });
-
-        it('lets the user proceed without a UEI', () => {
-          cy.get('@searchButton').click();
-
-          cy.wait('@invalidUeiRequest').then((interception) => {
-            assert.isNotNull(
-              interception.response.body,
-              '1st API call has data'
-            );
-          });
-
-          cy.get('@primaryButton').click();
-          cy.get('#no-uei-warning').should('be.visible');
-          cy.get('#auditee_uei').should('not.be.visible');
-        });
-      });
-
-      describe('A successful lookup', () => {
-        beforeEach(() => {
-          cy.intercept(
-            {
-              method: 'POST', // Route all GET requests
-              url: '/sac/ueivalidation', // that have a URL that matches '/users/*'
-            },
-            {
-              valid: true,
-              response: {
-                uei: 'ZQGGHJH74DW7',
-                auditee_name: 'INTERNATIONAL BUSINESS MACHINES CORPORATION',
-              },
-            }
-          ).as('validUeiRequest');
-        });
-
-        it('shows entity name after valid UEI request', () => {
-          cy.get('@searchButton').click();
-
-          cy.wait('@validUeiRequest').then((interception) => {
-            assert.isNotNull(
-              interception.response.body,
-              '1st API call has data'
-            );
-          });
-
-          cy.get('#uei-error-message li').should('have.length', 0);
-          cy.get('#auditee_name').should(
-            'have.value',
-            'INTERNATIONAL BUSINESS MACHINES CORPORATION'
-          );
-        });
-
-        it('Shows UEI and name in the page and hides the search field', () => {
-          cy.get('@searchButton').click();
-
-          cy.wait('@validUeiRequest').then((interception) => {
-            assert.isNotNull(
-              interception.response.body,
-              '1st API call has data'
-            );
-          });
-
-          cy.get('@primaryButton').click();
-          cy.get('#auditee_uei').should('not.be.visible');
-          cy.get('[data-testid=uei-info]').should('be.visible');
-        });
-      });
-    });
-  });
-
-  describe('Prepopulate the form', () => {
-    it('does not show any errors initially', () => {
-      cy.get('[class*=--error]').should('have.length', 0);
-    });
-
-    describe('Add Auditee UEID', () => {
-      it('should add auditee UEI', () => {
-        cy.get('#auditee_uei').clear().type('ZQGGHJH74DW7').blur();
-      });
-    });
-
-    describe('ADD Auditee Name as part of UEI Validation via API', () => {
-      it('shows entity name after valid UEI request', () => {
-        cy.intercept(
-          {
-            method: 'POST', // Route all GET requests
-            url: '/sac/ueivalidation', // that have a URL that matches '/users/*'
-          },
-          {
-            valid: true,
-            response: {
-              uei: 'ZQGGHJH74DW7',
+              report_id: '2021JG70001000010',
+              submission_status: 'in_progress',
+              auditee_uei: 'ZQGGHJH74xW7',
+              auditee_fiscal_period_end: '2022-01-01',
               auditee_name: 'INTERNATIONAL BUSINESS MACHINES CORPORATION',
             },
-          }
-        ).as('validUeiRequest');
+            {
+              report_id: '2021E650001000011',
+              submission_status: 'in_progress',
+              auditee_uei: 'ZQGGHJH74xW7',
+              auditee_fiscal_period_end: '2022-01-01',
+              auditee_name: 'asd',
+            },
+            {
+              report_id: '2021MCM0001000013',
+              submission_status: 'in_progress',
+              auditee_uei: 'ZQGGHJH74DW7',
+              auditee_fiscal_period_end: '2022-01-01',
+              auditee_name: null,
+            },
+            {
+              report_id: '2021RFJ0001000014',
+              submission_status: 'in_progress',
+              auditee_uei: 'ZQGGHJH74DW7',
+              auditee_fiscal_period_end: '2022-01-01',
+              auditee_name: null,
+            },
+            {
+              report_id: '2021WEU0001000015',
+              submission_status: 'in_progress',
+              auditee_uei: 'ZQGGHJH74DW7',
+              auditee_fiscal_period_end: '2022-01-01',
+              auditee_name: null,
+            },
+            {
+              report_id: '2021BGX0001000016',
+              submission_status: 'in_progress',
+              auditee_uei: 'ZQGGHJH74DW7',
+              auditee_fiscal_period_end: '2022-01-01',
+              auditee_name: null,
+            },
+            {
+              report_id: '20216KN0001000017',
+              submission_status: 'in_progress',
+              auditee_uei: 'ZQGGHJH74DW7',
+              auditee_fiscal_period_end: '2021-11-01',
+              auditee_name: null,
+            },
+          ],
+        }
+      ).as('submissionsRequest');
 
-        cy.get('#auditee_uei-btn').click();
-
-        cy.wait('@validUeiRequest').then((interception) => {
-          assert.isNotNull(interception.response.body, '1st API call has data');
-        });
-
-        cy.get('.usa-modal__footer button.primary').as('primaryButton').click();
-
-        cy.get('#uei-error-message li').should('have.length', 0);
-        cy.get('#auditee_name').should(
-          'have.value',
-          'INTERNATIONAL BUSINESS MACHINES CORPORATION'
-        );
+      cy.wait('@vsubmissionsRequest').then((interception) => {
+        assert.isNotNull(interception.response.body, '1st API call has data');
       });
-    });
-
-    describe('ADD Fiscal start/end dates', () => {
-      it('Enter expected start date', () => {
-        cy.get('#auditee_fiscal_period_start').clear().type('01/01/2021');
-        cy.get('#fy-error-message li').should('have.length', 0);
-      });
-      it('Enter expected end date', () => {
-        cy.get('#auditee_fiscal_period_end').clear().type('01/01/2022');
-        cy.get('#fy-error-message li').should('have.length', 0);
-      });
-    });
-  });
-
-  describe('Auditee info validation via API', () => {
-    it('should return auditee info errors from the remote server', () => {
-      cy.intercept('POST', '/sac/auditee', {
-        validueid: false,
-        errors: 'Not valid.',
-      }).as('invalidResponse');
-
-      cy.get('.usa-button').contains('Continue').click();
-
-      cy.wait('@invalidResponse').then((interception) => {
-        assert.isFalse(
-          interception.response.body.validueid,
-          'Failure API Response'
-        );
-        console.log('Response:' + interception.response.body.validueid);
-      });
-    });
-
-    it('should return success response and move to the next page', () => {
-      cy.intercept('POST', '/sac/auditee', {
-        validueid: true,
-        next: '/sac/accessandsubmission',
-      }).as('validResponse');
-
-      cy.get('.usa-button').contains('Continue').click();
-
-      cy.wait('@validResponse').then((interception) => {
-        assert.isTrue(
-          interception.response.body.validueid,
-          'Succcessful API Response'
-        );
-        console.log('Response:' + interception.response.body.validueid);
-      });
-      cy.url().should('include', '/audit/new/step-3/');
     });
   });
 });
