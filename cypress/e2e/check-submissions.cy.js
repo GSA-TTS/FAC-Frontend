@@ -79,7 +79,7 @@ describe('Display my audit submissions', () => {
         }
       ).as('submissionsRequest');
 
-      cy.wait('@vsubmissionsRequest').then((interception) => {
+      cy.wait('@submissionsRequest').then((interception) => {
         assert.isNotNull(interception.response.body, '1st API call has data');
       });
     });
