@@ -8,7 +8,7 @@
     "build": "run-s clean build:*",
     "clean": "rm -rf ./_src",
     "start": "run-p dev:*",
-    "get-forms": "git checkout test-data/main -- ./src/forms",
+    "build:get-forms": "git checkout test-data/main -- forms && mv forms/* src/forms",
     "dev:11ty": "eleventy --serve --watch --incremental",
     "dev:postcss": "postcss _site/assets/scss/main.css -o _site/assets/scss/main.css --use autoprefixer --watch",
     "build:11ty": "npx @11ty/eleventy",

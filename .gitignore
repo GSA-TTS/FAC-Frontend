@@ -1,4 +1,6 @@
 _site/
+forms
+src/forms/*.yaml
 node_modules/
 .env
 coverage
