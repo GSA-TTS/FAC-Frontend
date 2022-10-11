@@ -1,5 +1,4 @@
 export default () => ({
-  pageSize: 3,
   current_page: 1,
   total_pages: 1,
 
