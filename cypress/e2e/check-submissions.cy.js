@@ -14,7 +14,8 @@ describe('Display my audit submissions', () => {
       ).as('submissionsRequest');
 
       cy.wait('@submissionsRequest').then((interception) => {
-        expect([interception.response.body]).to.be.empty;
+        console.log(interception);
+        interception.response.body.should('have.length', 0);
       });
     });
   });
