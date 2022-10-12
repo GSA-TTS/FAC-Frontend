@@ -14,7 +14,7 @@ describe('Display my audit submissions', () => {
       ).as('submissionsRequest');
 
       cy.wait('@submissionsRequest').then((interception) => {
-        assert.isNull(interception.response.body, 'has no data');
+        assert.expect([interception.response]).to.be.empty;
       });
     });
   });
