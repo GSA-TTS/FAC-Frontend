@@ -49,7 +49,7 @@
     </thead>
     <tbody>
       <template x-if="!submissions">
-        <tr><td colspan="5"><i>Loading...</i></td></tr>
+        <tr><td colspan="5">Loading...</td></tr>
       </template>
       <template x-for="submission in pagedSubmissions" :key="submission.id">
         <tr>
