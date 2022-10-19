@@ -5,6 +5,7 @@ describe('Accessibility', () => {
     '/audit/new/step-2',
     '/audit/new/step-3',
     '/audit/submission',
+    '/audit/submission/awards',
     '/submissions',
   ];
   it('should get a perfect Lighthouse score for accessibility on every page', () => {
