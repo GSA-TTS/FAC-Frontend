@@ -1,0 +1,12 @@
+<div class="usa-form-group>
+  <span class="usa-error-message" id="{{ params.id }}-alert"></span>
+  <input
+    id={{ params.id }}
+    class="usa-file-input"
+    type="file"
+    name={{ params.id }}
+    {{ "accept="+params.accept if params.accept }}
+    aria-label={{ params.label }}
+    aria-description={{ params.hint }}
+  />
+</div>

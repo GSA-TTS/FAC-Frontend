@@ -1,0 +1,71 @@
+---
+title: Federal awards
+intro: Enter the federal awards you received in the last audit year using the provided worksheet
+
+sidenav:
+  links:
+    - text: General information
+      href: '#general-information'
+    - text: Federal awards
+      href: /
+      current: true
+    - text: Notes to SEFA
+      href: /
+    - text: Audit Information
+      href: /
+    - text: Findings text
+    - text: CAP text
+    - text: Additional EINs
+    - text: Additional UEIs
+    - text: Secondary auditors
+    - text: Finalize
+      href: /
+---
+
+{%- extends "form.njk" -%}
+{%- block form -%}
+<div class="grid-container" x-data="$store">
+  <div class="grid-row grid-gap">
+    <nav class="desktop:grid-col-3 sticky-nav" aria-label="Secondary navigation">
+      {{
+        component('usa-sidenav', {
+          links: sidenav.links,
+          baseUrl: config.baseUrl
+        }) 
+      }}
+    </nav>
+    <form class="desktop:grid-col-9 usa-form usa-form--large sf-sac" id="general-info">
+      <fieldset class="usa-fieldset">
+        <legend class="usa-legend usa-legend--large" id="general-information">{{ title }}</legend>
+        <p>
+          {{ intro }}
+        </p>
+        {{
+          component('usa-process-list', {
+            heading_level: 4,
+            steps: [
+              {
+                heading: "Download worksheet",
+                body: "The worksheet is an Excel spreadsheet file (XSLX file).",
+                action: '<button class="usa-button usa-button--outline" id="download-worksheet">Download worksheet</button>'
+              },
+              {
+                heading: "Complete worksheet",
+                body: "Open the worksheet using a program such as Microsoft Excel or Google Sheets and enter your federal awards in the worksheet"
+              },
+              {
+                heading: "Upload completed worksheet",
+                body: "Save your worksheet as an XSLX file and upload it below",
+                action: component('usa-file-input', {
+                  id: "upload-worksheet",
+                  accept: ".xslx",
+                  label: "Upload completed worksheet",
+                  hint: "Save your worksheet as an XSLX file and upload it below"
+                })
+              }
+            ]
+          })
+        }}
+    </form>
+</div>
+{%- endblock -%}
