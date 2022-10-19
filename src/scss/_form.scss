@@ -1,6 +1,5 @@
 @use 'uswds-core' as *;
 
-
 .usa-form {
   padding-bottom: 2rem;
 }
@@ -340,5 +339,16 @@ ul.usa-error-message {
         }
       }
     }
+  }
+}
+
+.federal-awards {
+  .usa-button {
+    margin-top: 0;
+  }
+
+  .usa-process-list__item.complete::before {
+    border-color: #00a91c;
+    content: url('../../assets/img/usa-icons/check.svg');
   }
 }
