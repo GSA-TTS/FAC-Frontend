@@ -351,4 +351,8 @@ ul.usa-error-message {
     border-color: #00a91c;
     content: url('../../assets/img/usa-icons/check.svg');
   }
+
+  [type="submit"] {
+    margin-top: 1rem;
+  }
 }
