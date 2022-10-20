@@ -343,6 +343,13 @@ ul.usa-error-message {
 }
 
 .federal-awards {
+  margin-top: 2rem;
+
+  h1 {
+    font-size: size('body', 'xl');
+    margin: 0;
+  }
+
   .usa-button {
     margin-top: 0;
   }

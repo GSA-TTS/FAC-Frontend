@@ -22,6 +22,7 @@ sidenav:
       href: /
 ---
 
+{%- set hideHeader = true -%}
 {%- extends "form.njk" -%}
 {%- block form -%}
 <div class="grid-container federal-awards" x-data="$store">
@@ -36,13 +37,13 @@ sidenav:
     </nav>
     <form class="desktop:grid-col-9 usa-form usa-form--large sf-sac" id="general-info">
       <fieldset class="usa-fieldset">
-        <legend class="usa-legend usa-legend--large" id="general-information">{{ title }}</legend>
+        <legend class="usa-legend usa-legend--large" id="general-information"><h1>{{ title }}</h1></legend>
         <p>
           {{ intro }}
         </p>
         {{
           component('usa-process-list', {
-            heading_level: 4,
+            heading_level: 2,
             steps: [
               {
                 heading: "Download worksheet",
