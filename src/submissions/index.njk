@@ -1,5 +1,16 @@
 ---
 title: My audit submissions
+
+uei_modal:
+  id: modal-uei-info
+  class: flex-justify-start display-one
+  heading: What is a Unique Entity Identifier (UEI)?
+  continueButton: {
+    id: modal-uei-info-continue,
+    class: ,
+    text: Close
+  }
+  description: <p>The Unique Entity Identifier (UEI) for an awardee or recipient is an alphanumeric code created in the System for Award Management (SAM.gov) that is used to uniquely identify specific commercial, nonprofit, or business entities registered to do business with the federal government.</p>
 ---
 
 {%- extends "layout.njk" -%}
@@ -7,5 +18,24 @@ title: My audit submissions
 {%- block content -%}
   <div class="grid-container">
     <h1>My audit submissions</h1>
+    {{
+      component('usa-table-sortable', {
+        id: 'audit-submissions',
+        class: 'display-none',
+        baseUrl: config.baseUrl
+      })
+    }}
+
+    {{
+      component('usa-modal', {
+        id: uei_modal.id,
+        class: uei_modal.class,
+        heading: uei_modal.heading,
+        continueButton: uei_modal.continueButton,
+        description: uei_modal.description,
+        baseUrl: config.baseUrl
+      })
+    }}
   </div>
+  <script src="{{ config.baseUrl }}assets/js/audit-submissions.js"></script>
 {%- endblock -%}
