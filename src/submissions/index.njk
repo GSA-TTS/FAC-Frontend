@@ -11,6 +11,21 @@ uei_modal:
     text: Close
   }
   description: <p>The Unique Entity Identifier (UEI) for an awardee or recipient is an alphanumeric code created in the System for Award Management (SAM.gov) that is used to uniquely identify specific commercial, nonprofit, or business entities registered to do business with the federal government.</p>
+
+terms_modal:
+  id: modal-terms-conditions
+  class: flex-justify-start
+  heading: Federal Audit Clearinghouse terms and conditions
+  continueButton: {
+    id: modal-terms-continue,
+    class: ,
+    text: Accept and start a new submission
+  }
+  backButtonText: Go back
+  description: <p>FAC.gov is a U.S. General Services Administration federal government service. This site collects required documentation from organizations that spend $750,000 or more in federal grant funds in a given year.</p>
+                <p>All use of FAC.gov will be monitored, recorded, and subject to audit by GSA staff and other federal government authorities. By using this system, you consent to your use being monitored and recorded.</p>
+                <p>Unauthorized use is prohibited, and individuals found performing unauthorized activities are subject to disciplinary action including criminal prosecution.</p>
+                <p>If you have questions about these conditions, please email <a class="usa-link" href="mailto:fac-support@gsa.gov">fac-support@gsa.gov</a>.</p>
 ---
 
 {%- extends "layout.njk" -%}
@@ -25,17 +40,47 @@ uei_modal:
         baseUrl: config.baseUrl
       })
     }}
-
-    {{
-      component('usa-modal', {
-        id: uei_modal.id,
-        class: uei_modal.class,
-        heading: uei_modal.heading,
-        continueButton: uei_modal.continueButton,
-        description: uei_modal.description,
-        baseUrl: config.baseUrl
-      })
-    }}
   </div>
+  <div class="grid-container">
+    <form id="start-new-submission" class="usa-form usa-form--large">
+      <h2>Start a new submission</h2>
+      <p>Before you start a new submission, double check to make sure that you don't already have one in progress.</p>
+      <div class="usa-checkbox">
+        <input
+          id="check-start-new-submission"
+          class="usa-checkbox__input"
+          type="checkbox"
+        />
+        <label class="usa-checkbox__label" for="check-start-new-submission">
+          I agree to the above <button id="terms-conditions-trigger" class="usa-button usa-button--unstyled">terms and conditions</button>.
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+        </label>
+      </div>
+      <div class="usa-button-group">
+        <button id="start-submission" class="usa-button" disabled>Start a new submission</button>
+      </div>
+    </form>
+  </div>
+  {{
+    component('usa-modal', {
+      id: uei_modal.id,
+      class: uei_modal.class,
+      heading: uei_modal.heading,
+      continueButton: uei_modal.continueButton,
+      description: uei_modal.description,
+      baseUrl: config.baseUrl
+    })
+  }}
+  {{
+    component('usa-modal', {
+      id: terms_modal.id,
+      class: terms_modal.class,
+      heading: terms_modal.heading,
+      continueButton: terms_modal.continueButton,
+      backButtonText: terms_modal.backButtonText,
+      description: terms_modal.description,
+      baseUrl: config.baseUrl
+    })
+  }}
   <script src="{{ config.baseUrl }}assets/js/audit-submissions.js"></script>
 {%- endblock -%}
