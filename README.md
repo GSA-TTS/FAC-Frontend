@@ -53,6 +53,9 @@ Lighthouse runs as part of the Cypress test suite, but to run the `pa11y-ci` sca
 npm run pa11y:ci
 ```
 
+When adding a new page to the frontend site, please be sure to add its URL to the [relevant Cypress spec](https://github.com/GSA-TTS/FAC-Frontend/blob/main/cypress/e2e/run-lighthouse.cy.js) and the [pa11y configuration](https://github.com/GSA-TTS/FAC-Frontend/blob/main/.pa11yci).
+
+
 ## Linting & Styling
 
 This project uses [Prettier](https://prettier.io/), [eslint](https://eslint.org/), and [stylelint](https://stylelint.io/) to ensure code is correct and formatted consistently. Git will run these tools automatically before applying a commit, but you should install the editor plugins for each tool to apply formatting and lint your code automatically.
