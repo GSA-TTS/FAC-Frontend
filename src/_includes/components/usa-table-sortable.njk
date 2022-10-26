@@ -1,0 +1,69 @@
+<div class="usa-table-container {{ params.class }}" x-data="submissionsTable">
+  <table id="{{ params.id }}" class="usa-table">
+    <caption>
+      My unpublished audit submission list
+    </caption>
+    <thead>
+      <tr>
+        <th 
+          data-sortable
+          id="report_id"
+          scope="col"
+          role="columnheader"
+        >
+          Report ID
+        </th>
+        <th
+            data-sortable
+            id="submission_status"
+            scope="col" 
+            role="columnheader" 
+        >
+          Status
+        </th>
+        <th 
+            data-sortable 
+            id="auditee_uei"
+            scope="col" 
+            role="columnheader"
+        >
+          Auditee <a class="usa-link" href="javascript:void(0);" data-open-modal>UEI</a>
+        </th>
+        <th
+            data-sortable 
+            id="auditee_name"
+            scope="col" 
+            role="columnheader"
+        >
+          Auditee name
+        </th>
+        <th
+            data-sortable
+            id="auditee_fiscal_period_end" 
+            scope="col" 
+            role="columnheader"
+        >
+          Fiscal year end date
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <template x-if="!submissions">
+        <tr><td colspan="5">Loading...</td></tr>
+      </template>
+      <template x-for="submission in pagedSubmissions" :key="submission.id">
+        <tr>
+          <td x-text="submission.report_id"></td>   
+          <td x-text="submission.submission_status"></td>   
+          <td x-text="submission.auditee_uei"></td>   
+          <td x-text="submission.auditee_name"></td>
+          <td x-text="submission.auditee_fiscal_period_end"></td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+  <div
+    class="usa-sr-only usa-table__announcement-region"
+    aria-live="polite"
+  ></div>
+</div>
