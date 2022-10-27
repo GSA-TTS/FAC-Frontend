@@ -103,17 +103,19 @@ describe('Create New Audit', () => {
     });
 
     it('should return SUCCESS response and move to the next page', () => {
+      const reportId = '2022UBT0001000020';
       cy.intercept('POST', '/sac/accessandsubmission', {
-        sac_id: 1,
+        report_id: reportId,
         next: 'TBD',
       }).as('validResponse');
 
       cy.get('.usa-button').contains('Create').click();
 
       cy.wait('@validResponse').then((interception) => {
-        expect(interception.response.body.sac_id).to.exist;
+        expect(interception.response.body.report_id).to.exist;
       });
       cy.url().should('include', 'submission');
+      cy.url().should('include', `reportId=${reportId}`);
     });
   });
 });

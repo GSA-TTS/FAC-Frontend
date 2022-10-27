@@ -33,9 +33,8 @@ function submitForm() {
 }
 
 function handleAccessResponse(data) {
-  console.log(data);
-  if (data.sac_id) {
-    const nextUrl = '../../submission';
+  if (data.report_id) {
+    const nextUrl = `../../submission/?reportId=${data.report_id}`;
     window.location.href = nextUrl;
   } else {
     console.log(data);
