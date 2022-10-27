@@ -3,7 +3,7 @@ describe('Display my audit submissions', () => {
     cy.visit('/submissions');
   });
   describe('On correct page.', () => {
-    it('does not display the submissions table', () => {
+    it('should have expected h1', () => {
       cy.get('h1').should('have.text', 'My audit submissions');
     });
   });
