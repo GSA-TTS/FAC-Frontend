@@ -8,7 +8,7 @@ describe('Display my audit submissions', () => {
     });
   });
 
-  describe('enable/disable button', () => {
+  describe('test Start new submission button', () => {
     it('should be disbaled to start', () => {
       cy.get('#start-submission').should('have.attr', 'disabled');
     });
@@ -20,78 +20,31 @@ describe('Display my audit submissions', () => {
       cy.get('#check-start-new-submission').click({ force: true });
       cy.get('#start-submission').should('have.attr', 'disabled');
     });
-  });
-  /*
-  describe('Display table if user has submissions', () => {
-    it('displays the submissions table', () => {
-      cy.intercept(
-        {
-          method: 'GET',
-          url: 'https://fac-dev.app.cloud.gov/submissions',
-        },
-        [
-          {
-            report_id: '2021FQF0001000003',
-            submission_status: 'in_progress',
-            auditee_uei: 'MQGVHJH74DW7',
-            auditee_fiscal_period_end: '2022-01-01',
-            auditee_name: 'Test 1',
-          },
-          {
-            report_id: '20215L30001000005',
-            submission_status: 'in_progress',
-            auditee_uei: 'XRGSHJH74DW7',
-            auditee_fiscal_period_end: '2022-01-01',
-            auditee_name: 'Test 2',
-          },
-          {
-            report_id: '2021JG70001000010',
-            submission_status: 'in_progress',
-            auditee_uei: 'ZQGGHJH74xW7',
-            auditee_fiscal_period_end: '2022-01-01',
-            auditee_name: 'INTERNATIONAL BUSINESS MACHINES CORPORATION',
-          },
-        ]
-      ).as('hasData');
-      cy.visit('/submissions/');
-      cy.wait('@hasData').then((interception) => {
-        assert.isNotNull(interception.response.body, 'has data');
-        cy.get('.usa-table-container')
-          .should('have.attr', 'class')
-          .and('not.contain', 'display-none');
-      });
+    it('should navigate to first step in new submission process on click', () => {
+      cy.get('#check-start-new-submission').click({ force: true });
+      cy.get('#start-submission').click();
+      cy.get('h1').should('have.text', 'Create new audit');
     });
   });
 
-  describe('Sorted by Report ID ASC', () => {
-    it('TH should have sorted attr set to ascending', () => {
-      cy.get('#report_id')
-        .should('have.attr', 'aria-sort')
-        .and('contain', 'ascending');
+  describe('test terms and conditions modal trigger', () => {
+    before(() => {
+      cy.visit('/submissions');
     });
-    it('TH should have visible ascending icon', () => {
-      cy.get('#report_id svg .ascending').should(
-        'have.css',
-        'fill',
-        'rgb(27, 27, 27)'
-      );
+    it('should have the modal as hidden by default', () => {
+      cy.get('#modal-terms-conditions').should('have.class', 'is-hidden');
     });
-  });
-
-  describe('Displays modal on click', () => {
-    it('should display modal on click', () => {
-      cy.get('th .usa-link').contains('UEI').click();
-      cy.get('.usa-modal-wrapper')
-        .should('have.attr', 'class')
-        .and('contain', 'is-visible');
+    it('should unhide the modal and close it', () => {
+      cy.get('#terms-conditions-trigger').click();
+      cy.get('#modal-terms-conditions').should('not.have.class', 'is-hidden');
+      cy.get('#modal-terms-conditions .usa-modal__close').click();
+      cy.get('#modal-terms-conditions').should('have.class', 'is-hidden');
     });
-
-    it('should display modal on click', () => {
-      cy.get('li .usa-button').contains('Close').click();
-      cy.get('.usa-modal-wrapper')
-        .should('have.attr', 'class')
-        .and('contain', 'is-hidden');
+    it('should navigate to first step in new submission process', () => {
+      cy.get('#terms-conditions-trigger').click();
+      cy.get('#modal-terms-conditions').should('not.have.class', 'is-hidden');
+      cy.get('#modal-terms-continue').click();
+      cy.get('h1').should('have.text', 'Create new audit');
     });
   });
-  */
 });
