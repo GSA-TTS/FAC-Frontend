@@ -13,11 +13,11 @@ describe('Display my audit submissions', () => {
       cy.get('#start-submission').should('have.attr', 'disabled');
     });
     it('should be enabled when checkbox checked', () => {
-      cy.get('.usa-checkbox .usa-checkbox__label').click();
+      cy.get('#check-start-new-submission').click({ force: true });
       cy.get('#start-submission').should('not.have.attr', 'disabled');
     });
     it('should be disabled when checkbox unchecked', () => {
-      cy.get('.usa-checkbox__label').click();
+      cy.get('#check-start-new-submission').click({ force: true });
       cy.get('#start-submission').should('have.attr', 'disabled');
     });
   });
