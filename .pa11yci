@@ -4,7 +4,8 @@
     "http://localhost:8080/audit/new/step-1",
     "http://localhost:8080/audit/new/step-2",
     "http://localhost:8080/audit/new/step-3",
-    "http://localhost:8080/audit/submission"
+    "http://localhost:8080/audit/submission",
+    "http://localhost:8080/submissions"
   ],
   "defaults": {
     "standard": "WCAG2AA",
